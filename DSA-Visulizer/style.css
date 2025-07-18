@@ -1,0 +1,144 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #121212;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    height: 60px;
+    align-items: center;
+    background-color: rgba(60, 60, 60, 0.352);
+}
+
+.logo {
+    padding-left: 5vw;
+    font-size: 30px;
+    font-weight: 600;
+    color: #f06262;
+}
+
+nav {
+    display: flex;
+    gap: 20px;
+    padding-right: 5vw;
+}
+
+.links {
+    text-decoration: none;
+    color: #f06262;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.links:hover {
+    color: #f9a825;
+}
+
+.hero {
+    text-align: center;
+    padding: 100px 20px 80px;
+    background: linear-gradient(to right, #1e1e1e, #2e2e2e);
+}
+
+.hero h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    background: -webkit-linear-gradient(#ff0000, #f9a825);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    color: #0004ff;
+    margin-bottom: 30px;
+}
+
+.explore-btn {
+    background-color: #f06262;
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.explore-btn:hover {
+  background-color: #f9a825;
+}
+
+.categories {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 50px 0;
+    flex-direction: column;
+    text-align: center;
+}
+
+.categories h2 {
+  font-size: 2rem;
+  margin-bottom: 40px;
+  color: #f9a825;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  padding: 0 20px;
+}
+
+.category-card {
+  background-color: #1e1e1e7e;
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: 0 8px 15px rgba(229, 26, 26, 0.529);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.category-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px rgba(255, 251, 18, 0.4);
+}
+
+.categories-card img{
+    max-width: 80px;
+    margin-bottom: 15px;
+}
+
+.category-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.category-card p {
+  font-size: 0.95rem;
+  color: #aaa;
+  margin-bottom: 15px;
+}
+
+.category-card a {
+  background-color: #f9a825;
+  color: #000000;
+  padding: 8px 16px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.category-card a:hover {
+  background-color: #ffd54f;
+}
