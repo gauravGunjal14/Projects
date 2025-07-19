@@ -18,6 +18,7 @@ body {
   background-color: rgba(60, 60, 60, 0.974);
   position: sticky;
   top: 0;
+  z-index: 1;
 }
 
 .logo {
@@ -119,14 +120,16 @@ nav {
   font-size: 3rem;
   font-weight: 700;
   margin-bottom: 10px;
-  background: -webkit-linear-gradient(#ff0000, #f9a825);
+  background: linear-gradient(to right, #ff6b6b, #4ecdc4, #ffd166, #6a0572, #ab83a1);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .hero p {
   font-size: 1.2rem;
-  color: #0004ff;
+  background: linear-gradient(to right, #05ffea, #ee00ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   margin-bottom: 30px;
 }
 
@@ -165,6 +168,15 @@ nav {
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 30px;
   padding: 0 20px;
+}
+
+.category-card img{
+  width: 200px;
+}
+
+.imgBg{
+  background-color: rgb(255, 255, 255);
+  width: 330px;
 }
 
 .category-card {
@@ -211,11 +223,70 @@ nav {
   background-color: #ffd54f;
 }
 
-.about {
-  background-color: #1e1e1e;
-  color: #f9a825;
+.contact {
+  background-color: #1e1e1e7e;
+  color: #f06262;
   padding: 50px 20px;
   text-align: center;
+}
+
+.contact h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.contact p {
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+}
+
+.contact form {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.contact form input,
+.contact form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 5px;
+  background-color: #2e2e2e;
+  color: #fff;
+}
+
+.contact button{
+  background-color: #f06262;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.contact button:hover{
+  background-color: #ffd166;
+  color: #000000;
+}
+
+.footer {
+  background-color: #1e1e1e;
+  color: #f06262;
+  text-align: center;
+  padding: 20px;
+}
+
+.footer p {
+  font-size: 0.9rem; 
+  color: #999;
+}
+
+.footer a {
+  color: #f9a825;
+
 }
 
 @media screen and (max-width: 768px) {
@@ -253,5 +324,9 @@ nav {
     background: -webkit-linear-gradient(#ff0000, #f9a825);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+  }
+
+  .footer p {
+    font-size: 0.8rem;
   }
 }
