@@ -10,6 +10,11 @@ body {
   background-color: #121212;
 }
 
+body.light-mode {
+  background-color: #ffffff;
+  color: #2d2d2d;
+}
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -19,6 +24,10 @@ body {
   position: sticky;
   top: 0;
   z-index: 1;
+}
+
+body.light-mode .navbar {
+  background-color: rgba(232, 232, 232, 0.974);
 }
 
 .logo {
@@ -64,45 +73,6 @@ nav {
   align-items: center;
 }
 
-.light-mode {
-  display: block;
-  border-radius: 50%;
-}
-
-.light-mode:hover {
-  animation: rotate 1s ease-in;
-}
-
-@keyframes rotate {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(40deg);
-  }
-}
-
-.dark-mode {
-  display: none;
-  padding: 10px;
-  border-radius: 50%;
-}
-
-.dark-mode:hover {
-  animation: rotate 1s ease-in;
-}
-
-@keyframes rotate {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(40deg);
-  }
-}
-
 .menu-icon {
   display: none;
   font-size: 30px;
@@ -114,6 +84,10 @@ nav {
   text-align: center;
   padding: 100px 20px 80px;
   background: linear-gradient(to right, #1e1e1e, #2e2e2e);
+}
+
+body.light-mode .hero {
+  background: linear-gradient(to right, #ffd8d8, #ffffff);
 }
 
 .hero h1 {
@@ -157,6 +131,10 @@ nav {
   text-align: center;
 }
 
+body.light-mode .categories {
+  background-color: #ffffff;
+}
+
 .categories h2 {
   font-size: 2rem;
   margin-bottom: 40px;
@@ -170,13 +148,8 @@ nav {
   padding: 0 20px;
 }
 
-.category-card img{
+.category-card img {
   width: 200px;
-}
-
-.imgBg{
-  background-color: rgb(255, 255, 255);
-  width: 330px;
 }
 
 .category-card {
@@ -187,9 +160,18 @@ nav {
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
+body.light-mode .category-card {
+  background-color: #ff92927e;
+  box-shadow: 0 8px 15px rgba(26, 70, 229, 0.529);
+}
+
 .category-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 12px 20px rgba(255, 251, 18, 0.4);
+}
+
+body.light-mode .category-card:hover {
+  box-shadow: 0 12px 20px rgba(2, 255, 23, 0.4);
 }
 
 .categories-card img {
@@ -230,6 +212,10 @@ nav {
   text-align: center;
 }
 
+body.light-mode .contact {
+  background-color: #ededed;
+}
+
 .contact h2 {
   font-size: 2rem;
   margin-bottom: 20px;
@@ -256,7 +242,14 @@ nav {
   color: #fff;
 }
 
-.contact button{
+body.light-mode .contact form input{
+  background-color: #ffe2e2;
+}
+body.light-mode .contact form textarea {
+  background-color: #ffe2e2;
+}
+
+.contact button {
   background-color: #f06262;
   color: white;
   padding: 10px 20px;
@@ -267,7 +260,7 @@ nav {
   font-weight: 700;
 }
 
-.contact button:hover{
+.contact button:hover {
   background-color: #ffd166;
   color: #000000;
 }
@@ -279,9 +272,17 @@ nav {
   padding: 20px;
 }
 
+body.light-mode .footer{
+  background-color: #ffdfdf;
+}
+
 .footer p {
-  font-size: 0.9rem; 
+  font-size: 0.9rem;
   color: #999;
+}
+
+body.light-mode .footer p{
+  color: #000000;
 }
 
 .footer a {
@@ -299,31 +300,16 @@ nav {
     display: block;
   }
 
-  .dark-mode,
-  .light-mode {
-    display: block;
-    margin-right: 10px;
-  }
-
-  .dark-mode {
-    display: none;
-    border-radius: 50%;
-  }
-
   .hero {
     text-align: center;
     padding: 25vh 20px 80px;
     height: 80vh;
-    background: linear-gradient(to right, #1e1e1e, #2e2e2e);
   }
 
   .hero h1 {
     font-size: 2rem;
     font-weight: 700;
     margin-bottom: 10px;
-    background: -webkit-linear-gradient(#ff0000, #f9a825);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
   }
 
   .footer p {
