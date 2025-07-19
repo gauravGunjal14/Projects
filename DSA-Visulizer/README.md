@@ -44,7 +44,7 @@ The goal of this project is to:
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/yourusername/dsa-visualizer.git
+git clone https://github.com/gaurav-gunjal14/Projects/tree/main/DSA-Visulizer.git
 
 # 2. Navigate into the project folder
 cd dsa-visualizer
