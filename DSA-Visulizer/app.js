@@ -41,8 +41,25 @@ closeIcon.addEventListener("click", () => {
 const allLinks = document.querySelectorAll(".nav-links a");
 allLinks.forEach(link => {
     link.addEventListener("click", () => {
+        if(navLinks.classList.contains("show")){
         navLinks.classList.remove("show");
         closeIcon.style.display = "none";
         menuIcon.style.display = "block";
+        }
     });
 });
+
+// window.addEventListener("resize", () => {
+//     if (window.innerWidth > 768) {
+//         // Desktop screen: show nav and hide icons
+//         navLinks.classList.remove("show"); // optional: desktop pe 'show' class ki zarurat nahi
+//         navLinks.style.display = "flex";   // or whatever display you use in CSS for desktop
+//         menuIcon.style.display = "none";
+//         closeIcon.style.display = "none";
+//     } else {
+//         // Mobile screen: hide nav by default
+//         navLinks.style.display = "none";
+//         menuIcon.style.display = "block";
+//         closeIcon.style.display = "none";
+//     }
+// });

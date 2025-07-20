@@ -23,14 +23,81 @@
       <div class="theme">
         <button id="toggelBtn" class="light-mode theme"><img id="themeIcon" src="../icons/light-mode.png"
             alt="Switch into light mode"></button>
-        <!-- <button class="dark-mode theme"><img src="./icons/dark-mode.png" alt="Switch into dark-mode"></button> -->
       </div>
 
       <div class="menuIcon" id="menuIcon">&#9776;</div>
       <div class="closeIcon" id="closeIcon" style="display: none;">&times;</div>
     </nav>
   </header>
+
+  <!-- main -->
+  <main id="sort-page">
+    <!-- sort selector -->
+    <section class="sort-selector">
+      <button class="sort-btn active" id="insertion">Insertion</button>
+      <button class="sort-btn" id="selection">Selection</button>
+      <button class="sort-btn" id="bubble">Bubble</button>
+      <button class="sort-btn" id="quick">Quick</button>
+      <button class="sort-btn" id="merge">Merge</button>
+      <button class="sort-btn" id="heap">Heap</button>
+      <button class="sort-btn" id="radix">Radix</button>
+    </section>
+
+    <!-- sort info. -->
+    <section class="sort-desc" id="sortDesc">
+      <h2><strong>Bubble Sort</strong></h2>
+      <p><strong>Definition:</strong> Bubble Sort repeatedly steps through the list, compares adjacent elements and
+        swaps them if they are in the wrong order.</p>
+      <p><strong>Working:</strong> After each pass, the largest unsorted element "bubbles" to the end of the list.</p>
+      <p><strong>Time Complexity:</strong> O(n²) average and worst case</p>
+      <p><strong>Space Complexity:</strong> O(1)</p>
+    </section>
+
+    <!-- Visualizer -->
+    <section class="visualizer">
+
+      <div class="input-section">
+        <label for="customInput">Enter numbers:</label>
+        <input type="text" id="customInput" placeholder="e.g. 45, 18, 7, 10" />
+        <button id="generateBtn">Generate Bars</button>
+      </div>
+
+      <!--Bars Area -->
+      <div class="bars-container" id="barsContainer"></div>
+
+      <!--Controls -->
+      <div class="control-panel">
+        <button id="playBtn">▶ Play</button>
+        <button id="pauseBtn">⏸ Pause</button>
+        <button id="prevBtn">⏮ Prev</button>
+        <button id="nextBtn">⏭ Next</button>
+        <div class="speed">
+          <label for="speedRange">Speed:</label>
+          <input type="range" id="speedRange" min="100" max="2000" value="500" />
+        </div>
+      </div>
+
+      <div class="step-info" id="stepInfo">Current Step Info will appear here...</div>
+    </section>
+
+    <!-- display multi-language code -->
+    <section class="sort-lan-selector">
+      <button class="sort-lan-btn active" id="cpp">C++</button>
+      <button class="sort-lan-btn" id="c">C</button>
+      <button class="sort-lan-btn" id="python">Python</button>
+      <button class="sort-lan-btn" id="java">Java</button>
+      <button class="sort-lan-btn" id="javaScript">JavaScript</button>
+    </section>
+
+    <!-- code display -->
+    <section class="code-display">
+      <!-- display code of selected language -->
+    </section>
+
+  </main>
+
   <script src="../app.js"></script>
+  <script src="./sortLogic.js"></script>
 </body>
 
 </html>
