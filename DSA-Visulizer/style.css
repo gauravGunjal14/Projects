@@ -52,6 +52,23 @@ nav {
   margin-right: 40px;
 }
 
+.nav-links.show {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 60px;
+  right: -40px;
+  background-color: #322727;
+  padding: 10px 20px;
+  border-radius: 10px;
+  z-index: 2;
+}
+
+body.light-mode .nav-links.show {
+  background-color: #ffe2e2;
+}
+
+
 .links {
   text-decoration: none;
   color: #f06262;
@@ -73,11 +90,14 @@ nav {
   align-items: center;
 }
 
-.menu-icon {
+.menuIcon,
+.closeIcon {
   display: none;
   font-size: 30px;
   color: #f06262;
   cursor: pointer;
+  font-weight: 700;
+  width: 30px;
 }
 
 .hero {
@@ -153,7 +173,7 @@ body.light-mode .categories {
 }
 
 .category-card {
-  background-color: #1e1e1e7e;
+  background-color: #1c1616;
   border-radius: 10px;
   padding: 25px;
   box-shadow: 0 8px 15px rgba(229, 26, 26, 0.529);
@@ -242,9 +262,10 @@ body.light-mode .contact {
   color: #fff;
 }
 
-body.light-mode .contact form input{
+body.light-mode .contact form input {
   background-color: #ffe2e2;
 }
+
 body.light-mode .contact form textarea {
   background-color: #ffe2e2;
 }
@@ -272,7 +293,7 @@ body.light-mode .contact form textarea {
   padding: 20px;
 }
 
-body.light-mode .footer{
+body.light-mode .footer {
   background-color: #ffdfdf;
 }
 
@@ -281,7 +302,7 @@ body.light-mode .footer{
   color: #999;
 }
 
-body.light-mode .footer p{
+body.light-mode .footer p {
   color: #000000;
 }
 
@@ -296,7 +317,8 @@ body.light-mode .footer p{
     display: none;
   }
 
-  .menu-icon {
+  .menuIcon,
+  .closeIcon {
     display: block;
   }
 

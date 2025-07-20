@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DSA Visulizer</title>
+    <link rel="stylesheet" href="./style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<style>* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-margin: 60px;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #121212;
+}
+
+body.light-mode {
+  background-color: #ffffff;
+  color: #2d2d2d;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  height: 60px;
+  align-items: center;
+  background-color: rgba(60, 60, 60, 0.974);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+body.light-mode .navbar {
+  background-color: rgba(232, 232, 232, 0.974);
+}
+
+.logo {
+  padding-left: 5vw;
+  font-size: 30px;
+  font-weight: 600;
+  color: #f06262;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  margin-right: 2vw;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  margin-right: 40px;
+}
+
+.links {
+  text-decoration: none;
+  color: #f06262;
+  font-size: 18px;
+  font-weight: 500;
+  align-self: center;
+}
+
+.links:hover {
+  color: #f9a825;
+}
+
+.theme {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.menuIcon {
+  display: none;
+  font-size: 30px;
+  color: #f06262;
+  cursor: pointer;
+}
+
+.hero {
+  text-align: center;
+  padding: 100px 20px 80px;
+  background: linear-gradient(to right, #1e1e1e, #2e2e2e);
+}
+
+body.light-mode .hero {
+  background: linear-gradient(to right, #ffd8d8, #ffffff);
+}
+
+.hero h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  background: linear-gradient(to right, #ff6b6b, #4ecdc4, #ffd166, #6a0572, #ab83a1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  background: linear-gradient(to right, #05ffea, #ee00ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 30px;
+}
+
+.explore-btn {
+  background-color: #f06262;
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.explore-btn:hover {
+  background-color: #f9a825;
+}
+
+.categories {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 50px 0;
+  flex-direction: column;
+  text-align: center;
+}
+
+body.light-mode .categories {
+  background-color: #ffffff;
+}
+
+.categories h2 {
+  font-size: 2rem;
+  margin-bottom: 40px;
+  color: #f9a825;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  padding: 0 20px;
+}
+
+.category-card img {
+  width: 200px;
+}
+
+.category-card {
+  background-color: #1e1e1e7e;
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: 0 8px 15px rgba(229, 26, 26, 0.529);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+body.light-mode .category-card {
+  background-color: #ff92927e;
+  box-shadow: 0 8px 15px rgba(26, 70, 229, 0.529);
+}
+
+.category-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px rgba(255, 251, 18, 0.4);
+}
+
+body.light-mode .category-card:hover {
+  box-shadow: 0 12px 20px rgba(2, 255, 23, 0.4);
+}
+
+.categories-card img {
+  max-width: 80px;
+  margin-bottom: 15px;
+}
+
+.category-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.category-card p {
+  font-size: 0.95rem;
+  color: #aaa;
+  margin-bottom: 15px;
+}
+
+.category-card a {
+  background-color: #f9a825;
+  color: #000000;
+  padding: 8px 16px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.category-card a:hover {
+  background-color: #ffd54f;
+}
+
+.contact {
+  background-color: #1e1e1e7e;
+  color: #f06262;
+  padding: 50px 20px;
+  text-align: center;
+}
+
+body.light-mode .contact {
+  background-color: #ededed;
+}
+
+.contact h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.contact p {
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+}
+
+.contact form {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.contact form input,
+.contact form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 5px;
+  background-color: #2e2e2e;
+  color: #fff;
+}
+
+body.light-mode .contact form input{
+  background-color: #ffe2e2;
+}
+body.light-mode .contact form textarea {
+  background-color: #ffe2e2;
+}
+
+.contact button {
+  background-color: #f06262;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.contact button:hover {
+  background-color: #ffd166;
+  color: #000000;
+}
+
+.footer {
+  background-color: #1e1e1e;
+  color: #f06262;
+  text-align: center;
+  padding: 20px;
+}
+
+body.light-mode .footer{
+  background-color: #ffdfdf;
+}
+
+.footer p {
+  font-size: 0.9rem;
+  color: #999;
+}
+
+body.light-mode .footer p{
+  color: #000000;
+}
+
+.footer a {
+  color: #f9a825;
+
+}
+
+@media screen and (max-width: 768px) {
+
+  .nav-links {
+    display: none;
+  }
+
+  .menuIcon {
+    display: block;
+  }
+
+  .hero {
+    text-align: center;
+    padding: 25vh 20px 80px;
+    height: 80vh;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .footer p {
+    font-size: 0.8rem;
+  }
+}</style>
+
+<body>
+    <!-- Header -->
+    <header class="navbar">
+        <div class="logo">DSA Visulizer</div>
+        <nav>
+            <div class="nav-links">
+                <a href="#home" class="links">Home</a>
+                <a href="#algorithms" class="links">Algorithms</a>
+                <a href="#contact" class="links">Contact</a>
+            </div>
+            <div class="theme">
+                <button id="toggelBtn" class="light-mode theme"><img src="./icons/light-mode.png"alt="Switch into light mode"></button>
+                <!-- <button class="dark-mode theme"><img src="./icons/dark-mode.png" alt="Switch into dark-mode"></button> -->
+            </div>
+            <div class="menuIcon">&#9776;</div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <h1>Visualize Data Structures & Algorithms</h1>
+        <p>Interactive animations to understand DSA better.</p>
+        <a href="#algorithms" class="explore-btn">Explore Now</a>
+    </section>
+
+    <!-- Categories Section -->
+    <section id="algorithms" class="categories">
+        <h2>Choose a Category</h2>
+        <div class="category-grid">
+
+            <div class="category-card">
+                <img src="images/array.png" alt="Array Operations" />
+                <h3>Array</h3>
+                <p>Sliding Window, Prefix Sum...</p>
+                <a href="array.html">Explore</a>
+            </div>
+
+            <div class="category-card">
+                <img src="images/sort.gif" alt="Sorting Algorithms" />
+                <h3>Sorting</h3>
+                <p>Bubble, Merge, Quick...</p>
+                <a href="sort.html">Explore</a>
+            </div>
+
+            <div class="category-card">
+                <img src="images/list.gif" alt="Linked List" />
+                <h3>Linked List</h3>
+                <p>Stack, Queue, Doubly...</p>
+                <a href="list.html">Explore</a>
+            </div>
+
+            <div class="category-card">
+                <img src="images/hashtable.gif" alt="Hash Table" />
+                <h3>Hash Table</h3>
+                <p>Open addresing, Linear...</p>
+                <a href="hashTable.html">Explore</a>
+            </div>
+
+            <div class="category-card">
+                <img src="images/bst.gif" alt="Binary Search Tree" />
+                <h3>Binary Search Tree</h3>
+                <p>BST, AVL...</p>
+                <a href="bst.html">Explore</a>
+            </div>
+
+            <div class="category-card">
+                <img src="images/dfsbfs.gif" alt="Graph Traversal" />
+                <h3>Graph Traversal</h3>
+                <p>BFS, DFS,...</p>
+                <a href="dfsbfs.html">Explore</a>
+            </div>
+
+            <div class="category-card">
+                <img src="images/graphds.gif" alt="Graph Structure" />
+                <h3>Graph Structure</h3>
+                <p>U/U, U/W, D/U...</p>
+                <a href="graphds.html">Explore</a>
+            </div>
+
+            <div class="category-card">
+                <img src="images/mst.gif" alt="Min Spanning Tree" />
+                <h3>Min Spanning Tree</h3>
+                <p>Mst, Prism, Kruskal,...</p>
+                <a href="mst.html">Explore</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <h2>Contact Us</h2>
+        <p>Have questions or suggestions? Reach out to us!</p>
+        <form action="#" method="post">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>Some visual assets used are sourced from <a href="https://visualgo.net" target="_blank">Visualgo.net</a> for educational reference purposes. All rights belong to their respective creators.</p>
+        </div>
+    </footer>
+    <script>
+        const toggelBtn = document.getElementById("toggelBtn");
+const body = document.querySelector("body");
+
+if (localStorage.getItem("theme") === "light") {
+    body.classList.add("light-mode");
+    toggelBtn.src = "./icons/dark-mode.png";
+}
+
+toggelBtn.addEventListener("click", () => {
+    body.classList.toggle("light-mode");
+
+    if (body.classList.contains("light-mode")) {
+        toggelBtn.src = "./icons/dark-mode.png";
+        localStorage.setItem("theme", "light");
+    }
+    else {
+        toggelBtn.src = "./icons/light-mode.png";
+        localStorage.setItem("theme", "dark");
+    }
+});
+    </script>
+</body>
+
+</html>
