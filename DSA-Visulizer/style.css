@@ -418,7 +418,7 @@ body.light-mode .sort-desc {
 }
 
 .visualizer {
-  margin-top: 40px;
+  margin: 40px 50px 0px;
   padding: 20px;
   background-color: #2d2d2d;
   border-radius: 12px;
@@ -563,6 +563,9 @@ body.light-mode .code-display {
 }
 
 @media screen and (max-width: 768px) {
+  .visualizer{
+    margin: 30px 5px 0px;
+  }
   .input-section input {
     width: 80%;
     margin-bottom: 10px;
