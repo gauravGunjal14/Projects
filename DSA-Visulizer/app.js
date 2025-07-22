@@ -5,18 +5,18 @@ const body = document.querySelector("body");
 
 if (localStorage.getItem("theme") === "light") {
     body.classList.add("light-mode");
-    themeIcon.src = "../icons/dark-mode.png";
+    themeIcon.src = "/icons/dark-mode.png";
 }
 
 toggelBtn.addEventListener("click", () => {
     body.classList.toggle("light-mode");
 
     if (body.classList.contains("light-mode")) {
-        themeIcon.src = "../icons/dark-mode.png";
+        themeIcon.src = "/icons/dark-mode.png";
         localStorage.setItem("theme", "light");
     }
     else {
-        themeIcon.src = "../icons/light-mode.png";
+        themeIcon.src = "/icons/light-mode.png";
         localStorage.setItem("theme", "dark");
     }
 });
