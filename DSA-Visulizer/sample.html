@@ -8,11 +8,10 @@
   <meta name="keywords"
     content="DSA, Visualizer, Algorithms, Data Structures, Interactive, Sorting, Sort, Gaurav Gunjal">
   <title>DSA Visualizer</title>
-  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="../style.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
-<style>
-  * {
+<style>* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -352,21 +351,342 @@ body.light-mode .footer p {
     font-size: 0.8rem;
   }
 }
-</style>
+
+
+/* sort page */
+
+#sort-page {
+  padding: 50px 20px;
+  color: #fff;
+}
+
+body.light-mode #sort-page {
+  color: #2d2d2d;
+}
+
+.sort-selector {
+  display: flex;
+  flex-wrap: wrap;
+  justify-self: center;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.sort-btn {
+  background-color: #f06262;
+  color: white;
+  border-radius: 8px;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.sort-btn:hover {
+  background-color: #bc2a2a;
+}
+
+body.light-mode .sort-btn:hover {
+  background-color: #bc2a2a;
+}
+
+.sort-btn.active {
+  background-color: #f9a825;
+  color: #000000;
+}
+
+body.light-mode .sort-btn.active {
+  background-color: #f9a825;
+  color: #000000;
+}
+
+body.light-mode .sort-btn {
+  background-color: #ff7c7c;
+  color: white;
+}
+
+.sort-desc {
+  max-width: 800px;
+  margin: 0 auto 40px;
+  padding: 20px;
+  background-color: #543939;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+  color: #a4a4a4;
+}
+
+.sort-desc strong {
+  color: white;
+}
+
+body.light-mode .sort-desc strong {
+  color: rgb(0, 0, 0);
+}
+
+body.light-mode .sort-desc {
+  background-color: #ffe2e2;
+  color: #212121;
+}
+
+.visualizer-layout {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1c1616;
+  gap: 30px;
+  margin: 20px;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+body.light-mode .visualizer-layout {
+  background-color: #fbe8e8;
+}
+
+.left-panel {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.step-info {
+  height: 300px;
+  flex: 1;
+  background-color: #392d2f;
+  color: #f8f8f2;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 1rem;
+  max-height: 400px;
+  overflow-y: auto;
+  transition: all 0.3s ease;
+}
+
+body.light-mode .step-info {
+  background-color: #ffd8d8;
+  color: #000;
+}
+
+.input-section {
+  margin-bottom: 20px;
+}
+
+.input-section input {
+  padding: 10px;
+  width: 60%;
+  max-width: 300px;
+  border-radius: 5px;
+  border: none;
+  margin-right: 10px;
+}
+
+.input-section button {
+  padding: 10px 15px;
+  background-color: #f06262;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.input-section button:hover {
+  background-color: #f9a825;
+  color: black;
+}
+
+.bars-container {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background-color: #2d2d2d;
+  gap: 8px;
+  height: 300px;
+  padding-top: 60px;
+  overflow: visible;
+  border-radius: 15px;
+}
+
+body.light-mode .bars-container {
+  background-color: #ffffff;
+}
+
+.bar {
+  background: linear-gradient(to top, #88cc88, #55aa55);
+  display: inline-block;
+  border-radius: 5px 5px 0 0;
+  width: 30px;
+  transition: transform 0.4s ease, background-color 0.4s ease;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+.bar-label {
+  position: absolute;
+  top: -25px;
+  width: 100%;
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: white;
+  pointer-events: none;
+}
+
+body.light-mode .bar-label {
+  color: #000000;
+}
+
+.bar.compare {
+  background: linear-gradient(to top, #ffe066, #f1c40f);
+  transform: scaleY(1.1);
+  box-shadow: 0 0 5px #f1fa8c;
+}
+
+.bar.swap {
+  background: linear-gradient(to top, #a3ffaf, #00c851);
+  /* green type color */
+  animation: pulse 0.3s ease-in-out;
+}
+
+.bar.sorted {
+  background: linear-gradient(to top, #a0eacb, #00c897);
+  box-shadow: 0 0 8px #00c897;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scaleY(1);
+  }
+
+  50% {
+    transform: scaleY(1.25);
+  }
+
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+.control-panel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.control-panel button,
+.control-panel input[type="range"] {
+  padding: 8px 12px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: none;
+}
+
+.control-panel button {
+  background-color: #f06262;
+  color: white;
+  cursor: pointer;
+}
+
+.control-panel button:hover {
+  background-color: #f9a825;
+  color: black;
+}
+
+.speed {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sort-lan-selector {
+  margin-top: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.sort-lan-btn {
+  background-color: #4ecdc4;
+  border: none;
+  color: #000000;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.sort-lan-btn:hover {
+  background-color: #bffaf5;
+}
+
+.sort-lan-btn.active {
+  background-color: #ffd166;
+}
+
+.code-display {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #1c1616;
+  border-radius: 12px;
+  color: #fff;
+  max-width: 90%;
+  margin-inline: auto;
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+
+body.light-mode .code-display {
+  background-color: #fff0f0;
+  color: #000;
+}
+
+@media screen and (max-width: 768px) {
+  .visualizer-layout {
+    flex-direction: column;
+  }
+
+  .step-info {
+    max-height: none;
+    margin-top: 20px;
+  }
+
+  .input-section input {
+    width: 80%;
+    margin-bottom: 10px;
+  }
+
+  .sort-desc {
+    font-size: 0.95rem;
+  }
+
+  .bars-container {
+    height: 180px;
+  }
+
+  .bar {
+    width: 12px;
+  }
+
+}</style>
 <body>
   <!-- Header -->
   <header class="navbar">
     <div class="logo">DSA Visualizer</div>
     <nav>
       <div class="nav-links">
-        <a href="#home" class="links">Home</a>
-        <a href="#algorithms" class="links">Algorithms</a>
-        <a href="#contact" class="links">Contact</a>
+        <a href="../index.html" class="links">Home</a>
       </div>
       <div class="theme">
-        <button id="toggelBtn" class="light-mode theme"><img id="themeIcon" src="./icons/light-mode.png"
+        <button id="toggelBtn" class="light-mode theme"><img id="themeIcon" src="../icons/light-mode.png"
             alt="Switch into light mode"></button>
-        <!-- <button class="dark-mode theme"><img src="./icons/dark-mode.png" alt="Switch into dark-mode"></button> -->
       </div>
 
       <div class="menuIcon" id="menuIcon">&#9776;</div>
@@ -374,146 +694,194 @@ body.light-mode .footer p {
     </nav>
   </header>
 
-  <!-- Hero Section -->
-  <section id="home" class="hero">
-    <h1>Visualize Data Structures & Algorithms</h1>
-    <p>Interactive animations to understand DSA better.</p>
-    <a href="#algorithms" class="explore-btn">Explore Now</a>
-  </section>
+  <!-- main -->
+  <main id="sort-page">
+    <!-- sort selector -->
+    <section class="sort-selector">
+      <button class="sort-btn" id="insertion">Insertion</button>
+      <button class="sort-btn" id="selection">Selection</button>
+      <button class="sort-btn active" id="bubble">Bubble</button>
+      <button class="sort-btn" id="quick">Quick</button>
+      <button class="sort-btn" id="merge">Merge</button>
+      <button class="sort-btn" id="heap">Heap</button>
+      <button class="sort-btn" id="radix">Radix</button>
+    </section>
 
-  <!-- Categories Section -->
-  <section id="algorithms" class="categories">
-    <h2>Choose a Category</h2>
-    <div class="category-grid">
+    <!-- sort info. -->
+    <section class="sort-desc" id="sortDesc">
+      <h2><strong>Bubble Sort</strong></h2>
+      <p><strong>Definition:</strong> Bubble Sort repeatedly steps through the list, compares adjacent elements and
+        swaps them if they are in the wrong order.</p>
+      <p><strong>Working:</strong> After each pass, the largest unsorted element "bubbles" to the end of the list.</p>
+      <p><strong>Time Complexity:</strong> O(n²) average and worst case</p>
+      <p><strong>Space Complexity:</strong> O(1)</p>
+    </section>
 
-      <div class="category-card">
-        <img src="images/array.png" alt="Array Operations" />
-        <h3>Array</h3>
-        <p>Sliding Window, Prefix Sum...</p>
-        <a href="array.html">Explore</a>
+    <section class="visualizer">
+
+      <div class="visualizer-layout">
+
+        <!-- Left side: Bars + Controls -->
+        <div class="left-panel">
+          <div class="input-section">
+            <label for="customInput">Enter numbers:</label>
+            <input type="text" id="customInput" placeholder="45, 18, 10, 7" />
+            <button id="generateBtn">Generate Bars</button>
+          </div>
+
+          <div id="barsContainer" class="bars-container"></div>
+
+          <div class="control-panel">
+            <button id="playBtn">▶ Play</button>
+            <button id="pauseBtn">⏸ Pause</button>
+            <button id="prevBtn">⏮ Prev</button>
+            <button id="nextBtn">⏭ Next</button>
+            <div class="speed">
+              <label for="speedRange">Speed:</label>
+              <input type="range" id="speedRange" min="100" max="2000" value="500" />
+            </div>
+          </div>
+        </div>
+
+        <div class="step-info" id="stepInfo">
+          Current Step Info will appear here...
+        </div>
+
       </div>
 
-      <div class="category-card">
-        <img src="images/sort.gif" alt="Sorting Algorithms" />
-        <h3>Sorting</h3>
-        <p>Bubble, Merge, Quick...</p>
-        <a href="./sort/sort.html">Explore</a>
-      </div>
+    </section>
 
-      <div class="category-card">
-        <img src="images/list.gif" alt="Linked List" />
-        <h3>Linked List</h3>
-        <p>Stack, Queue, Doubly...</p>
-        <a href="list.html">Explore</a>
-      </div>
 
-      <div class="category-card">
-        <img src="images/hashtable.gif" alt="Hash Table" />
-        <h3>Hash Table</h3>
-        <p>Open addresing, Linear...</p>
-        <a href="hashTable.html">Explore</a>
-      </div>
+    <!-- display multi-language code -->
+    <section class="sort-lan-selector">
+      <button class="sort-lan-btn active" id="cpp">C++</button>
+      <button class="sort-lan-btn" id="c">C</button>
+      <button class="sort-lan-btn" id="python">Python</button>
+      <button class="sort-lan-btn" id="java">Java</button>
+      <button class="sort-lan-btn" id="javaScript">JavaScript</button>
+    </section>
 
-      <div class="category-card">
-        <img src="images/bst.gif" alt="Binary Search Tree" />
-        <h3>Binary Search Tree</h3>
-        <p>BST, AVL...</p>
-        <a href="bst.html">Explore</a>
-      </div>
+    <!-- code display -->
+    <section class="code-display">
+      <!-- display code of selected language -->
+      <p>#include <bits /stdc++.h>
+          using namespace std;
 
-      <div class="category-card">
-        <img src="images/dfsbfs.gif" alt="Graph Traversal" />
-        <h3>Graph Traversal</h3>
-        <p>BFS, DFS,...</p>
-        <a href="dfsbfs.html">Explore</a>
-      </div>
+          // An optimized version of Bubble Sort
+          void bubbleSort(vector<int>& arr) {
+            int n = arr.size();
+            bool swapped;
 
-      <div class="category-card">
-        <img src="images/graphds.gif" alt="Graph Structure" />
-        <h3>Graph Structure</h3>
-        <p>U/U, U/W, D/U...</p>
-        <a href="graphds.html">Explore</a>
-      </div>
+            for (int i = 0; i < n - 1; i++) { swapped=false; for (int j=0; j < n - i - 1; j++) { if (arr[j]> arr[j + 1])
+              {
+              swap(arr[j], arr[j + 1]);
+              swapped = true;
+              }
+              }
 
-      <div class="category-card">
-        <img src="images/mst.gif" alt="Min Spanning Tree" />
-        <h3>Min Spanning Tree</h3>
-        <p>Mst, Prism, Kruskal,...</p>
-        <a href="mst.html">Explore</a>
-      </div>
-    </div>
-  </section>
+              // If no two elements were swapped, then break
+              if (!swapped)
+              break;
+              }
+              }
 
-  <!-- Contact Section -->
-  <section id="contact" class="contact">
-    <h2>Contact Us</h2>
-    <p>Have questions or suggestions? Reach out to us!</p>
-    <form action="#" method="post">
-      <input type="text" name="name" placeholder="Your Name" required>
-      <input type="email" name="email" placeholder="Your Email" required>
-      <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
-      <button type="submit">Send Message</button>
-    </form>
-  </section>
+              // Function to print a vector
+              void printVector(const vector<int>& arr) {
+                for (int num : arr)
+                cout << " " << num; } int main() { vector<int> arr = { 64, 34, 25, 12, 22, 11, 90 };
+                  bubbleSort(arr);
+                  cout << "Sorted array: \n" ; printVector(arr); return 0; }</p>
+    </section>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="footer-content">
-      <p>Some visual assets used are sourced from <a href="https://visualgo.net" target="_blank">Visualgo.net</a>
-        for educational reference purposes. All rights belong to their respective creators.</p>
-    </div>
-  </footer>
+  </main>
   <script>
     // Dark Mode and Light Mode
-    const toggelBtn = document.getElementById("toggelBtn");
-    const themeIcon = document.getElementById("themeIcon")
-    const body = document.querySelector("body");
+const toggelBtn = document.getElementById("toggelBtn");
+const themeIcon = document.getElementById("themeIcon")
+const body = document.querySelector("body");
 
-    if (localStorage.getItem("theme") === "light") {
-      body.classList.add("light-mode");
-      themeIcon.src = "../icons/dark-mode.png";
-    }
+if (localStorage.getItem("theme") === "light") {
+    body.classList.add("light-mode");
+    themeIcon.src = "../icons/dark-mode.png";
+}
 
-    toggelBtn.addEventListener("click", () => {
-      body.classList.toggle("light-mode");
+toggelBtn.addEventListener("click", () => {
+    body.classList.toggle("light-mode");
 
-      if (body.classList.contains("light-mode")) {
+    if (body.classList.contains("light-mode")) {
         themeIcon.src = "../icons/dark-mode.png";
         localStorage.setItem("theme", "light");
-      }
-      else {
+    }
+    else {
         themeIcon.src = "../icons/light-mode.png";
         localStorage.setItem("theme", "dark");
-      }
-    });
+    }
+});
 
-    // menuIcon logic
-    const menuIcon = document.getElementById("menuIcon");
-    const closeIcon = document.getElementById("closeIcon");
-    const navLinks = document.querySelector(".nav-links");
+// menuIcon logic
+const menuIcon = document.getElementById("menuIcon");
+const closeIcon = document.getElementById("closeIcon");
+const navLinks = document.querySelector(".nav-links");
 
-    menuIcon.addEventListener("click", () => {
-      navLinks.classList.add("show");
-      menuIcon.style.display = "none";
-      closeIcon.style.display = "block";
-    });
+menuIcon.addEventListener("click", () => {
+    navLinks.classList.add("show");
+    menuIcon.style.display = "none";
+    closeIcon.style.display = "block";
+});
 
-    closeIcon.addEventListener("click", () => {
-      navLinks.classList.remove("show");
-      closeIcon.style.display = "none";
-      menuIcon.style.display = "block";
-    });
+closeIcon.addEventListener("click", () => {
+    navLinks.classList.remove("show");
+    closeIcon.style.display = "none";
+    menuIcon.style.display = "block";
+});
 
-    const allLinks = document.querySelectorAll(".nav-links a");
-    allLinks.forEach(link => {
-      link.addEventListener("click", () => {
+const allLinks = document.querySelectorAll(".nav-links a");
+allLinks.forEach(link => {
+    link.addEventListener("click", () => {
         if (navLinks.classList.contains("show")) {
-          navLinks.classList.remove("show");
-          closeIcon.style.display = "none";
-          menuIcon.style.display = "block";
+            navLinks.classList.remove("show");
+            closeIcon.style.display = "none";
+            menuIcon.style.display = "block";
         }
-      });
     });
+});
+
+
+//animation
+function generateBars(arr) {
+    const container = document.getElementById("barContainer");
+    container.innerHTML = ""; // Clear existing bars
+
+    const maxValue = Math.max(...arr);
+
+    arr.forEach((value, index) => {
+        const barWrapper = document.createElement("div");
+        barWrapper.style.display = "flex";
+        barWrapper.style.flexDirection = "column";
+        barWrapper.style.alignItems = "center";
+        barWrapper.style.gap = "5px";
+
+        const bar = document.createElement("div");
+        bar.classList.add("bar");
+        bar.style.height = `${(value / maxValue) * 100}%`;
+
+        const valLabel = document.createElement("div");
+        valLabel.classList.add("bar-value");
+        valLabel.textContent = value;
+
+        const indexLabel = document.createElement("div");
+        indexLabel.classList.add("bar-index");
+        indexLabel.textContent = index;
+        indexLabel.style.color = "#aaa";
+        indexLabel.style.fontSize = "12px";
+
+        bar.appendChild(valLabel);
+        barWrapper.appendChild(bar);
+        barWrapper.appendChild(indexLabel);
+        container.appendChild(barWrapper);
+    });
+}
+
   </script>
 </body>
 

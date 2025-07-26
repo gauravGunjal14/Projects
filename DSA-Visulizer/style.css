@@ -404,11 +404,11 @@ body.light-mode .sort-btn {
   color: #a4a4a4;
 }
 
-.sort-desc strong{
+.sort-desc strong {
   color: white;
 }
 
-body.light-mode .sort-desc strong{
+body.light-mode .sort-desc strong {
   color: rgb(0, 0, 0);
 }
 
@@ -417,16 +417,45 @@ body.light-mode .sort-desc {
   color: #212121;
 }
 
-.visualizer {
-  margin: 40px 50px 0px;
+.visualizer-layout {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1c1616;
+  gap: 30px;
+  margin: 20px;
+  border-radius: 20px;
   padding: 20px;
-  background-color: #2d2d2d;
-  border-radius: 12px;
-  text-align: center;
 }
 
-body.light-mode .visualizer {
+body.light-mode .visualizer-layout {
   background-color: #fbe8e8;
+}
+
+.left-panel {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.step-info {
+  height: 300px;
+  flex: 1;
+  background-color: #392d2f;
+  color: #f8f8f2;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 1rem;
+  max-height: 400px;
+  overflow-y: auto;
+  transition: all 0.3s ease;
+}
+
+body.light-mode .step-info {
+  background-color: #ffd8d8;
+  color: #000;
 }
 
 .input-section {
@@ -458,14 +487,16 @@ body.light-mode .visualizer {
 }
 
 .bars-container {
+  position: relative;
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  height: 250px;
-  background-color: #444343;
-  margin: 20px 0;
-  border-radius: 10px;
-  overflow-x: auto;
+  background-color: #2d2d2d;
+  gap: 8px;
+  height: 300px;
+  padding-top: 60px;
+  overflow: visible;
+  border-radius: 15px;
 }
 
 body.light-mode .bars-container {
@@ -473,10 +504,58 @@ body.light-mode .bars-container {
 }
 
 .bar {
-  margin: 0 5px;
-  background-color: #f06262;
-  border-radius: 5px;
-  width: 20px;
+  background: linear-gradient(to top, #88cc88, #55aa55);
+  display: inline-block;
+  border-radius: 5px 5px 0 0;
+  width: 30px;
+  transition: transform 0.4s ease, background-color 0.4s ease;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+.bar-label {
+  position: absolute;
+  top: -25px;
+  width: 100%;
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: white;
+  pointer-events: none;
+}
+
+body.light-mode .bar-label {
+  color: #000000;
+}
+
+.bar.compare {
+  background: linear-gradient(to top, #ffe066, #f1c40f);
+  transform: scaleY(1.1);
+  box-shadow: 0 0 5px #f1fa8c;
+}
+
+.bar.swap {
+  background: linear-gradient(to top, #a3ffaf, #00c851);
+  /* green type color */
+  animation: pulse 0.3s ease-in-out;
+}
+
+.bar.sorted {
+  background: linear-gradient(to top, #a0eacb, #00c897);
+  box-shadow: 0 0 8px #00c897;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scaleY(1);
+  }
+
+  50% {
+    transform: scaleY(1.25);
+  }
+
+  100% {
+    transform: scaleY(1);
+  }
 }
 
 .control-panel {
@@ -507,16 +586,10 @@ body.light-mode .bars-container {
   color: black;
 }
 
-.speed{
+.speed {
   display: flex;
   align-items: center;
   gap: 10px;
-}
-
-.step-info {
-  margin-top: 20px;
-  font-weight: 600;
-  color: #ffd166;
 }
 
 .sort-lan-selector {
@@ -563,9 +636,15 @@ body.light-mode .code-display {
 }
 
 @media screen and (max-width: 768px) {
-  .visualizer{
-    margin: 30px 5px 0px;
+  .visualizer-layout {
+    flex-direction: column;
   }
+
+  .step-info {
+    max-height: none;
+    margin-top: 20px;
+  }
+
   .input-section input {
     width: 80%;
     margin-bottom: 10px;

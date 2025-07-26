@@ -41,16 +41,51 @@ closeIcon.addEventListener("click", () => {
 const allLinks = document.querySelectorAll(".nav-links a");
 allLinks.forEach(link => {
     link.addEventListener("click", () => {
-        if(navLinks.classList.contains("show")){
-        navLinks.classList.remove("show");
-        closeIcon.style.display = "none";
-        menuIcon.style.display = "block";
+        if (navLinks.classList.contains("show")) {
+            navLinks.classList.remove("show");
+            closeIcon.style.display = "none";
+            menuIcon.style.display = "block";
         }
     });
 });
 
-const input = document.getElementById('customInput').value.trim();
-if (!/^\d+(,\s*\d+)*$/.test(input)) {
-  alert('Please enter valid numbers separated by commas.');
-  return;
+
+//animation
+function generateBars(arr) {
+    const container = document.getElementById("barContainer");
+    container.innerHTML = ""; // Clear existing bars
+
+    const maxValue = Math.max(...arr);
+
+    arr.forEach((value, index) => {
+        const barWrapper = document.createElement("div");
+        barWrapper.style.display = "flex";
+        barWrapper.style.flexDirection = "column";
+        barWrapper.style.alignItems = "center";
+        barWrapper.style.gap = "5px";
+
+        const bar = document.createElement("div");
+        bar.classList.add("bar");
+        bar.style.height = `${(value / maxValue) * 100}%`;
+
+        const valLabel = document.createElement("div");
+        valLabel.classList.add("bar-value");
+        valLabel.textContent = value;
+
+        const indexLabel = document.createElement("div");
+        indexLabel.classList.add("bar-index");
+        indexLabel.textContent = index;
+        indexLabel.style.color = "#aaa";
+        indexLabel.style.fontSize = "12px";
+
+        bar.appendChild(valLabel);
+        barWrapper.appendChild(bar);
+        barWrapper.appendChild(indexLabel);
+        container.appendChild(barWrapper);
+    });
 }
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    generateBars([30, 10, 50, 40, 20]);
+});

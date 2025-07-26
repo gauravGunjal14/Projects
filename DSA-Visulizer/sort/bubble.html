@@ -53,32 +53,40 @@
       <p><strong>Space Complexity:</strong> O(1)</p>
     </section>
 
-    <!-- Visualizer -->
     <section class="visualizer">
 
-      <div class="input-section">
-        <label for="customInput">Enter numbers:</label>
-        <input type="text" id="customInput" placeholder="e.g. 45, 18, 7, 10" />
-        <button id="generateBtn">Generate Bars</button>
-      </div>
+      <div class="visualizer-layout">
 
-      <!--Bars Area -->
-      <div class="bars-container" id="barsContainer"></div>
+        <!-- Left side: Bars + Controls -->
+        <div class="left-panel">
+          <div class="input-section">
+            <label for="customInput">Enter numbers:</label>
+            <input type="text" id="customInput" placeholder="45, 18, 10, 7" />
+            <button id="generateBtn">Generate Bars</button>
+          </div>
 
-      <!--Controls -->
-      <div class="control-panel">
-        <button id="playBtn">▶ Play</button>
-        <button id="pauseBtn">⏸ Pause</button>
-        <button id="prevBtn">⏮ Prev</button>
-        <button id="nextBtn">⏭ Next</button>
-        <div class="speed">
-          <label for="speedRange">Speed:</label>
-          <input type="range" id="speedRange" min="100" max="2000" value="500" />
+          <div id="barContainer" class="bars-container"></div>
+
+          <div class="control-panel">
+            <button id="playBtn">▶ Play</button>
+            <button id="pauseBtn">⏸ Pause</button>
+            <button id="prevBtn">⏮ Prev</button>
+            <button id="nextBtn">⏭ Next</button>
+            <div class="speed">
+              <label for="speedRange">Speed:</label>
+              <input type="range" id="speedRange" min="100" max="2000" value="500" />
+            </div>
+          </div>
         </div>
+
+        <div class="step-info" id="stepInfo">
+          Current Step Info will appear here...
+        </div>
+
       </div>
 
-      <div class="step-info" id="stepInfo">Current Step Info will appear here...</div>
     </section>
+
 
     <!-- display multi-language code -->
     <section class="sort-lan-selector">
@@ -92,6 +100,33 @@
     <!-- code display -->
     <section class="code-display">
       <!-- display code of selected language -->
+      <p>#include <bits /stdc++.h>
+          using namespace std;
+
+          // An optimized version of Bubble Sort
+          void bubbleSort(vector<int>& arr) {
+            int n = arr.size();
+            bool swapped;
+
+            for (int i = 0; i < n - 1; i++) { swapped=false; for (int j=0; j < n - i - 1; j++) { if (arr[j]> arr[j + 1])
+              {
+              swap(arr[j], arr[j + 1]);
+              swapped = true;
+              }
+              }
+
+              // If no two elements were swapped, then break
+              if (!swapped)
+              break;
+              }
+              }
+
+              // Function to print a vector
+              void printVector(const vector<int>& arr) {
+                for (int num : arr)
+                cout << " " << num; } int main() { vector<int> arr = { 64, 34, 25, 12, 22, 11, 90 };
+                  bubbleSort(arr);
+                  cout << "Sorted array: \n" ; printVector(arr); return 0; }</p>
     </section>
 
   </main>
