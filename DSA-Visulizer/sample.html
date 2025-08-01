@@ -2,16 +2,14 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Visualize data structures and algorithms with animations and interactive tools.">
-  <meta name="keywords"
-    content="DSA, Visualizer, Algorithms, Data Structures, Interactive, Sorting, Sort, Gaurav Gunjal">
-  <title>DSA Visualizer</title>
-  <link rel="stylesheet" href="../style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-</head>
-<style>* {
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Visualize data structures and algorithms with animations and interactive tools.">
+    <meta name="keywords" content="DSA, Visualizer, Algorithms, Data Structures, Interactive, Sorting, Sort, Gaurav Gunjal">
+    <title>DSA Visualizer</title>
+    <link rel="stylesheet" href="./style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -676,213 +674,119 @@ body.light-mode .code-display {
   }
 
 }</style>
+</head>
+
 <body>
-  <!-- Header -->
-  <header class="navbar">
-    <div class="logo">DSA Visualizer</div>
-    <nav>
-      <div class="nav-links">
-        <a href="../index.html" class="links">Home</a>
-      </div>
-      <div class="theme">
-        <button id="toggelBtn" class="light-mode theme"><img id="themeIcon" src="../icons/light-mode.png"
-            alt="Switch into light mode"></button>
-      </div>
-
-      <div class="menuIcon" id="menuIcon">&#9776;</div>
-      <div class="closeIcon" id="closeIcon" style="display: none;">&times;</div>
-    </nav>
-  </header>
-
-  <!-- main -->
-  <main id="sort-page">
-    <!-- sort selector -->
-    <section class="sort-selector">
-      <button class="sort-btn" id="insertion">Insertion</button>
-      <button class="sort-btn" id="selection">Selection</button>
-      <button class="sort-btn active" id="bubble">Bubble</button>
-      <button class="sort-btn" id="quick">Quick</button>
-      <button class="sort-btn" id="merge">Merge</button>
-      <button class="sort-btn" id="heap">Heap</button>
-      <button class="sort-btn" id="radix">Radix</button>
-    </section>
-
-    <!-- sort info. -->
-    <section class="sort-desc" id="sortDesc">
-      <h2><strong>Bubble Sort</strong></h2>
-      <p><strong>Definition:</strong> Bubble Sort repeatedly steps through the list, compares adjacent elements and
-        swaps them if they are in the wrong order.</p>
-      <p><strong>Working:</strong> After each pass, the largest unsorted element "bubbles" to the end of the list.</p>
-      <p><strong>Time Complexity:</strong> O(n²) average and worst case</p>
-      <p><strong>Space Complexity:</strong> O(1)</p>
-    </section>
-
-    <section class="visualizer">
-
-      <div class="visualizer-layout">
-
-        <!-- Left side: Bars + Controls -->
-        <div class="left-panel">
-          <div class="input-section">
-            <label for="customInput">Enter numbers:</label>
-            <input type="text" id="customInput" placeholder="45, 18, 10, 7" />
-            <button id="generateBtn">Generate Bars</button>
-          </div>
-
-          <div id="barsContainer" class="bars-container"></div>
-
-          <div class="control-panel">
-            <button id="playBtn">▶ Play</button>
-            <button id="pauseBtn">⏸ Pause</button>
-            <button id="prevBtn">⏮ Prev</button>
-            <button id="nextBtn">⏭ Next</button>
-            <div class="speed">
-              <label for="speedRange">Speed:</label>
-              <input type="range" id="speedRange" min="100" max="2000" value="500" />
+    <!-- Header -->
+    <header class="navbar">
+        <div class="logo">DSA Visualizer</div>
+        <nav>
+            <div class="nav-links">
+                <a href="#home" class="links">Home</a>
+                <a href="#algorithms" class="links">Algorithms</a>
+                <a href="#contact" class="links">Contact</a>
             </div>
-          </div>
+            <div class="theme">
+                <button id="toggelBtn" class="light-mode theme"><img id="themeIcon" src="./icons/light-mode.png"
+                        alt="Switch into light mode"></button>
+                <!-- <button class="dark-mode theme"><img src="./icons/dark-mode.png" alt="Switch into dark-mode"></button> -->
+            </div>
+
+            <div class="menuIcon" id="menuIcon">&#9776;</div>
+            <div class="closeIcon" id="closeIcon" style="display: none;">&times;</div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <h1>Visualize Data Structures & Algorithms</h1>
+        <p>Interactive animations to understand DSA better.</p>
+        <a href="#algorithms" class="explore-btn">Explore Now</a>
+    </section>
+
+    <!-- Categories Section -->
+    <section id="algorithms" class="categories">
+        <h2>Choose a Category</h2>
+        <div class="category-grid">
+
+            <div class="category-card">
+                <img src="images/array.png" alt="Array Operations" />
+                <h3>Array</h3>
+                <p>Sliding Window, Prefix Sum...</p>
+                <a href="array.html">Explore</a>
+            </div>
+
+            <div class="category-card">
+                <img src="images/sort.gif" alt="Sorting Algorithms" />
+                <h3>Sorting</h3>
+                <p>Bubble, Merge, Quick...</p>
+                <a href="./sort/bubble.html">Explore</a>
+            </div>
+
+            <div class="category-card">
+                <img src="images/list.gif" alt="Linked List" />
+                <h3>Linked List</h3>
+                <p>Stack, Queue, Doubly...</p>
+                <a href="list.html">Explore</a>
+            </div>
+
+            <div class="category-card">
+                <img src="images/hashtable.gif" alt="Hash Table" />
+                <h3>Hash Table</h3>
+                <p>Open addresing, Linear...</p>
+                <a href="hashTable.html">Explore</a>
+            </div>
+
+            <div class="category-card">
+                <img src="images/bst.gif" alt="Binary Search Tree" />
+                <h3>Binary Search Tree</h3>
+                <p>BST, AVL...</p>
+                <a href="bst.html">Explore</a>
+            </div>
+
+            <div class="category-card">
+                <img src="images/dfsbfs.gif" alt="Graph Traversal" />
+                <h3>Graph Traversal</h3>
+                <p>BFS, DFS,...</p>
+                <a href="dfsbfs.html">Explore</a>
+            </div>
+
+            <div class="category-card">
+                <img src="images/graphds.gif" alt="Graph Structure" />
+                <h3>Graph Structure</h3>
+                <p>U/U, U/W, D/U...</p>
+                <a href="graphds.html">Explore</a>
+            </div>
+
+            <div class="category-card">
+                <img src="images/mst.gif" alt="Min Spanning Tree" />
+                <h3>Min Spanning Tree</h3>
+                <p>Mst, Prism, Kruskal,...</p>
+                <a href="mst.html">Explore</a>
+            </div>
         </div>
+    </section>
 
-        <div class="step-info" id="stepInfo">
-          Current Step Info will appear here...
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <h2>Contact Us</h2>
+        <p>Have questions or suggestions? Reach out to us!</p>
+        <form action="#" method="post">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>Some visual assets used are sourced from <a href="https://visualgo.net" target="_blank">Visualgo.net</a>
+                for educational reference purposes. All rights belong to their respective creators.</p>
         </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- display multi-language code -->
-    <section class="sort-lan-selector">
-      <button class="sort-lan-btn active" id="cpp">C++</button>
-      <button class="sort-lan-btn" id="c">C</button>
-      <button class="sort-lan-btn" id="python">Python</button>
-      <button class="sort-lan-btn" id="java">Java</button>
-      <button class="sort-lan-btn" id="javaScript">JavaScript</button>
-    </section>
-
-    <!-- code display -->
-    <section class="code-display">
-      <!-- display code of selected language -->
-      <p>#include <bits /stdc++.h>
-          using namespace std;
-
-          // An optimized version of Bubble Sort
-          void bubbleSort(vector<int>& arr) {
-            int n = arr.size();
-            bool swapped;
-
-            for (int i = 0; i < n - 1; i++) { swapped=false; for (int j=0; j < n - i - 1; j++) { if (arr[j]> arr[j + 1])
-              {
-              swap(arr[j], arr[j + 1]);
-              swapped = true;
-              }
-              }
-
-              // If no two elements were swapped, then break
-              if (!swapped)
-              break;
-              }
-              }
-
-              // Function to print a vector
-              void printVector(const vector<int>& arr) {
-                for (int num : arr)
-                cout << " " << num; } int main() { vector<int> arr = { 64, 34, 25, 12, 22, 11, 90 };
-                  bubbleSort(arr);
-                  cout << "Sorted array: \n" ; printVector(arr); return 0; }</p>
-    </section>
-
-  </main>
-  <script>
-    // Dark Mode and Light Mode
-const toggelBtn = document.getElementById("toggelBtn");
-const themeIcon = document.getElementById("themeIcon")
-const body = document.querySelector("body");
-
-if (localStorage.getItem("theme") === "light") {
-    body.classList.add("light-mode");
-    themeIcon.src = "../icons/dark-mode.png";
-}
-
-toggelBtn.addEventListener("click", () => {
-    body.classList.toggle("light-mode");
-
-    if (body.classList.contains("light-mode")) {
-        themeIcon.src = "../icons/dark-mode.png";
-        localStorage.setItem("theme", "light");
-    }
-    else {
-        themeIcon.src = "../icons/light-mode.png";
-        localStorage.setItem("theme", "dark");
-    }
-});
-
-// menuIcon logic
-const menuIcon = document.getElementById("menuIcon");
-const closeIcon = document.getElementById("closeIcon");
-const navLinks = document.querySelector(".nav-links");
-
-menuIcon.addEventListener("click", () => {
-    navLinks.classList.add("show");
-    menuIcon.style.display = "none";
-    closeIcon.style.display = "block";
-});
-
-closeIcon.addEventListener("click", () => {
-    navLinks.classList.remove("show");
-    closeIcon.style.display = "none";
-    menuIcon.style.display = "block";
-});
-
-const allLinks = document.querySelectorAll(".nav-links a");
-allLinks.forEach(link => {
-    link.addEventListener("click", () => {
-        if (navLinks.classList.contains("show")) {
-            navLinks.classList.remove("show");
-            closeIcon.style.display = "none";
-            menuIcon.style.display = "block";
-        }
-    });
-});
-
-
-//animation
-function generateBars(arr) {
-    const container = document.getElementById("barContainer");
-    container.innerHTML = ""; // Clear existing bars
-
-    const maxValue = Math.max(...arr);
-
-    arr.forEach((value, index) => {
-        const barWrapper = document.createElement("div");
-        barWrapper.style.display = "flex";
-        barWrapper.style.flexDirection = "column";
-        barWrapper.style.alignItems = "center";
-        barWrapper.style.gap = "5px";
-
-        const bar = document.createElement("div");
-        bar.classList.add("bar");
-        bar.style.height = `${(value / maxValue) * 100}%`;
-
-        const valLabel = document.createElement("div");
-        valLabel.classList.add("bar-value");
-        valLabel.textContent = value;
-
-        const indexLabel = document.createElement("div");
-        indexLabel.classList.add("bar-index");
-        indexLabel.textContent = index;
-        indexLabel.style.color = "#aaa";
-        indexLabel.style.fontSize = "12px";
-
-        bar.appendChild(valLabel);
-        barWrapper.appendChild(bar);
-        barWrapper.appendChild(indexLabel);
-        container.appendChild(barWrapper);
-    });
-}
-
-  </script>
+    </footer>
+    <script src="./home.js"></script>
 </body>
 
 </html>
