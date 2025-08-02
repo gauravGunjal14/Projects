@@ -92,41 +92,16 @@
     <section class="sort-lan-selector">
       <button class="sort-lan-btn active" id="cpp">C++</button>
       <button class="sort-lan-btn" id="c">C</button>
-      <button class="sort-lan-btn" id="python">Python</button>
+      <button class="sort-lan-btn" id="py">Python</button>
       <button class="sort-lan-btn" id="java">Java</button>
-      <button class="sort-lan-btn" id="javaScript">JavaScript</button>
+      <button class="sort-lan-btn" id="js">JavaScript</button>
     </section>
 
     <!-- code display -->
     <section class="code-display">
+      <button id="copy-btn"><img src="../icons/dark-copy.png" alt=""></button>
       <!-- display code of selected language -->
-      <p>#include <bits /stdc++.h>
-          using namespace std;
-
-          // An optimized version of Bubble Sort
-          void bubbleSort(vector<int>& arr) {
-            int n = arr.size();
-            bool swapped;
-
-            for (int i = 0; i < n - 1; i++) { swapped=false; for (int j=0; j < n - i - 1; j++) { if (arr[j]> arr[j + 1])
-              {
-              swap(arr[j], arr[j + 1]);
-              swapped = true;
-              }
-              }
-
-              // If no two elements were swapped, then break
-              if (!swapped)
-              break;
-              }
-              }
-
-              // Function to print a vector
-              void printVector(const vector<int>& arr) {
-                for (int num : arr)
-                cout << " " << num; } int main() { vector<int> arr = { 64, 34, 25, 12, 22, 11, 90 };
-                  bubbleSort(arr);
-                  cout << "Sorted array: \n" ; printVector(arr); return 0; }</p>
+      <p class="code-lang"></p>
     </section>
 
   </main>

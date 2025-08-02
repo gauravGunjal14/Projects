@@ -49,43 +49,194 @@ allLinks.forEach(link => {
     });
 });
 
+// language button logic
+let lang = "cpp";
 
-//animation
-function generateBars(arr) {
-    const container = document.getElementById("barContainer");
-    container.innerHTML = ""; // Clear existing bars
+// bydefault cpp code will be displayed
+window.addEventListener("DOMContentLoaded", () => {
+    document.querySelector(".code-display p").textContent = sortCodes[lang];
+});
 
-    const maxValue = Math.max(...arr);
+const sortCodes = {
+    cpp: `#include <bits/stdc++.h>
+using namespace std;
 
-    arr.forEach((value, index) => {
-        const barWrapper = document.createElement("div");
-        barWrapper.style.display = "flex";
-        barWrapper.style.flexDirection = "column";
-        barWrapper.style.alignItems = "center";
-        barWrapper.style.gap = "5px";
+// An optimized version of Bubble Sort 
+void bubbleSort(vector<int>& arr) {
+    int n = arr.size();
+    bool swapped;
 
-        const bar = document.createElement("div");
-        bar.classList.add("bar");
-        bar.style.height = `${(value / maxValue) * 100}%`;
-
-        const valLabel = document.createElement("div");
-        valLabel.classList.add("bar-value");
-        valLabel.textContent = value;
-
-        const indexLabel = document.createElement("div");
-        indexLabel.classList.add("bar-index");
-        indexLabel.textContent = index;
-        indexLabel.style.color = "#aaa";
-        indexLabel.style.fontSize = "12px";
-
-        bar.appendChild(valLabel);
-        barWrapper.appendChild(bar);
-        barWrapper.appendChild(indexLabel);
-        container.appendChild(barWrapper);
-    });
+    for (int i = 0; i < n - 1; i++) {
+        swapped = false;
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                swap(arr[j], arr[j + 1]);
+                swapped = true;
+            }
+        }
+        if (!swapped)
+            break;
+    }
 }
 
+void printVector(const vector<int>& arr) {
+    for (int num : arr)
+        cout << " " << num;
+}
 
-document.addEventListener("DOMContentLoaded", () => {
-    generateBars([30, 10, 50, 40, 20]);
+int main() {
+    vector<int> arr = {64, 34, 25, 12, 22, 11, 90};
+    bubbleSort(arr);
+    cout << "Sorted array: \\n";
+    printVector(arr);
+    return 0;
+}`,
+
+    c: `#include <stdbool.h>
+#include <stdio.h>
+
+void swap(int* xp, int* yp){
+    int temp = *xp;
+    *xp = *yp;
+    *yp = temp;
+}
+
+void bubbleSort(int arr[], int n){
+    int i, j;
+    bool swapped;
+    for (i = 0; i < n - 1; i++) {
+        swapped = false;
+        for (j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                swap(&arr[j], &arr[j + 1]);
+                swapped = true;
+            }
+        }
+        if (!swapped)
+            break;
+    }
+}
+
+void printArray(int arr[], int size){
+    for (int i = 0; i < size; i++)
+        printf("%d ", arr[i]);
+}
+
+int main(){
+    int arr[] = {64, 34, 25, 12, 22, 11, 90};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    bubbleSort(arr, n);
+    printf("Sorted array: \\n");
+    printArray(arr, n);
+    return 0;
+}`,
+
+    py: `# Optimized implementation of Bubble Sort in Python
+def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        swapped = False
+        for j in range(0, n - i - 1):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+                swapped = True
+        if not swapped:
+            break
+
+def print_array(arr):
+    for i in arr:
+        print(i, end=" ")
+
+arr = [64, 34, 25, 12, 22, 11, 90]
+bubble_sort(arr)
+print("Sorted array:")
+print_array(arr)`,
+
+    java: `// Optimized Bubble Sort in Java
+class GFG {
+    static void bubbleSort(int arr[], int n){
+        int i, j, temp;
+        boolean swapped;
+        for (i = 0; i < n - 1; i++) {
+            swapped = false;
+            for (j = 0; j < n - i - 1; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                    swapped = true;
+                }
+            }
+            if (!swapped)
+                break;
+        }
+    }
+
+    static void printArray(int arr[], int size){
+        for (int i = 0; i < size; i++)
+            System.out.print(arr[i] + " ");
+        System.out.println();
+    }
+
+    public static void main(String args[]){
+        int arr[] = {64, 34, 25, 12, 22, 11, 90};
+        int n = arr.length;
+        bubbleSort(arr, n);
+        System.out.println("Sorted array:");
+        printArray(arr, n);
+    }
+}`,
+
+    js: `// Optimized Bubble Sort in JavaScript
+function bubbleSort(arr) {
+    let n = arr.length;
+    for (let i = 0; i < n; i++) {
+        let swapped = false;
+        for (let j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+                swapped = true;
+            }
+        }
+        if (!swapped) break;
+    }
+}
+
+function printArray(arr) {
+    console.log(arr.join(" "));
+}
+
+let arr = [64, 34, 25, 12, 22, 11, 90];
+bubbleSort(arr);
+console.log("Sorted array:");
+printArray(arr);`
+};
+
+const buttons = document.querySelectorAll(".sort-lan-selector button");
+const codeDisplay = document.querySelector(".code-display p");
+
+buttons.forEach(button => {
+    button.addEventListener("click", (event) => {
+        const selectedLang = event.target.id;
+
+        if (selectedLang !== lang) {
+            document.querySelector(".sort-lan-selector .active")?.classList.remove("active");
+            event.target.classList.add("active");
+
+            lang = selectedLang;
+            codeDisplay.textContent = sortCodes[lang] || "// Code not found!";
+        }
+    });
+});
+
+// copy btn logic
+document.getElementById("copy-btn").addEventListener("click", () => {
+    const code = document.querySelector(".code-display p").textContent;
+    navigator.clipboard.writeText(code)
+        .then(() => {
+            alert("Code copied to clipboard!");
+        })
+        .catch(err => {
+            alert("Failed to copy code. Please try again.");
+        });
 });
