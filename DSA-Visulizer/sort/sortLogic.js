@@ -240,3 +240,189 @@ document.getElementById("copy-btn").addEventListener("click", () => {
             alert("Failed to copy code. Please try again.");
         });
 });
+
+// main sorting logic
+const inputBox = document.getElementById('customInput');
+const generateBtn = document.getElementById('generateBtn');
+const barContainer = document.getElementById('barContainer');
+const playBtn = document.getElementById('playBtn');
+const pauseBtn = document.getElementById('pauseBtn');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const stepInfo = document.getElementById('stepInfo');
+const speedSlider = document.getElementById('speedRange');
+
+let bars = [];
+let steps = [];
+let currentStep = 0;
+let interval = null;
+let speed = 500;
+
+// Bar Generator
+function generateBars(arr) {
+    barContainer.innerHTML = '';
+    document.getElementById('barIndexContainer').innerHTML = '';
+    bars = [];
+
+    const maxVal = Math.max(...arr); // 🔥 Find the max to scale everything
+
+    arr.forEach((num, idx) => {
+        // Normalize height relative to max value
+        const heightPercent = (num / maxVal) * 100;
+
+        const bar = document.createElement('div');
+        bar.classList.add('bar');
+        bar.style.height = `${heightPercent}%`;
+        bar.style.width = `30px`;
+        bar.style.margin = '0 5px';
+        bar.style.backgroundColor = '#61dafb';
+        bar.style.display = 'flex';
+        bar.style.alignItems = 'flex-end';
+        bar.style.justifyContent = 'center';
+        bar.textContent = num;
+        bars.push(bar);
+        barContainer.appendChild(bar);
+
+        const indexLabel = document.createElement('div');
+        indexLabel.classList.add('bar-index');
+        indexLabel.textContent = idx;
+        document.getElementById('barIndexContainer').appendChild(indexLabel);
+    });
+}
+
+// Bubble Sort Step Recorder
+function recordBubbleSortSteps(arr) {
+    steps = [];
+    let temp = [...arr];
+
+    for (let i = 0; i < temp.length - 1; i++) {
+        for (let j = 0; j < temp.length - i - 1; j++) {
+            const step = {
+                indices: [j, j + 1],
+                swapped: false,
+                arrSnapshot: [...temp]
+            };
+
+            if (temp[j] > temp[j + 1]) {
+                [temp[j], temp[j + 1]] = [temp[j + 1], temp[j]];
+                step.swapped = true;
+            }
+
+            step.arrSnapshot = [...temp];
+            steps.push(step);
+        }
+    }
+}
+
+// Animate a Step
+function animateStep(index) {
+    if (index < 0 || index >= steps.length) return;
+
+    const step = steps[index];
+    const [i, j] = step.indices;
+
+    // Update bars
+    step.arrSnapshot.forEach((val, idx) => {
+        bars[idx].style.height = `${val * 3}px`;
+        bars[idx].textContent = val;
+        bars[idx].style.backgroundColor = '#61dafb';
+    });
+
+    bars[i].style.backgroundColor = '#f39c12';
+    bars[j].style.backgroundColor = '#e74c3c';
+
+    // Update step info single-line display (optional)
+    // document.getElementById('stepInfo').textContent = `Comparing index ${i} and ${j}. ${step.swapped ? "Swapped" : "No Swap"}`;
+
+    // Update full step list below
+    updateStepList();
+}
+
+function updateStepList() {
+    const stepList = document.getElementById('stepList');
+    stepList.innerHTML = '';
+
+    for (let i = 0; i <= currentStep - 1; i++) {
+        const step = steps[i];
+        const [a, b] = step.indices;
+        const arr = step.arrSnapshot;
+        const valA = arr[a];
+        const valB = arr[b];
+
+        const li = document.createElement('li');
+
+        let description = `Visited index ${a} (${valA}) and ${b} (${valB}) → `;
+        if (valA > valB) {
+            description += `${valA} is greater than ${valB}, so swapped`;
+        } else {
+            description += `${valA} is less than or equal to ${valB}, no swap needed`;
+        }
+
+        li.textContent = `Step ${i + 1}: ${description}`;
+
+        if (i === currentStep - 1) {
+            li.classList.add('current');
+        }
+
+        stepList.appendChild(li);
+    }
+
+    const container = document.getElementById('stepInfo');
+    container.scrollTop = container.scrollHeight;
+}
+
+// Play
+function play() {
+    if (interval) return;
+
+    interval = setInterval(() => {
+        if (currentStep >= steps.length) {
+            clearInterval(interval);
+            interval = null;
+            return;
+        }
+        animateStep(currentStep++);
+    }, getActualSpeed());
+}
+
+// Pause
+function pause() {
+    clearInterval(interval);
+    interval = null;
+}
+
+// Events
+generateBtn.addEventListener('click', () => {
+    const input = inputBox.value.trim();
+    if (!input) return;
+
+    const arr = input.split(',').map(num => parseInt(num.trim())).filter(num => !isNaN(num));
+    if (arr.length === 0) return;
+
+    generateBars(arr);
+    recordBubbleSortSteps(arr);
+    currentStep = 0;
+    animateStep(currentStep);
+});
+
+playBtn.addEventListener('click', play);
+
+pauseBtn.addEventListener('click', pause);
+
+nextBtn.addEventListener('click', () => {
+    if (currentStep < steps.length) {
+        animateStep(currentStep++);
+    }
+});
+
+prevBtn.addEventListener('click', () => {
+    if (currentStep > 0) {
+        currentStep--; // go back first
+        animateStep(currentStep);
+    }
+});
+
+function getActualSpeed() {
+    const sliderValue = parseInt(speedSlider.value);
+    return 2100 - sliderValue; // 100 => 2000ms, 2000 => 100ms
+}
