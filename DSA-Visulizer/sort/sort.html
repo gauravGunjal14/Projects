@@ -34,7 +34,7 @@
   <main id="sort-page">
     <!-- sort selector -->
     <section class="sort-selector">
-      <button class="sort-btn" id="insertion">Insertion</button>
+      <button class="sort-btn" id="insertion"><a href="./insertion.html">Insertion</a></button>
       <button class="sort-btn" id="selection">Selection</button>
       <button class="sort-btn active" id="bubble">Bubble</button>
       <button class="sort-btn" id="quick">Quick</button>
@@ -57,7 +57,6 @@
 
       <div class="visualizer-layout">
 
-        <!-- Left side: Bars + Controls -->
         <div class="left-panel">
           <div class="input-section">
             <label for="customInput">Enter numbers:</label>
@@ -71,10 +70,11 @@
           </div>
 
           <div class="control-panel">
-            <button id="playBtn">▶ Play</button>
-            <button id="pauseBtn">⏸ Pause</button>
-            <button id="prevBtn">⏮ Prev</button>
-            <button id="nextBtn">⏭ Next</button>
+            <button id="playBtn">&#9654; Play</button>
+            <button id="pauseBtn">&#x23F8; Pause</button>
+            <button id="prevBtn">&#10094; Prev</button>
+            <button id="nextBtn">&#10095; Next</button>
+            <button id="restart">&#x27F3; Restart</button>
             <div class="speed">
               <label for="speedRange">Speed:</label>
               <input type="range" id="speedRange" min="100" max="2000" value="1000" />

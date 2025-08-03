@@ -249,6 +249,7 @@ const playBtn = document.getElementById('playBtn');
 const pauseBtn = document.getElementById('pauseBtn');
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
+const restartBtn = document.getElementById('restart')
 const stepInfo = document.getElementById('stepInfo');
 const speedSlider = document.getElementById('speedRange');
 
@@ -420,6 +421,12 @@ prevBtn.addEventListener('click', () => {
         currentStep--; // go back first
         animateStep(currentStep);
     }
+});
+
+restartBtn.addEventListener('click', () => {
+    pause();
+    currentStep = 0;
+    animateStep(currentStep);
 });
 
 function getActualSpeed() {
