@@ -298,19 +298,20 @@ function recordBubbleSortSteps(arr) {
 
     for (let i = 0; i < temp.length - 1; i++) {
         for (let j = 0; j < temp.length - i - 1; j++) {
-            const step = {
+            const shouldSwap = temp[j] > temp[j + 1];
+
+            // Push step BEFORE actual swap
+            steps.push({
                 indices: [j, j + 1],
-                swapped: false,
-                arrSnapshot: [...temp]
-            };
+                swapped: shouldSwap,
+                arrSnapshot: [...temp], // snapshot before swap
+                codeLine: shouldSwap ? 'swap' : 'compare'
+            });
 
-            if (temp[j] > temp[j + 1]) {
+            // Do swap if needed
+            if (shouldSwap) {
                 [temp[j], temp[j + 1]] = [temp[j + 1], temp[j]];
-                step.swapped = true;
             }
-
-            step.arrSnapshot = [...temp];
-            steps.push(step);
         }
     }
 }
@@ -353,16 +354,17 @@ function updateStepList() {
         const li = document.createElement('li');
 
         let description = `Visited index ${a} (${valA}) and ${b} (${valB}) → `;
-        if (valA > valB) {
-            description += `${valA} is greater than ${valB}, so swapped`;
+        if (step.swapped) {
+            description += `${valA} > ${valB}, so swapped`;
         } else {
-            description += `${valA} is less than or equal to ${valB}, no swap needed`;
+            description += `${valA} ≤ ${valB}, no swap`;
         }
 
         li.textContent = `Step ${i + 1}: ${description}`;
 
         if (i === currentStep - 1) {
             li.classList.add('current');
+            highlightCodeLine(step.codeLine); // highlight the matching code line
         }
 
         stepList.appendChild(li);
@@ -370,6 +372,19 @@ function updateStepList() {
 
     const container = document.getElementById('stepInfo');
     container.scrollTop = container.scrollHeight;
+}
+
+// Highlight Code Line
+function highlightCodeLine(lineId) {
+    const allLines = document.querySelectorAll('#codeBox span');
+    allLines.forEach(line => {
+        line.style.backgroundColor = '';
+    });
+
+    const lineToHighlight = document.getElementById(lineId);
+    if (lineToHighlight) {
+        lineToHighlight.style.backgroundColor = '#0f6df1ff';
+    }
 }
 
 // Play
