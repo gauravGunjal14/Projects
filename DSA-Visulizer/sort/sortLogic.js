@@ -291,52 +291,110 @@ function generateBars(arr) {
     });
 }
 
+function highlightBars(index1, index2, className) {
+  const bars = document.querySelectorAll('.bar');
+  bars[index1]?.classList.add(className);
+  bars[index2]?.classList.add(className);
+}
+
+function removeHighlight(index1, index2, className) {
+  const bars = document.querySelectorAll('.bar');
+  bars[index1]?.classList.remove(className);
+  bars[index2]?.classList.remove(className);
+}
+
+function setSortedBars() {
+  document.querySelectorAll('.bar').forEach(bar => {
+    bar.classList.remove('comparing', 'swapping');
+    bar.classList.add('sorted');
+  });
+}
+
+function highlightCodeLine(lineNumber) {
+  const codeLines = document.querySelectorAll('#codeBox span');
+  codeLines.forEach((line, idx) => {
+    line.classList.toggle('active-line', idx === lineNumber);
+  });
+}
+
 // Bubble Sort Step Recorder
 function recordBubbleSortSteps(arr) {
-    steps = [];
+    steps = []; // clear previous steps
     let temp = [...arr];
 
     for (let i = 0; i < temp.length - 1; i++) {
         for (let j = 0; j < temp.length - i - 1; j++) {
-            const shouldSwap = temp[j] > temp[j + 1];
+            const swapped = temp[j] > temp[j + 1];
 
-            // Push step BEFORE actual swap
+            // Record comparison step
             steps.push({
                 indices: [j, j + 1],
-                swapped: shouldSwap,
-                arrSnapshot: [...temp], // snapshot before swap
-                codeLine: shouldSwap ? 'swap' : 'compare'
+                arrSnapshot: [...temp],
+                swapped: swapped,
+                codeLine: swapped ? `swap` : `compare`,
+                sortedIndices: [] // nothing marked sorted yet in this step
             });
 
-            // Do swap if needed
-            if (shouldSwap) {
+            if (swapped) {
                 [temp[j], temp[j + 1]] = [temp[j + 1], temp[j]];
             }
         }
+
+        // After each outer loop, last i elements are sorted
+        let sortedPart = [];
+        for (let k = temp.length - i; k < temp.length; k++) {
+            sortedPart.push(k);
+        }
+
+        // Push step to mark these bars sorted
+        steps.push({
+            indices: [],
+            arrSnapshot: [...temp],
+            swapped: false,
+            codeLine: null,
+            sortedIndices: sortedPart
+        });
     }
+
+    // Final pass: mark all sorted
+    steps.push({
+        indices: [],
+        arrSnapshot: [...temp],
+        swapped: false,
+        codeLine: null,
+        sortedIndices: [...Array(temp.length).keys()]
+    });
 }
 
-// Animate a Step
 function animateStep(index) {
     if (index < 0 || index >= steps.length) return;
 
     const step = steps[index];
-    const [i, j] = step.indices;
+    const [i, j] = step.indices || [];
+    const maxVal = Math.max(...step.arrSnapshot);
 
-    // Update bars
-    step.arrSnapshot.forEach((val, idx) => {
-        bars[idx].style.height = `${val * 3}px`;
-        bars[idx].textContent = val;
-        bars[idx].style.backgroundColor = '#61dafb';
+    // 1. Reset all bars before applying this step
+    bars.forEach((bar, idx) => {
+        bar.classList.remove("sorted");
+        bar.style.backgroundColor = '#61dafb'; // default blue
+        const heightPercent = (step.arrSnapshot[idx] / maxVal) * 100;
+        bar.style.height = `${heightPercent}%`;
+        bar.textContent = step.arrSnapshot[idx];
     });
 
-    bars[i].style.backgroundColor = '#f39c12';
-    bars[j].style.backgroundColor = '#e74c3c';
+    // 2. Highlight current comparison
+    if (step.indices && step.indices.length === 2) {
+        bars[i].style.backgroundColor = '#f39c12'; // comparing
+        bars[j].style.backgroundColor = '#e74c3c'; // swapping
+    }
 
-    // Update step info single-line display (optional)
-    // document.getElementById('stepInfo').textContent = `Comparing index ${i} and ${j}. ${step.swapped ? "Swapped" : "No Swap"}`;
+    // 3. Apply sorted class for this step
+    if (step.sortedIndices && step.sortedIndices.length) {
+        step.sortedIndices.forEach(idx => {
+            bars[idx].classList.add("sorted");
+        });
+    }
 
-    // Update full step list below
     updateStepList();
 }
 
@@ -346,25 +404,34 @@ function updateStepList() {
 
     for (let i = 0; i <= currentStep - 1; i++) {
         const step = steps[i];
-        const [a, b] = step.indices;
-        const arr = step.arrSnapshot;
-        const valA = arr[a];
-        const valB = arr[b];
-
         const li = document.createElement('li');
+        let description = '';
 
-        let description = `Visited index ${a} (${valA}) and ${b} (${valB}) → `;
-        if (step.swapped) {
-            description += `${valA} > ${valB}, so swapped`;
-        } else {
-            description += `${valA} ≤ ${valB}, no swap`;
+        if (step.indices && step.indices.length === 2) {
+            const [a, b] = step.indices;
+            const arr = step.arrSnapshot;
+            const valA = arr[a];
+            const valB = arr[b];
+
+            description = `Visited index ${a} (${valA}) and ${b} (${valB}) → `;
+            if (step.swapped) {
+                description += `${valA} > ${valB}, so swapped`;
+            } else {
+                description += `${valA} ≤ ${valB}, no swap`;
+            }
+        } 
+        else if (step.sortedIndices && step.sortedIndices.length) {
+            description = `Marking sorted bars at indices [${step.sortedIndices.join(", ")}]`;
+        } 
+        else {
+            description = `No comparison (initialization/final sorted state)`;
         }
 
         li.textContent = `Step ${i + 1}: ${description}`;
 
         if (i === currentStep - 1) {
             li.classList.add('current');
-            highlightCodeLine(step.codeLine); // highlight the matching code line
+            highlightCodeLine(step.codeLine);
         }
 
         stepList.appendChild(li);
@@ -381,9 +448,11 @@ function highlightCodeLine(lineId) {
         line.style.backgroundColor = '';
     });
 
+    if (!lineId) return;
+
     const lineToHighlight = document.getElementById(lineId);
     if (lineToHighlight) {
-        lineToHighlight.style.backgroundColor = '#0f6df1ff';
+        lineToHighlight.style.backgroundColor = '#0f6df1';
     }
 }
 
@@ -416,9 +485,9 @@ generateBtn.addEventListener('click', () => {
     if (arr.length === 0) return;
 
     generateBars(arr);
-    recordBubbleSortSteps(arr);
+    recordBubbleSortSteps(arr); // <-- now only records steps
     currentStep = 0;
-    animateStep(currentStep);
+    animateStep(currentStep); // show first step
 });
 
 playBtn.addEventListener('click', play);
@@ -427,13 +496,14 @@ pauseBtn.addEventListener('click', pause);
 
 nextBtn.addEventListener('click', () => {
     if (currentStep < steps.length) {
-        animateStep(currentStep++);
+        animateStep(currentStep);
+        currentStep++;
     }
 });
 
 prevBtn.addEventListener('click', () => {
     if (currentStep > 0) {
-        currentStep--; // go back first
+        currentStep--;
         animateStep(currentStep);
     }
 });
@@ -441,7 +511,17 @@ prevBtn.addEventListener('click', () => {
 restartBtn.addEventListener('click', () => {
     pause();
     currentStep = 0;
-    animateStep(currentStep);
+
+    // Clear all highlights and sorted states
+    bars.forEach(bar => {
+        bar.classList.remove('sorted', 'comparing', 'swapping');
+        bar.style.backgroundColor = '#61dafb';
+    });
+
+    // Show first step
+    if (steps.length > 0) {
+        animateStep(currentStep);
+    }
 });
 
 function getActualSpeed() {
