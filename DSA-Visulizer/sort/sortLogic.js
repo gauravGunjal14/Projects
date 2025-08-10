@@ -49,12 +49,142 @@ allLinks.forEach(link => {
     });
 });
 
+// sort selector
+const sortName = {
+    insertion: "Insertion Sort",
+    selection: "Selection Sort",
+    bubble: "Bubble Sort",
+    quick: "Quick Sort",
+    merge: "Merge Sort",
+    heap: "Heap Sort",
+}
+
+const sortDefination = {
+    insertion: '<strong>Definition:</strong><ul><li class="defination1">Insertion sort is a simple sorting algorithm that works by iteratively inserting each element of an unsorted list into its correct position in a sorted portion of the list. It is like sorting playing cards in your hands. You split the cards into two groups: the sorted cards and the unsorted cards. Then, you pick a card from the unsorted group and put it in the right place in the sorted group.</ul></li>',
+
+    selection: '<strong>Definition:</strong><ul><li class="defination1">Selection Sort is a comparison-based sorting algorithm. It sorts an array by repeatedly selecting the smallest (or largest) element from the unsorted portion and swapping it with the first unsorted element. This process continues until the entire array is sorted.</ul></li>',
+
+    bubble: '<strong>Definition:</strong><ul><li class="defination1">Bubble Sort is the simplest sorting algorithm that works by repeatedly swapping the adjacent elements if they are in the wrong order. This algorithm is not suitable for large data sets as its average and worst-case time complexity are quite high.</ul></li>',
+
+    quick: '<strong>Definition:</strong><ul><li class="defination1">QuickSort is a sorting algorithm based on the Divide and Conquer that picks an element as a pivot and partitions the given array around the picked pivot by placing the pivot in its correct position in the sorted array.</ul></li>',
+
+    merge: '<strong>Definition:</strong><ul><li class="defination1">Merge sort is a popular sorting algorithm known for its efficiency and stability. It follows the divide-and-conquer approach. It works by recursively dividing the input array into two halves, recursively sorting the two halves and finally merging them back together to obtain the sorted array.</ul></li>',
+
+    heap: '<strong>Definition:</strong><ul><li class="defination1">Heap sort is a comparison-based sorting technique based on Binary Heap Data Structure. It can be seen as an optimization over selection sort where we first find the max (or min) element and swap it with the last (or first).</ul></li>',
+}
+
+const sortWorking = {
+    insertion: `<strong>Working:</strong>
+    <ul class="working1">
+    <li>We start with the second element of the array as the first element is assumed to be sorted.</li>
+    <li>Compare the second element with the first element if the second element is smaller then swap them.</li>
+    <li>Move to the third element, compare it with the first two elements, and put it in its correct position.</li>
+    <li>Repeat until the entire array is sorted.</li>
+    </ul>`,
+
+    selection: `<strong>Working:</strong>
+    <ul class="working1">
+    <li>First we find the smallest element and swap it with the first element. This way we get the smallest element at its correct position.</li>
+    <li>Then we find the smallest among remaining elements (or second smallest) and swap it with the second element.</li>
+    <li>We keep doing this until we get all elements moved to correct position.</li>
+    </ul>`,
+
+    bubble: `<strong>Working:</strong>
+    <ul class="working1">
+    <li>We sort the array using multiple passes. After the first pass, the maximum element goes to end (its correctposition). Same way, after second pass, the second largest element goes to second last position and so on.</li>
+    <li>In every pass, we process only those elements that have already not moved to correct position. After k passes, the largest k elements must have been moved to the last k positions.</li>
+    <li>In a pass, we consider remaining elements and compare all adjacent and swap if larger element is before a smaller element. If we keep doing this, we get the largest (among the remaining elements) at its correct position.</li>
+    </ul>`,
+
+    quick: `<strong>Working:</strong>
+    <ul class="working1">
+    <li>Choose a Pivot: Select an element from the array as the pivot. The choice of pivot can vary (e.g., first element, last element, random element, or median).</li>
+    <li>Partition the Array: Re arrange the array around the pivot. After partitioning, all elements smaller than the pivot will be on its left, and all elements greater than the pivot will be on its right. The pivot is then in its correct position, and we obtain the index of the pivot.</li>
+    <li>Recursively Call: Recursively apply the same process to the two partitioned sub-arrays (left and right of the pivot).</li>
+    <li>Base Case: The recursion stops when there is only one element left in the sub-array, as a single element is already sorted.</li>
+    </ul>`,
+
+    merge: `<strong>Working:</strong>
+    <ul class="working1">
+    <li>Divide:  Divide the list or array recursively into two halves until it can no more be divided. </li>
+    <li>Conquer:  Each subarray is sorted individually using the merge sort algorithm. </li>
+    <li>Merge:  The sorted subarrays are merged back together in sorted order. The process continues until all elements from both subarrays have been merged. </li>
+    </ul>`,
+
+    heap: `<strong>Working:</strong>
+    <ul class="working1">
+    <li>Rearrange array elements so that they form a Max Heap.</li>
+    <li>Repeat the following steps until the heap contains only one element:
+    1)Swap the root element of the heap (which is the largest element in current heap) with the last element of the heap.
+    2)Remove the last element of the heap (which is now in the correct position).We mainly reduce heap size and do not remove element from the actual array.
+    3)Heapify the remaining elements of the heap.</li>
+    <li>Finally we get sorted array.</li>
+    </ul>`,
+}
+
+const sortTimeComplexity = {
+    insertion: "<strong>Time Complexity:</strong> Best case: O(n), Average case: O(n²), Worst case: O(n²)",
+    selection: "<strong>Time Complexity:</strong> Best case: O(n²), Average case: O(n²), Worst case: O(n²)",
+    bubble: "<strong>Time Complexity:</strong> Best case: O(n), Average case: O(n²), Worst case: O(n²)",
+    quick: "<strong>Time Complexity:</strong> Best Case: (Ω(n log n)), Average Case (θ(n log n)), Worst Case: (O(n²))",
+    merge: "<strong>Time Complexity:</strong> Best Case: O(n log n), Average Case: O(n log n), Worst Case: O(n log n)",
+    heap: "<strong>Time Complexity:</strong> Best Case: O(n log n), Average Case: O(n log n), Worst Case: O(n log n)",
+}
+
+const sortSpaceComplexity = {
+    insertion: "<strong>Space Complexity:</strong> O(1)",
+    selection: "<strong>Space Complexity:</strong> O(1)",
+    bubble: "<strong>Space Complexity:</strong> O(1)",
+    quick: "<strong>Space Complexity:</strong> O(log n) (due to recursion stack)",
+    merge: "<strong>Space Complexity:</strong> O(n) (due to temporary arrays used for merging)",
+    heap: "<strong>Space Complexity:</strong> O(1) (in-place sorting, no extra space needed)",
+}
+
+let activeSort = "bubble";
+const bubbleSortBtn = document.querySelector("#bubble");
+const sortButtons = document.querySelectorAll(".sort-selector button");
+
+const sortDescName = document.querySelector("#sortDesc h2 strong");
+const sortDescDefination = document.querySelector(".defination");
+const sortDescWorking = document.querySelector(".working");
+const sortTime = document.querySelector(".time-complexity");
+const sortSpace = document.querySelector(".space-complexity");
+
+sortButtons.forEach(sortButtons => {
+    sortButtons.addEventListener("click", (event) => {
+        const selectedSort = event.target.id;
+
+        if (selectedSort !== activeSort) {
+            document.querySelector(".sort-selector .active")?.classList.remove("active");
+            event.target.classList.add("active");
+
+            activeSort = selectedSort;
+            sortDescName.innerHTML = sortName[activeSort];
+            sortDescDefination.innerHTML = sortDefination[activeSort];
+            sortDescWorking.innerHTML = sortWorking[activeSort];
+            sortTime.innerHTML = sortTimeComplexity[activeSort];
+            sortSpace.innerHTML = sortSpaceComplexity[activeSort];
+        }
+    })
+})
+
+
+
 // language button logic
 let lang = "cpp";
 
-// bydefault cpp code will be displayed
+// bydefault displayed when reloaded page
 window.addEventListener("DOMContentLoaded", () => {
+    //bubble code display
     document.querySelector(".code-display p").textContent = sortCodes[lang];
+
+    // bubble sort
+    bubbleSortBtn.classList.add("active");
+    sortDescName.textContent = sortName[activeSort];
+    sortDescDefination.innerHTML = sortDefination[activeSort];
+    sortDescWorking.innerHTML = sortWorking[activeSort];
+    sortTime.innerHTML = sortTimeComplexity[activeSort];
+    sortSpace.innerHTML = sortSpaceComplexity[activeSort];
 });
 
 const sortCodes = {
@@ -212,11 +342,11 @@ console.log("Sorted array:");
 printArray(arr);`
 };
 
-const buttons = document.querySelectorAll(".sort-lan-selector button");
+const bubbleLanButtons = document.querySelectorAll(".sort-lan-selector button");
 const codeDisplay = document.querySelector(".code-display p");
 
-buttons.forEach(button => {
-    button.addEventListener("click", (event) => {
+bubbleLanButtons.forEach(bubbleLanButtons => {
+    bubbleLanButtons.addEventListener("click", (event) => {
         const selectedLang = event.target.id;
 
         if (selectedLang !== lang) {
@@ -292,29 +422,29 @@ function generateBars(arr) {
 }
 
 function highlightBars(index1, index2, className) {
-  const bars = document.querySelectorAll('.bar');
-  bars[index1]?.classList.add(className);
-  bars[index2]?.classList.add(className);
+    const bars = document.querySelectorAll('.bar');
+    bars[index1]?.classList.add(className);
+    bars[index2]?.classList.add(className);
 }
 
 function removeHighlight(index1, index2, className) {
-  const bars = document.querySelectorAll('.bar');
-  bars[index1]?.classList.remove(className);
-  bars[index2]?.classList.remove(className);
+    const bars = document.querySelectorAll('.bar');
+    bars[index1]?.classList.remove(className);
+    bars[index2]?.classList.remove(className);
 }
 
 function setSortedBars() {
-  document.querySelectorAll('.bar').forEach(bar => {
-    bar.classList.remove('comparing', 'swapping');
-    bar.classList.add('sorted');
-  });
+    document.querySelectorAll('.bar').forEach(bar => {
+        bar.classList.remove('comparing', 'swapping');
+        bar.classList.add('sorted');
+    });
 }
 
 function highlightCodeLine(lineNumber) {
-  const codeLines = document.querySelectorAll('#codeBox span');
-  codeLines.forEach((line, idx) => {
-    line.classList.toggle('active-line', idx === lineNumber);
-  });
+    const codeLines = document.querySelectorAll('#codeBox span');
+    codeLines.forEach((line, idx) => {
+        line.classList.toggle('active-line', idx === lineNumber);
+    });
 }
 
 // Bubble Sort Step Recorder
@@ -419,10 +549,10 @@ function updateStepList() {
             } else {
                 description += `${valA} ≤ ${valB}, no swap`;
             }
-        } 
+        }
         else if (step.sortedIndices && step.sortedIndices.length) {
             description = `Marking sorted bars at indices [${step.sortedIndices.join(", ")}]`;
-        } 
+        }
         else {
             description = `No comparison (initialization/final sorted state)`;
         }
