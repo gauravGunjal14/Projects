@@ -176,7 +176,7 @@ let lang = "cpp";
 // bydefault displayed when reloaded page
 window.addEventListener("DOMContentLoaded", () => {
     //bubble code display
-    document.querySelector(".code-display p").textContent = sortCodes[lang];
+    document.querySelector(".code-display p").textContent = bubbleSortCodes[lang];
 
     // bubble sort
     bubbleSortBtn.classList.add("active");
@@ -187,7 +187,7 @@ window.addEventListener("DOMContentLoaded", () => {
     sortSpace.innerHTML = sortSpaceComplexity[activeSort];
 });
 
-const sortCodes = {
+const bubbleSortCodes = {
     cpp: `#include <bits/stdc++.h>
 using namespace std;
 
@@ -342,6 +342,141 @@ console.log("Sorted array:");
 printArray(arr);`
 };
 
+const insertionSortCodes = {
+    cpp: `#include <bits/stdc++.h>
+using namespace std;
+
+// Function to perform Insertion Sort
+void insertionSort(vector<int>& arr) {
+    int n = arr.size();
+    for (int i = 1; i < n; i++) {
+        int key = arr[i];
+        int j = i - 1;
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        arr[j + 1] = key;
+    }
+}
+
+void printVector(const vector<int>& arr) {
+    for (int num : arr)
+        cout << num << " ";
+    cout << endl;
+}
+
+int main() {
+    vector<int> arr = {64, 34, 25, 12, 22, 11, 90};
+    insertionSort(arr);
+    cout << "Sorted array:\\n";
+    printVector(arr);
+    return 0;
+}`,
+
+    c: `#include <stdio.h>
+
+// Function to perform Insertion Sort
+void insertionSort(int arr[], int n) {
+    for (int i = 1; i < n; i++) {
+        int key = arr[i];
+        int j = i - 1;
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        arr[j + 1] = key;
+    }
+}
+
+void printArray(int arr[], int size) {
+    for (int i = 0; i < size; i++)
+        printf("%d ", arr[i]);
+    printf("\\n");
+}
+
+int main() {
+    int arr[] = {64, 34, 25, 12, 22, 11, 90};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    insertionSort(arr, n);
+    printf("Sorted array:\\n");
+    printArray(arr, n);
+    return 0;
+}`,
+
+    py: `# Insertion Sort in Python
+def insertion_sort(arr):
+    for i in range(1, len(arr)):
+        key = arr[i]
+        j = i - 1
+        while j >= 0 and arr[j] > key:
+            arr[j + 1] = arr[j]
+            j -= 1
+        arr[j + 1] = key
+
+def print_array(arr):
+    for i in arr:
+        print(i, end=" ")
+    print()
+
+arr = [64, 34, 25, 12, 22, 11, 90]
+insertion_sort(arr)
+print("Sorted array:")
+print_array(arr)`,
+
+    java: `// Insertion Sort in Java
+class GFG {
+    static void insertionSort(int arr[]) {
+        int n = arr.length;
+        for (int i = 1; i < n; i++) {
+            int key = arr[i];
+            int j = i - 1;
+            while (j >= 0 && arr[j] > key) {
+                arr[j + 1] = arr[j];
+                j = j - 1;
+            }
+            arr[j + 1] = key;
+        }
+    }
+
+    static void printArray(int arr[]) {
+        for (int num : arr)
+            System.out.print(num + " ");
+        System.out.println();
+    }
+
+    public static void main(String args[]) {
+        int arr[] = {64, 34, 25, 12, 22, 11, 90};
+        insertionSort(arr);
+        System.out.println("Sorted array:");
+        printArray(arr);
+    }
+}`,
+
+    js: `// Insertion Sort in JavaScript
+function insertionSort(arr) {
+    for (let i = 1; i < arr.length; i++) {
+        let key = arr[i];
+        let j = i - 1;
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        arr[j + 1] = key;
+    }
+}
+
+function printArray(arr) {
+    console.log(arr.join(" "));
+}
+
+let arr = [64, 34, 25, 12, 22, 11, 90];
+insertionSort(arr);
+console.log("Sorted array:");
+printArray(arr);`
+};
+
+
 const bubbleLanButtons = document.querySelectorAll(".sort-lan-selector button");
 const codeDisplay = document.querySelector(".code-display p");
 
@@ -349,12 +484,19 @@ bubbleLanButtons.forEach(bubbleLanButtons => {
     bubbleLanButtons.addEventListener("click", (event) => {
         const selectedLang = event.target.id;
 
-        if (selectedLang !== lang) {
+        if (selectedLang !== lang && activeSort === "bubble") {
             document.querySelector(".sort-lan-selector .active")?.classList.remove("active");
             event.target.classList.add("active");
 
             lang = selectedLang;
-            codeDisplay.textContent = sortCodes[lang] || "// Code not found!";
+            codeDisplay.textContent = bubbleSortBtn[lang] || "// Code not found!";
+        }
+        else if (selectedLang !== lang && activeSort === "insertion") {
+            document.querySelector(".sort-lan-selector .active")?.classList.remove("active");
+            event.target.classList.add("active");
+
+            lang = selectedLang;
+            codeDisplay.textContent = insertionSortCodes[lang] || "// Code not found!";
         }
     });
 });
