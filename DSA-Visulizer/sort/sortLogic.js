@@ -150,6 +150,7 @@ const sortDescWorking = document.querySelector(".working");
 const sortTime = document.querySelector(".time-complexity");
 const sortSpace = document.querySelector(".space-complexity");
 
+// sort selection button
 sortButtons.forEach(sortButtons => {
     sortButtons.addEventListener("click", (event) => {
         const selectedSort = event.target.id;
@@ -164,6 +165,7 @@ sortButtons.forEach(sortButtons => {
             sortDescWorking.innerHTML = sortWorking[activeSort];
             sortTime.innerHTML = sortTimeComplexity[activeSort];
             sortSpace.innerHTML = sortSpaceComplexity[activeSort];
+            codeDisplay.textContent = sortCodes[activeSort][lang] || "// Code not found!";
         }
     })
 })
@@ -175,8 +177,8 @@ let lang = "cpp";
 
 // bydefault displayed when reloaded page
 window.addEventListener("DOMContentLoaded", () => {
-    //bubble code display
-    document.querySelector(".code-display p").textContent = bubbleSortCodes[lang];
+    //sort multi-language code display
+    document.querySelector(".code-display p").textContent = sortCodes[activeSort][lang];
 
     // bubble sort
     bubbleSortBtn.classList.add("active");
@@ -187,8 +189,9 @@ window.addEventListener("DOMContentLoaded", () => {
     sortSpace.innerHTML = sortSpaceComplexity[activeSort];
 });
 
-const bubbleSortCodes = {
-    cpp: `#include <bits/stdc++.h>
+const sortCodes = {
+    bubble: {
+        cpp: `#include <bits/stdc++.h>
 using namespace std;
 
 // An optimized version of Bubble Sort 
@@ -222,7 +225,7 @@ int main() {
     return 0;
 }`,
 
-    c: `#include <stdbool.h>
+        c: `#include <stdbool.h>
 #include <stdio.h>
 
 void swap(int* xp, int* yp){
@@ -261,7 +264,7 @@ int main(){
     return 0;
 }`,
 
-    py: `# Optimized implementation of Bubble Sort in Python
+        py: `# Optimized implementation of Bubble Sort in Python
 def bubble_sort(arr):
     n = len(arr)
     for i in range(n):
@@ -282,7 +285,7 @@ bubble_sort(arr)
 print("Sorted array:")
 print_array(arr)`,
 
-    java: `// Optimized Bubble Sort in Java
+        java: `// Optimized Bubble Sort in Java
 class GFG {
     static void bubbleSort(int arr[], int n){
         int i, j, temp;
@@ -317,7 +320,7 @@ class GFG {
     }
 }`,
 
-    js: `// Optimized Bubble Sort in JavaScript
+        js: `// Optimized Bubble Sort in JavaScript
 function bubbleSort(arr) {
     let n = arr.length;
     for (let i = 0; i < n; i++) {
@@ -340,10 +343,9 @@ let arr = [64, 34, 25, 12, 22, 11, 90];
 bubbleSort(arr);
 console.log("Sorted array:");
 printArray(arr);`
-};
-
-const insertionSortCodes = {
-    cpp: `#include <bits/stdc++.h>
+    },
+    insertion: {
+        cpp: `#include <bits/stdc++.h>
 using namespace std;
 
 // Function to perform Insertion Sort
@@ -374,7 +376,7 @@ int main() {
     return 0;
 }`,
 
-    c: `#include <stdio.h>
+        c: `#include <stdio.h>
 
 // Function to perform Insertion Sort
 void insertionSort(int arr[], int n) {
@@ -404,7 +406,7 @@ int main() {
     return 0;
 }`,
 
-    py: `# Insertion Sort in Python
+        py: `# Insertion Sort in Python
 def insertion_sort(arr):
     for i in range(1, len(arr)):
         key = arr[i]
@@ -424,7 +426,7 @@ insertion_sort(arr)
 print("Sorted array:")
 print_array(arr)`,
 
-    java: `// Insertion Sort in Java
+        java: `// Insertion Sort in Java
 class GFG {
     static void insertionSort(int arr[]) {
         int n = arr.length;
@@ -453,7 +455,7 @@ class GFG {
     }
 }`,
 
-    js: `// Insertion Sort in JavaScript
+        js: `// Insertion Sort in JavaScript
 function insertionSort(arr) {
     for (let i = 1; i < arr.length; i++) {
         let key = arr[i];
@@ -474,29 +476,957 @@ let arr = [64, 34, 25, 12, 22, 11, 90];
 insertionSort(arr);
 console.log("Sorted array:");
 printArray(arr);`
+    },
+    selection: {
+        cpp: `#include <bits/stdc++.h>
+using namespace std;
+
+// Function to perform Selection Sort
+void selectionSort(vector<int>& arr) {
+    int n = arr.size();
+    for (int i = 0; i < n - 1; i++) {
+        int min_idx = i;
+        for (int j = i + 1; j < n; j++)
+            if (arr[j] < arr[min_idx])
+                min_idx = j;
+        swap(arr[min_idx], arr[i]);
+    }
+}
+
+void printVector(const vector<int>& arr) {
+    for (int num : arr) cout << num << " ";
+    cout << endl;
+}
+
+int main() {
+    vector<int> arr = {64, 25, 12, 22, 11};
+    selectionSort(arr);
+    cout << "Sorted array:\\n";
+    printVector(arr);
+    return 0;
+}`,
+
+        c: `#include <stdio.h>
+
+// Function to perform Selection Sort
+void selectionSort(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        int min_idx = i;
+        for (int j = i + 1; j < n; j++)
+            if (arr[j] < arr[min_idx])
+                min_idx = j;
+        int temp = arr[min_idx];
+        arr[min_idx] = arr[i];
+        arr[i] = temp;
+    }
+}
+
+void printArray(int arr[], int size) {
+    for (int i = 0; i < size; i++)
+        printf("%d ", arr[i]);
+    printf("\\n");
+}
+
+int main() {
+    int arr[] = {64, 25, 12, 22, 11};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    selectionSort(arr, n);
+    printf("Sorted array:\\n");
+    printArray(arr, n);
+    return 0;
+}`,
+
+        py: `# Selection Sort in Python
+def selection_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        min_idx = i
+        for j in range(i+1, n):
+            if arr[j] < arr[min_idx]:
+                min_idx = j
+        arr[i], arr[min_idx] = arr[min_idx], arr[i]
+
+def print_array(arr):
+    print(" ".join(map(str, arr)))
+
+arr = [64, 25, 12, 22, 11]
+selection_sort(arr)
+print("Sorted array:")
+print_array(arr)`,
+
+        java: `// Selection Sort in Java
+class GFG {
+    static void selectionSort(int arr[]) {
+        int n = arr.length;
+        for (int i = 0; i < n-1; i++) {
+            int min_idx = i;
+            for (int j = i+1; j < n; j++)
+                if (arr[j] < arr[min_idx])
+                    min_idx = j;
+            int temp = arr[min_idx];
+            arr[min_idx] = arr[i];
+            arr[i] = temp;
+        }
+    }
+
+    static void printArray(int arr[]) {
+        for (int num : arr) System.out.print(num + " ");
+        System.out.println();
+    }
+
+    public static void main(String args[]) {
+        int arr[] = {64, 25, 12, 22, 11};
+        selectionSort(arr);
+        System.out.println("Sorted array:");
+        printArray(arr);
+    }
+}`,
+
+        js: `// Selection Sort in JavaScript
+function selectionSort(arr) {
+    let n = arr.length;
+    for (let i = 0; i < n; i++) {
+        let min_idx = i;
+        for (let j = i+1; j < n; j++) {
+            if (arr[j] < arr[min_idx]) min_idx = j;
+        }
+        [arr[i], arr[min_idx]] = [arr[min_idx], arr[i]];
+    }
+}
+
+function printArray(arr) {
+    console.log(arr.join(" "));
+}
+
+let arr = [64, 25, 12, 22, 11];
+selectionSort(arr);
+console.log("Sorted array:");
+printArray(arr);`
+    },
+    quick: {
+        cpp: `#include <bits/stdc++.h>
+using namespace std;
+
+int partition(vector<int>& arr, int low, int high) {
+    int pivot = arr[high];
+    int i = (low - 1);
+    for (int j = low; j < high; j++) {
+        if (arr[j] < pivot) {
+            i++;
+            swap(arr[i], arr[j]);
+        }
+    }
+    swap(arr[i+1], arr[high]);
+    return (i+1);
+}
+
+void quickSort(vector<int>& arr, int low, int high) {
+    if (low < high) {
+        int pi = partition(arr, low, high);
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+}
+
+void printVector(const vector<int>& arr) {
+    for (int num : arr) cout << num << " ";
+    cout << endl;
+}
+
+int main() {
+    vector<int> arr = {10, 7, 8, 9, 1, 5};
+    quickSort(arr, 0, arr.size()-1);
+    cout << "Sorted array:\\n";
+    printVector(arr);
+    return 0;
+}`,
+
+        c: `#include <stdio.h>
+
+void swap(int* a, int* b) {
+    int t = *a;
+    *a = *b;
+    *b = t;
+}
+
+int partition(int arr[], int low, int high) {
+    int pivot = arr[high];
+    int i = (low - 1);
+    for (int j = low; j < high; j++) {
+        if (arr[j] < pivot) {
+            i++;
+            swap(&arr[i], &arr[j]);
+        }
+    }
+    swap(&arr[i+1], &arr[high]);
+    return (i+1);
+}
+
+void quickSort(int arr[], int low, int high) {
+    if (low < high) {
+        int pi = partition(arr, low, high);
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+}
+
+void printArray(int arr[], int size) {
+    for (int i = 0; i < size; i++) printf("%d ", arr[i]);
+    printf("\\n");
+}
+
+int main() {
+    int arr[] = {10, 7, 8, 9, 1, 5};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    quickSort(arr, 0, n-1);
+    printf("Sorted array:\\n");
+    printArray(arr, n);
+    return 0;
+}`,
+
+        py: `# Quick Sort in Python
+def partition(arr, low, high):
+    pivot = arr[high]
+    i = low - 1
+    for j in range(low, high):
+        if arr[j] < pivot:
+            i += 1
+            arr[i], arr[j] = arr[j], arr[i]
+    arr[i+1], arr[high] = arr[high], arr[i+1]
+    return i + 1
+
+def quick_sort(arr, low, high):
+    if low < high:
+        pi = partition(arr, low, high)
+        quick_sort(arr, low, pi-1)
+        quick_sort(arr, pi+1, high)
+
+arr = [10, 7, 8, 9, 1, 5]
+quick_sort(arr, 0, len(arr)-1)
+print("Sorted array:", arr)`,
+
+        java: `// Quick Sort in Java
+class GFG {
+    static int partition(int arr[], int low, int high) {
+        int pivot = arr[high];
+        int i = (low - 1);
+        for (int j = low; j < high; j++) {
+            if (arr[j] < pivot) {
+                i++;
+                int temp = arr[i]; arr[i] = arr[j]; arr[j] = temp;
+            }
+        }
+        int temp = arr[i+1]; arr[i+1] = arr[high]; arr[high] = temp;
+        return i+1;
+    }
+
+    static void quickSort(int arr[], int low, int high) {
+        if (low < high) {
+            int pi = partition(arr, low, high);
+            quickSort(arr, low, pi-1);
+            quickSort(arr, pi+1, high);
+        }
+    }
+
+    static void printArray(int arr[]) {
+        for (int num : arr) System.out.print(num + " ");
+        System.out.println();
+    }
+
+    public static void main(String args[]) {
+        int arr[] = {10, 7, 8, 9, 1, 5};
+        quickSort(arr, 0, arr.length-1);
+        System.out.println("Sorted array:");
+        printArray(arr);
+    }
+}`,
+
+        js: `// Quick Sort in JavaScript
+function partition(arr, low, high) {
+    let pivot = arr[high];
+    let i = low - 1;
+    for (let j = low; j < high; j++) {
+        if (arr[j] < pivot) {
+            i++;
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+    }
+    [arr[i+1], arr[high]] = [arr[high], arr[i+1]];
+    return i+1;
+}
+
+function quickSort(arr, low, high) {
+    if (low < high) {
+        let pi = partition(arr, low, high);
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+}
+
+let arr = [10, 7, 8, 9, 1, 5];
+quickSort(arr, 0, arr.length-1);
+console.log("Sorted array:");
+console.log(arr.join(" "));`
+    },
+    merge: {
+        cpp: `#include <bits/stdc++.h>
+using namespace std;
+
+void merge(vector<int>& arr, int l, int m, int r) {
+    int n1 = m - l + 1;
+    int n2 = r - m;
+    vector<int> L(n1), R(n2);
+
+    for (int i = 0; i < n1; i++) L[i] = arr[l + i];
+    for (int j = 0; j < n2; j++) R[j] = arr[m + 1 + j];
+
+    int i = 0, j = 0, k = l;
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) arr[k++] = L[i++];
+        else arr[k++] = R[j++];
+    }
+    while (i < n1) arr[k++] = L[i++];
+    while (j < n2) arr[k++] = R[j++];
+}
+
+void mergeSort(vector<int>& arr, int l, int r) {
+    if (l < r) {
+        int m = l + (r-l)/2;
+        mergeSort(arr, l, m);
+        mergeSort(arr, m+1, r);
+        merge(arr, l, m, r);
+    }
+}
+
+void printVector(const vector<int>& arr) {
+    for (int num : arr) cout << num << " ";
+    cout << endl;
+}
+
+int main() {
+    vector<int> arr = {12, 11, 13, 5, 6, 7};
+    mergeSort(arr, 0, arr.size()-1);
+    cout << "Sorted array:\\n";
+    printVector(arr);
+    return 0;
+}`,
+
+        c: `#include <stdio.h>
+#include <stdlib.h>
+
+void merge(int arr[], int l, int m, int r) {
+    int n1 = m - l + 1, n2 = r - m;
+    int L[n1], R[n2];
+    for (int i = 0; i < n1; i++) L[i] = arr[l+i];
+    for (int j = 0; j < n2; j++) R[j] = arr[m+1+j];
+
+    int i = 0, j = 0, k = l;
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) arr[k++] = L[i++];
+        else arr[k++] = R[j++];
+    }
+    while (i < n1) arr[k++] = L[i++];
+    while (j < n2) arr[k++] = R[j++];
+}
+
+void mergeSort(int arr[], int l, int r) {
+    if (l < r) {
+        int m = l + (r-l)/2;
+        mergeSort(arr, l, m);
+        mergeSort(arr, m+1, r);
+        merge(arr, l, m, r);
+    }
+}
+
+void printArray(int arr[], int size) {
+    for (int i = 0; i < size; i++) printf("%d ", arr[i]);
+    printf("\\n");
+}
+
+int main() {
+    int arr[] = {12, 11, 13, 5, 6, 7};
+    int n = sizeof(arr)/sizeof(arr[0]);
+    mergeSort(arr, 0, n-1);
+    printf("Sorted array:\\n");
+    printArray(arr, n);
+    return 0;
+}`,
+
+        py: `# Merge Sort in Python
+def merge(arr, l, m, r):
+    L = arr[l:m+1]
+    R = arr[m+1:r+1]
+    i = j = 0
+    k = l
+    while i < len(L) and j < len(R):
+        if L[i] <= R[j]:
+            arr[k] = L[i]
+            i += 1
+        else:
+            arr[k] = R[j]
+            j += 1
+        k += 1
+    while i < len(L):
+        arr[k] = L[i]
+        i += 1; k += 1
+    while j < len(R):
+        arr[k] = R[j]
+        j += 1; k += 1
+
+def merge_sort(arr, l, r):
+    if l < r:
+        m = (l+r)//2
+        merge_sort(arr, l, m)
+        merge_sort(arr, m+1, r)
+        merge(arr, l, m, r)
+
+arr = [12, 11, 13, 5, 6, 7]
+merge_sort(arr, 0, len(arr)-1)
+print("Sorted array:", arr)`,
+
+        java: `// Merge Sort in Java
+class GFG {
+    static void merge(int arr[], int l, int m, int r) {
+        int n1 = m - l + 1, n2 = r - m;
+        int L[] = new int[n1];
+        int R[] = new int[n2];
+        for (int i=0; i<n1; i++) L[i] = arr[l+i];
+        for (int j=0; j<n2; j++) R[j] = arr[m+1+j];
+
+        int i=0, j=0, k=l;
+        while (i<n1 && j<n2) {
+            if (L[i] <= R[j]) arr[k++] = L[i++];
+            else arr[k++] = R[j++];
+        }
+        while (i<n1) arr[k++] = L[i++];
+        while (j<n2) arr[k++] = R[j++];
+    }
+
+    static void mergeSort(int arr[], int l, int r) {
+        if (l<r) {
+            int m = (l+r)/2;
+            mergeSort(arr, l, m);
+            mergeSort(arr, m+1, r);
+            merge(arr, l, m, r);
+        }
+    }
+
+    static void printArray(int arr[]) {
+        for (int num : arr) System.out.print(num + " ");
+        System.out.println();
+    }
+
+    public static void main(String args[]) {
+        int arr[] = {12, 11, 13, 5, 6, 7};
+        mergeSort(arr, 0, arr.length-1);
+        System.out.println("Sorted array:");
+        printArray(arr);
+    }
+}`,
+
+        js: `// Merge Sort in JavaScript
+function merge(arr, l, m, r) {
+    let L = arr.slice(l, m+1);
+    let R = arr.slice(m+1, r+1);
+    let i = 0, j = 0, k = l;
+    while (i < L.length && j < R.length) {
+        if (L[i] <= R[j]) arr[k++] = L[i++];
+        else arr[k++] = R[j++];
+    }
+    while (i < L.length) arr[k++] = L[i++];
+    while (j < R.length) arr[k++] = R[j++];
+}
+
+function mergeSort(arr, l, r) {
+    if (l < r) {
+        let m = Math.floor((l+r)/2);
+        mergeSort(arr, l, m);
+        mergeSort(arr, m+1, r);
+        merge(arr, l, m, r);
+    }
+}
+
+let arr = [12, 11, 13, 5, 6, 7];
+mergeSort(arr, 0, arr.length-1);
+console.log("Sorted array:");
+console.log(arr.join(" "));`
+    },
+    heap: {
+        cpp: `#include <bits/stdc++.h>
+using namespace std;
+
+void heapify(vector<int>& arr, int n, int i) {
+    int largest = i;
+    int l = 2*i + 1, r = 2*i + 2;
+    if (l < n && arr[l] > arr[largest]) largest = l;
+    if (r < n && arr[r] > arr[largest]) largest = r;
+    if (largest != i) {
+        swap(arr[i], arr[largest]);
+        heapify(arr, n, largest);
+    }
+}
+
+void heapSort(vector<int>& arr) {
+    int n = arr.size();
+    for (int i = n/2 - 1; i >= 0; i--)
+        heapify(arr, n, i);
+    for (int i = n-1; i > 0; i--) {
+        swap(arr[0], arr[i]);
+        heapify(arr, i, 0);
+    }
+}
+
+void printVector(const vector<int>& arr) {
+    for (int num : arr) cout << num << " ";
+    cout << endl;
+}
+
+int main() {
+    vector<int> arr = {12, 11, 13, 5, 6, 7};
+    heapSort(arr);
+    cout << "Sorted array:\\n";
+    printVector(arr);
+    return 0;
+}`,
+
+        c: `#include <stdio.h>
+
+void heapify(int arr[], int n, int i) {
+    int largest = i;
+    int l = 2*i + 1, r = 2*i + 2;
+    if (l < n && arr[l] > arr[largest]) largest = l;
+    if (r < n && arr[r] > arr[largest]) largest = r;
+    if (largest != i) {
+        int temp = arr[i];
+        arr[i] = arr[largest];
+        arr[largest] = temp;
+        heapify(arr, n, largest);
+    }
+}
+
+void heapSort(int arr[], int n) {
+    for (int i = n/2 - 1; i >= 0; i--)
+        heapify(arr, n, i);
+    for (int i = n-1; i > 0; i--) {
+        int temp = arr[0];
+        arr[0] = arr[i];
+        arr[i] = temp;
+        heapify(arr, i, 0);
+    }
+}
+
+void printArray(int arr[], int size) {
+    for (int i = 0; i < size; i++)
+        printf("%d ", arr[i]);
+    printf("\\n");
+}
+
+int main() {
+    int arr[] = {12, 11, 13, 5, 6, 7};
+    int n = sizeof(arr)/sizeof(arr[0]);
+    heapSort(arr, n);
+    printf("Sorted array:\\n");
+    printArray(arr, n);
+    return 0;
+}`,
+
+        py: `# Heap Sort in Python
+def heapify(arr, n, i):
+    largest = i
+    l = 2*i + 1
+    r = 2*i + 2
+    if l < n and arr[l] > arr[largest]:
+        largest = l
+    if r < n and arr[r] > arr[largest]:
+        largest = r
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
+        heapify(arr, n, largest)
+
+def heap_sort(arr):
+    n = len(arr)
+    for i in range(n//2 - 1, -1, -1):
+        heapify(arr, n, i)
+    for i in range(n-1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]
+        heapify(arr, i, 0)
+
+arr = [12, 11, 13, 5, 6, 7]
+heap_sort(arr)
+print("Sorted array:", arr)`,
+
+        java: `// Heap Sort in Java
+class GFG {
+    static void heapify(int arr[], int n, int i) {
+        int largest = i;
+        int l = 2*i + 1, r = 2*i + 2;
+        if (l < n && arr[l] > arr[largest]) largest = l;
+        if (r < n && arr[r] > arr[largest]) largest = r;
+        if (largest != i) {
+            int swap = arr[i];
+            arr[i] = arr[largest];
+            arr[largest] = swap;
+            heapify(arr, n, largest);
+        }
+    }
+
+    static void heapSort(int arr[]) {
+        int n = arr.length;
+        for (int i = n/2 - 1; i >= 0; i--)
+            heapify(arr, n, i);
+        for (int i = n-1; i > 0; i--) {
+            int temp = arr[0];
+            arr[0] = arr[i];
+            arr[i] = temp;
+            heapify(arr, i, 0);
+        }
+    }
+
+    static void printArray(int arr[]) {
+        for (int num : arr) System.out.print(num + " ");
+        System.out.println();
+    }
+
+    public static void main(String args[]) {
+        int arr[] = {12, 11, 13, 5, 6, 7};
+        heapSort(arr);
+        System.out.println("Sorted array:");
+        printArray(arr);
+    }
+}`,
+
+        js: `// Heap Sort in JavaScript
+function heapify(arr, n, i) {
+    let largest = i;
+    let l = 2*i + 1, r = 2*i + 2;
+    if (l < n && arr[l] > arr[largest]) largest = l;
+    if (r < n && arr[r] > arr[largest]) largest = r;
+    if (largest !== i) {
+        [arr[i], arr[largest]] = [arr[largest], arr[i]];
+        heapify(arr, n, largest);
+    }
+}
+
+function heapSort(arr) {
+    let n = arr.length;
+    for (let i = Math.floor(n/2) - 1; i >= 0; i--)
+        heapify(arr, n, i);
+    for (let i = n-1; i > 0; i--) {
+        [arr[0], arr[i]] = [arr[i], arr[0]];
+        heapify(arr, i, 0);
+    }
+}
+
+let arr = [12, 11, 13, 5, 6, 7];
+heapSort(arr);
+console.log("Sorted array:");
+console.log(arr.join(" "));`
+    }
 };
 
+// const bubbleSortCodes = {
+//     cpp: `#include <bits/stdc++.h>
+// using namespace std;
 
-const bubbleLanButtons = document.querySelectorAll(".sort-lan-selector button");
+// // An optimized version of Bubble Sort 
+// void bubbleSort(vector<int>& arr) {
+//     int n = arr.size();
+//     bool swapped;
+
+//     for (int i = 0; i < n - 1; i++) {
+//         swapped = false;
+//         for (int j = 0; j < n - i - 1; j++) {
+//             if (arr[j] > arr[j + 1]) {
+//                 swap(arr[j], arr[j + 1]);
+//                 swapped = true;
+//             }
+//         }
+//         if (!swapped)
+//             break;
+//     }
+// }
+
+// void printVector(const vector<int>& arr) {
+//     for (int num : arr)
+//         cout << " " << num;
+// }
+
+// int main() {
+//     vector<int> arr = {64, 34, 25, 12, 22, 11, 90};
+//     bubbleSort(arr);
+//     cout << "Sorted array: \\n";
+//     printVector(arr);
+//     return 0;
+// }`,
+
+//     c: `#include <stdbool.h>
+// #include <stdio.h>
+
+// void swap(int* xp, int* yp){
+//     int temp = *xp;
+//     *xp = *yp;
+//     *yp = temp;
+// }
+
+// void bubbleSort(int arr[], int n){
+//     int i, j;
+//     bool swapped;
+//     for (i = 0; i < n - 1; i++) {
+//         swapped = false;
+//         for (j = 0; j < n - i - 1; j++) {
+//             if (arr[j] > arr[j + 1]) {
+//                 swap(&arr[j], &arr[j + 1]);
+//                 swapped = true;
+//             }
+//         }
+//         if (!swapped)
+//             break;
+//     }
+// }
+
+// void printArray(int arr[], int size){
+//     for (int i = 0; i < size; i++)
+//         printf("%d ", arr[i]);
+// }
+
+// int main(){
+//     int arr[] = {64, 34, 25, 12, 22, 11, 90};
+//     int n = sizeof(arr) / sizeof(arr[0]);
+//     bubbleSort(arr, n);
+//     printf("Sorted array: \\n");
+//     printArray(arr, n);
+//     return 0;
+// }`,
+
+//     py: `# Optimized implementation of Bubble Sort in Python
+// def bubble_sort(arr):
+//     n = len(arr)
+//     for i in range(n):
+//         swapped = False
+//         for j in range(0, n - i - 1):
+//             if arr[j] > arr[j + 1]:
+//                 arr[j], arr[j + 1] = arr[j + 1], arr[j]
+//                 swapped = True
+//         if not swapped:
+//             break
+
+// def print_array(arr):
+//     for i in arr:
+//         print(i, end=" ")
+
+// arr = [64, 34, 25, 12, 22, 11, 90]
+// bubble_sort(arr)
+// print("Sorted array:")
+// print_array(arr)`,
+
+//     java: `// Optimized Bubble Sort in Java
+// class GFG {
+//     static void bubbleSort(int arr[], int n){
+//         int i, j, temp;
+//         boolean swapped;
+//         for (i = 0; i < n - 1; i++) {
+//             swapped = false;
+//             for (j = 0; j < n - i - 1; j++) {
+//                 if (arr[j] > arr[j + 1]) {
+//                     temp = arr[j];
+//                     arr[j] = arr[j + 1];
+//                     arr[j + 1] = temp;
+//                     swapped = true;
+//                 }
+//             }
+//             if (!swapped)
+//                 break;
+//         }
+//     }
+
+//     static void printArray(int arr[], int size){
+//         for (int i = 0; i < size; i++)
+//             System.out.print(arr[i] + " ");
+//         System.out.println();
+//     }
+
+//     public static void main(String args[]){
+//         int arr[] = {64, 34, 25, 12, 22, 11, 90};
+//         int n = arr.length;
+//         bubbleSort(arr, n);
+//         System.out.println("Sorted array:");
+//         printArray(arr, n);
+//     }
+// }`,
+
+//     js: `// Optimized Bubble Sort in JavaScript
+// function bubbleSort(arr) {
+//     let n = arr.length;
+//     for (let i = 0; i < n; i++) {
+//         let swapped = false;
+//         for (let j = 0; j < n - i - 1; j++) {
+//             if (arr[j] > arr[j + 1]) {
+//                 [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+//                 swapped = true;
+//             }
+//         }
+//         if (!swapped) break;
+//     }
+// }
+
+// function printArray(arr) {
+//     console.log(arr.join(" "));
+// }
+
+// let arr = [64, 34, 25, 12, 22, 11, 90];
+// bubbleSort(arr);
+// console.log("Sorted array:");
+// printArray(arr);`
+// };
+
+// const insertionSortCodes = {
+//     cpp: `#include <bits/stdc++.h>
+// using namespace std;
+
+// // Function to perform Insertion Sort
+// void insertionSort(vector<int>& arr) {
+//     int n = arr.size();
+//     for (int i = 1; i < n; i++) {
+//         int key = arr[i];
+//         int j = i - 1;
+//         while (j >= 0 && arr[j] > key) {
+//             arr[j + 1] = arr[j];
+//             j--;
+//         }
+//         arr[j + 1] = key;
+//     }
+// }
+
+// void printVector(const vector<int>& arr) {
+//     for (int num : arr)
+//         cout << num << " ";
+//     cout << endl;
+// }
+
+// int main() {
+//     vector<int> arr = {64, 34, 25, 12, 22, 11, 90};
+//     insertionSort(arr);
+//     cout << "Sorted array:\\n";
+//     printVector(arr);
+//     return 0;
+// }`,
+
+//     c: `#include <stdio.h>
+
+// // Function to perform Insertion Sort
+// void insertionSort(int arr[], int n) {
+//     for (int i = 1; i < n; i++) {
+//         int key = arr[i];
+//         int j = i - 1;
+//         while (j >= 0 && arr[j] > key) {
+//             arr[j + 1] = arr[j];
+//             j--;
+//         }
+//         arr[j + 1] = key;
+//     }
+// }
+
+// void printArray(int arr[], int size) {
+//     for (int i = 0; i < size; i++)
+//         printf("%d ", arr[i]);
+//     printf("\\n");
+// }
+
+// int main() {
+//     int arr[] = {64, 34, 25, 12, 22, 11, 90};
+//     int n = sizeof(arr) / sizeof(arr[0]);
+//     insertionSort(arr, n);
+//     printf("Sorted array:\\n");
+//     printArray(arr, n);
+//     return 0;
+// }`,
+
+//     py: `# Insertion Sort in Python
+// def insertion_sort(arr):
+//     for i in range(1, len(arr)):
+//         key = arr[i]
+//         j = i - 1
+//         while j >= 0 and arr[j] > key:
+//             arr[j + 1] = arr[j]
+//             j -= 1
+//         arr[j + 1] = key
+
+// def print_array(arr):
+//     for i in arr:
+//         print(i, end=" ")
+//     print()
+
+// arr = [64, 34, 25, 12, 22, 11, 90]
+// insertion_sort(arr)
+// print("Sorted array:")
+// print_array(arr)`,
+
+//     java: `// Insertion Sort in Java
+// class GFG {
+//     static void insertionSort(int arr[]) {
+//         int n = arr.length;
+//         for (int i = 1; i < n; i++) {
+//             int key = arr[i];
+//             int j = i - 1;
+//             while (j >= 0 && arr[j] > key) {
+//                 arr[j + 1] = arr[j];
+//                 j = j - 1;
+//             }
+//             arr[j + 1] = key;
+//         }
+//     }
+
+//     static void printArray(int arr[]) {
+//         for (int num : arr)
+//             System.out.print(num + " ");
+//         System.out.println();
+//     }
+
+//     public static void main(String args[]) {
+//         int arr[] = {64, 34, 25, 12, 22, 11, 90};
+//         insertionSort(arr);
+//         System.out.println("Sorted array:");
+//         printArray(arr);
+//     }
+// }`,
+
+//     js: `// Insertion Sort in JavaScript
+// function insertionSort(arr) {
+//     for (let i = 1; i < arr.length; i++) {
+//         let key = arr[i];
+//         let j = i - 1;
+//         while (j >= 0 && arr[j] > key) {
+//             arr[j + 1] = arr[j];
+//             j--;
+//         }
+//         arr[j + 1] = key;
+//     }
+// }
+
+// function printArray(arr) {
+//     console.log(arr.join(" "));
+// }
+
+// let arr = [64, 34, 25, 12, 22, 11, 90];
+// insertionSort(arr);
+// console.log("Sorted array:");
+// printArray(arr);`
+// };
+
+const sortLanButtons = document.querySelectorAll(".sort-lan-selector button");
 const codeDisplay = document.querySelector(".code-display p");
 
-bubbleLanButtons.forEach(bubbleLanButtons => {
-    bubbleLanButtons.addEventListener("click", (event) => {
+// code display logic for language buttons
+sortLanButtons.forEach(sortLanButtons => {
+    sortLanButtons.addEventListener("click", (event) => {
         const selectedLang = event.target.id;
 
-        if (selectedLang !== lang && activeSort === "bubble") {
+        if (selectedLang !== lang) {
             document.querySelector(".sort-lan-selector .active")?.classList.remove("active");
             event.target.classList.add("active");
 
             lang = selectedLang;
-            codeDisplay.textContent = bubbleSortBtn[lang] || "// Code not found!";
-        }
-        else if (selectedLang !== lang && activeSort === "insertion") {
-            document.querySelector(".sort-lan-selector .active")?.classList.remove("active");
-            event.target.classList.add("active");
-
-            lang = selectedLang;
-            codeDisplay.textContent = insertionSortCodes[lang] || "// Code not found!";
+            codeDisplay.textContent = sortCodes[activeSort][lang] || "// Code not found!";
         }
     });
 });
@@ -589,7 +1519,16 @@ function highlightCodeLine(lineNumber) {
     });
 }
 
-// Bubble Sort Step Recorder
+// Sort Step Recorder for every sort algorithm
+const sort = {
+    bubble: recordBubbleSortSteps,
+    insertion: recordInsertionSortSteps,
+    selection: recordSelectionSortSteps,
+    quick: recordQuickSortSteps,
+    merge: recordMergeSortSteps,
+    heap: recordHeapSortSteps
+};
+
 function recordBubbleSortSteps(arr) {
     steps = []; // clear previous steps
     let temp = [...arr];
@@ -603,8 +1542,9 @@ function recordBubbleSortSteps(arr) {
                 indices: [j, j + 1],
                 arrSnapshot: [...temp],
                 swapped: swapped,
-                codeLine: swapped ? `swap` : `compare`,
-                sortedIndices: [] // nothing marked sorted yet in this step
+                codeLine: swapped ? "swap" : "compare",
+                sortedIndices: [],
+                action: swapped ? "swap" : "compare"
             });
 
             if (swapped) {
@@ -624,7 +1564,8 @@ function recordBubbleSortSteps(arr) {
             arrSnapshot: [...temp],
             swapped: false,
             codeLine: null,
-            sortedIndices: sortedPart
+            sortedIndices: sortedPart,
+            action: "sorted"
         });
     }
 
@@ -634,9 +1575,62 @@ function recordBubbleSortSteps(arr) {
         arrSnapshot: [...temp],
         swapped: false,
         codeLine: null,
-        sortedIndices: [...Array(temp.length).keys()]
+        sortedIndices: [...Array(temp.length).keys()],
+        action: "sorted"
     });
 }
+
+function recordInsertionSortSteps(arr) {
+    steps = [];
+    let temp = [...arr];
+
+    for (let i = 1; i < temp.length; i++) {
+        let key = temp[i];
+        let j = i - 1;
+
+        while (j >= 0 && temp[j] > key) {
+            steps.push({
+                indices: [j, j + 1],
+                arrSnapshot: [...temp],
+                swapped: true,
+                codeLine: "shift",
+                sortedIndices: [],
+                action: "shift"
+            });
+            temp[j + 1] = temp[j];
+            j--;
+        }
+
+        temp[j + 1] = key;
+
+        steps.push({
+            indices: [j + 1],
+            arrSnapshot: [...temp],
+            swapped: false,
+            codeLine: "insert",
+            sortedIndices: [],
+            action: "insert"
+        });
+    }
+
+    // Final sorted state
+    steps.push({
+        indices: [],
+        arrSnapshot: [...temp],
+        swapped: false,
+        codeLine: null,
+        sortedIndices: [...Array(temp.length).keys()],
+        action: "sorted"
+    });
+}
+
+function recordSelectionSortSteps(arr) {}
+
+function recordQuickSortSteps(arr) {}
+
+function recordMergeSortSteps(arr) {}
+
+function recordHeapSortSteps(arr) {}
 
 function animateStep(index) {
     if (index < 0 || index >= steps.length) return;
@@ -679,24 +1673,41 @@ function updateStepList() {
         const li = document.createElement('li');
         let description = '';
 
-        if (step.indices && step.indices.length === 2) {
-            const [a, b] = step.indices;
-            const arr = step.arrSnapshot;
-            const valA = arr[a];
-            const valB = arr[b];
-
-            description = `Visited index ${a} (${valA}) and ${b} (${valB}) → `;
-            if (step.swapped) {
-                description += `${valA} > ${valB}, so swapped`;
-            } else {
-                description += `${valA} ≤ ${valB}, no swap`;
+        switch (step.action) {
+            case "compare": {
+                const [a, b] = step.indices;
+                const arr = step.arrSnapshot;
+                description = `Compared index ${a} (${arr[a]}) and ${b} (${arr[b]}) → ${arr[a]} ≤ ${arr[b]}`;
+                break;
             }
-        }
-        else if (step.sortedIndices && step.sortedIndices.length) {
-            description = `Marking sorted bars at indices [${step.sortedIndices.join(", ")}]`;
-        }
-        else {
-            description = `No comparison (initialization/final sorted state)`;
+            case "swap": {
+                const [a, b] = step.indices;
+                const arr = step.arrSnapshot;
+                description = `Swapped index ${a} (${arr[a]}) and ${b} (${arr[b]})`;
+                break;
+            }
+            case "shift": {
+                description = `Shifted element at index ${step.indices[0]}`;
+                break;
+            }
+            case "insert": {
+                description = `Inserted element at index ${step.indices[0]}`;
+                break;
+            }
+            case "partition": {
+                description = `Partitioning with pivot at index ${step.indices[0]}`;
+                break;
+            }
+            case "merge": {
+                description = `Merging subarrays ${step.indices.join(", ")}`;
+                break;
+            }
+            case "sorted": {
+                description = `Marking sorted indices [${step.sortedIndices.join(", ")}]`;
+                break;
+            }
+            default:
+                description = `No comparison (initialization/final state)`;
         }
 
         li.textContent = `Step ${i + 1}: ${description}`;
@@ -757,7 +1768,7 @@ generateBtn.addEventListener('click', () => {
     if (arr.length === 0) return;
 
     generateBars(arr);
-    recordBubbleSortSteps(arr); // <-- now only records steps
+    sort[activeSort](arr); // <-- now only records steps
     currentStep = 0;
     animateStep(currentStep); // show first step
 });
