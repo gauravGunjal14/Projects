@@ -170,8 +170,6 @@ sortButtons.forEach(sortButtons => {
     })
 })
 
-
-
 // language button logic
 let lang = "cpp";
 
@@ -1624,13 +1622,328 @@ function recordInsertionSortSteps(arr) {
     });
 }
 
-function recordSelectionSortSteps(arr) {}
+function recordSelectionSortSteps(arr) {
+    steps = [];
+    let temp = [...arr];
+    let n = temp.length;
 
-function recordQuickSortSteps(arr) {}
+    for (let i = 0; i < n - 1; i++) {
+        let minIndex = i;
 
-function recordMergeSortSteps(arr) {}
+        for (let j = i + 1; j < n; j++) {
+            steps.push({
+                indices: [minIndex, j],
+                arrSnapshot: [...temp],
+                swapped: false,
+                codeLine: "compare",
+                sortedIndices: [],
+                action: "compare"
+            });
 
-function recordHeapSortSteps(arr) {}
+            if (temp[j] < temp[minIndex]) {
+                minIndex = j;
+            }
+        }
+
+        if (minIndex !== i) {
+            [temp[i], temp[minIndex]] = [temp[minIndex], temp[i]];
+            steps.push({
+                indices: [i, minIndex],
+                arrSnapshot: [...temp],
+                swapped: true,
+                codeLine: "swap",
+                sortedIndices: [],
+                action: "swap"
+            });
+        }
+
+        // Mark sorted element
+        steps.push({
+            indices: [i],
+            arrSnapshot: [...temp],
+            swapped: false,
+            codeLine: null,
+            sortedIndices: [i],
+            action: "sorted"
+        });
+    }
+
+    // Final state: all sorted
+    steps.push({
+        indices: [],
+        arrSnapshot: [...temp],
+        swapped: false,
+        codeLine: null,
+        sortedIndices: [...Array(temp.length).keys()],
+        action: "sorted"
+    });
+}
+
+function recordQuickSortSteps(arr) {
+    steps = [];
+    let temp = [...arr];
+
+    function partition(low, high) {
+        let pivot = temp[high];
+        let i = low - 1;
+
+        steps.push({
+            indices: [high],
+            arrSnapshot: [...temp],
+            swapped: false,
+            codeLine: "pivot",
+            sortedIndices: [],
+            action: "partition"
+        });
+
+        for (let j = low; j < high; j++) {
+            steps.push({
+                indices: [j, high],
+                arrSnapshot: [...temp],
+                swapped: false,
+                codeLine: "compare",
+                sortedIndices: [],
+                action: "compare"
+            });
+
+            if (temp[j] < pivot) {
+                i++;
+                [temp[i], temp[j]] = [temp[j], temp[i]];
+                steps.push({
+                    indices: [i, j],
+                    arrSnapshot: [...temp],
+                    swapped: true,
+                    codeLine: "swap",
+                    sortedIndices: [],
+                    action: "swap"
+                });
+            }
+        }
+
+        [temp[i + 1], temp[high]] = [temp[high], temp[i + 1]];
+        steps.push({
+            indices: [i + 1, high],
+            arrSnapshot: [...temp],
+            swapped: true,
+            codeLine: "swap",
+            sortedIndices: [],
+            action: "swap"
+        });
+
+        return i + 1;
+    }
+
+    function quickSort(low, high) {
+        if (low < high) {
+            let pi = partition(low, high);
+
+            quickSort(low, pi - 1);
+            quickSort(pi + 1, high);
+        }
+    }
+
+    quickSort(0, temp.length - 1);
+
+    steps.push({
+        indices: [],
+        arrSnapshot: [...temp],
+        swapped: false,
+        codeLine: null,
+        sortedIndices: [...Array(temp.length).keys()],
+        action: "sorted"
+    });
+}
+
+function recordMergeSortSteps(arr) {
+    steps = [];
+    let temp = [...arr];
+
+    function merge(left, mid, right) {
+        let n1 = mid - left + 1;
+        let n2 = right - mid;
+
+        let L = temp.slice(left, mid + 1);
+        let R = temp.slice(mid + 1, right + 1);
+
+        let i = 0, j = 0, k = left;
+
+        while (i < n1 && j < n2) {
+            steps.push({
+                indices: [left + i, mid + 1 + j],
+                arrSnapshot: [...temp],
+                swapped: false,
+                codeLine: "compare",
+                sortedIndices: [],
+                action: "compare"
+            });
+
+            if (L[i] <= R[j]) {
+                temp[k] = L[i];
+                i++;
+            } else {
+                temp[k] = R[j];
+                j++;
+            }
+
+            steps.push({
+                indices: [k],
+                arrSnapshot: [...temp],
+                swapped: false,
+                codeLine: "merge",
+                sortedIndices: [],
+                action: "merge"
+            });
+            k++;
+        }
+
+        while (i < n1) {
+            temp[k] = L[i];
+            steps.push({
+                indices: [k],
+                arrSnapshot: [...temp],
+                swapped: false,
+                codeLine: "merge",
+                sortedIndices: [],
+                action: "merge"
+            });
+            i++;
+            k++;
+        }
+
+        while (j < n2) {
+            temp[k] = R[j];
+            steps.push({
+                indices: [k],
+                arrSnapshot: [...temp],
+                swapped: false,
+                codeLine: "merge",
+                sortedIndices: [],
+                action: "merge"
+            });
+            j++;
+            k++;
+        }
+    }
+
+    function mergeSort(left, right) {
+        if (left < right) {
+            let mid = Math.floor((left + right) / 2);
+            mergeSort(left, mid);
+            mergeSort(mid + 1, right);
+            merge(left, mid, right);
+        }
+    }
+
+    mergeSort(0, temp.length - 1);
+
+    steps.push({
+        indices: [],
+        arrSnapshot: [...temp],
+        swapped: false,
+        codeLine: null,
+        sortedIndices: [...Array(temp.length).keys()],
+        action: "sorted"
+    });
+}
+
+function recordHeapSortSteps(arr) {
+    steps = [];
+    let temp = [...arr];
+    let n = temp.length;
+
+    function heapify(n, i) {
+        let largest = i;
+        let l = 2 * i + 1;
+        let r = 2 * i + 2;
+
+        // Left child
+        if (l < n) {
+            steps.push({
+                indices: [i, l],
+                arrSnapshot: [...temp],
+                swapped: false,
+                codeLine: "compare",
+                sortedIndices: [],
+                action: "compare"
+            });
+            if (temp[l] > temp[largest]) {
+                largest = l;
+            }
+        }
+
+        // Right child
+        if (r < n) {
+            steps.push({
+                indices: [i, r],
+                arrSnapshot: [...temp],
+                swapped: false,
+                codeLine: "compare",
+                sortedIndices: [],
+                action: "compare"
+            });
+            if (temp[r] > temp[largest]) {
+                largest = r;
+            }
+        }
+
+        // Swap if needed
+        if (largest !== i) {
+            [temp[i], temp[largest]] = [temp[largest], temp[i]];
+            steps.push({
+                indices: [i, largest],
+                arrSnapshot: [...temp],
+                swapped: true,
+                codeLine: "swap",
+                sortedIndices: [],
+                action: "swap"
+            });
+
+            heapify(n, largest);
+        }
+    }
+
+    // Build max heap
+    for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {
+        heapify(n, i);
+    }
+
+    // Extract elements from heap one by one
+    for (let i = n - 1; i > 0; i--) {
+        // Swap root with last
+        [temp[0], temp[i]] = [temp[i], temp[0]];
+        steps.push({
+            indices: [0, i],
+            arrSnapshot: [...temp],
+            swapped: true,
+            codeLine: "swap",
+            sortedIndices: [i], // mark extracted as sorted
+            action: "swap"
+        });
+
+        // Heapify reduced heap
+        heapify(i, 0);
+
+        // Mark current last index as sorted
+        steps.push({
+            indices: [],
+            arrSnapshot: [...temp],
+            swapped: false,
+            codeLine: null,
+            sortedIndices: [i],
+            action: "sorted"
+        });
+    }
+
+    // Final sorted state
+    steps.push({
+        indices: [],
+        arrSnapshot: [...temp],
+        swapped: false,
+        codeLine: null,
+        sortedIndices: [...Array(temp.length).keys()],
+        action: "sorted"
+    });
+}
 
 function animateStep(index) {
     if (index < 0 || index >= steps.length) return;
