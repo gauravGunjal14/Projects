@@ -113,18 +113,26 @@ body.light-mode .links:hover {
 }
 
 body.light-mode .menuIcon,
-.closeIcon {
+body.light-mode .closeIcon {
   color: #627ef0;
 }
 
 .hero {
   text-align: center;
-  padding: 100px 20px 80px;
-  background: linear-gradient(to right, #1e1e1e, #2e2e2e);
+  padding: 100px 40px 80px;
+  background: radial-gradient(ellipse 120% 80% at 70% 20%, rgba(255, 20, 147, 0.15), transparent 50%),
+    radial-gradient(ellipse 100% 60% at 30% 10%, rgba(0, 255, 255, 0.12), transparent 60%),
+    radial-gradient(ellipse 90% 70% at 50% 0%, rgba(138, 43, 226, 0.18), transparent 65%),
+    radial-gradient(ellipse 110% 50% at 80% 30%, rgba(255, 215, 0, 0.08), transparent 40%),
+    #000000;
 }
 
 body.light-mode .hero {
-  background: linear-gradient(to right, #e7edff, #ffffff);
+  background: radial-gradient(ellipse 80% 60% at 5% 40%, rgba(175, 109, 255, 0.48), transparent 67%),
+    radial-gradient(ellipse 70% 60% at 45% 45%, rgba(255, 100, 180, 0.41), transparent 67%),
+    radial-gradient(ellipse 62% 52% at 83% 76%, rgba(255, 235, 170, 0.44), transparent 63%),
+    radial-gradient(ellipse 60% 48% at 75% 20%, rgba(120, 190, 255, 0.36), transparent 66%),
+    linear-gradient(45deg, #f7eaff 0%, #fde2ea 100%);
 }
 
 .hero h1 {
@@ -809,11 +817,11 @@ body.light-mode #copy-btn {
     margin: 0 20px 40px 20px;
   }
 
-  .sort-desc h2{
+  .sort-desc h2 {
     font-size: 0.9rem;
   }
 
-    .sort-desc p{
+  .sort-desc p {
     font-size: 0.8rem;
   }
 
@@ -892,7 +900,7 @@ body.light-mode #copy-btn {
     margin: 40px 20px;
   }
 
-  #codeBox{
+  #codeBox {
     /* padding: 20px;
     margin: 20px; */
     font-size: 0.6rem;
