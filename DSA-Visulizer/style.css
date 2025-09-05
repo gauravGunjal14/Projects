@@ -7,7 +7,7 @@
 
 body {
   font-family: 'Poppins', sans-serif;
-  background-color: #121212;
+  background-color: #000000;
 }
 
 body.light-mode {
@@ -20,25 +20,25 @@ body.light-mode {
   justify-content: space-between;
   height: 60px;
   align-items: center;
-  background-color: rgba(60, 60, 60, 0.974);
+  background-color: rgba(37, 37, 37, 0.974);
   position: sticky;
   top: 0;
   z-index: 1;
 }
 
 body.light-mode .navbar {
-  background-color: #f7f7fff5;
+  background-color: #fffffff5;
 }
 
 .logo {
   padding-left: 5vw;
   font-size: 30px;
   font-weight: 600;
-  color: #f06262;
+  color: #ffffff;
 }
 
 body.light-mode .logo {
-  color: #627ef0;
+  color: #000000;
 }
 
 nav {
@@ -75,14 +75,14 @@ body.light-mode .nav-links.show {
 
 .links {
   text-decoration: none;
-  color: #f06262;
+  color: #ffffff;
   font-size: 18px;
   font-weight: 500;
   align-self: center;
 }
 
 body.light-mode .links {
-  color: #627ef0;
+  color: #000000;
 }
 
 .links:hover {
@@ -119,60 +119,94 @@ body.light-mode .closeIcon {
 
 .hero {
   text-align: center;
-  padding: 100px 40px 80px;
-  background: radial-gradient(ellipse 120% 80% at 70% 20%, rgba(255, 20, 147, 0.15), transparent 50%),
-    radial-gradient(ellipse 100% 60% at 30% 10%, rgba(0, 255, 255, 0.12), transparent 60%),
-    radial-gradient(ellipse 90% 70% at 50% 0%, rgba(138, 43, 226, 0.18), transparent 65%),
-    radial-gradient(ellipse 110% 50% at 80% 30%, rgba(255, 215, 0, 0.08), transparent 40%),
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  background: radial-gradient(ellipse 120% 80% at 70% 20%, rgba(255, 20, 147, 0.150), transparent 50%),
+    radial-gradient(ellipse 100% 60% at 30% 30%, rgba(0, 255, 255, 0.120), transparent 60%),
+    radial-gradient(ellipse 90% 70% at 50% 0%, rgba(138, 43, 226, 0.180), transparent 65%),
+    radial-gradient(ellipse 110% 50% at 80% 50%, rgba(255, 215, 0, 0.080), transparent 40%),
     #000000;
 }
 
 body.light-mode .hero {
-  background: radial-gradient(ellipse 80% 60% at 5% 40%, rgba(175, 109, 255, 0.48), transparent 67%),
-    radial-gradient(ellipse 70% 60% at 45% 45%, rgba(255, 100, 180, 0.41), transparent 67%),
-    radial-gradient(ellipse 62% 52% at 83% 76%, rgba(255, 235, 170, 0.44), transparent 63%),
-    radial-gradient(ellipse 60% 48% at 75% 20%, rgba(120, 190, 255, 0.36), transparent 66%),
-    linear-gradient(45deg, #f7eaff 0%, #fde2ea 100%);
+  background: radial-gradient(ellipse 120% 80% at 70% 20%, rgba(255, 20, 147, 0.350), transparent 50%),
+    radial-gradient(ellipse 100% 60% at 30% 30%, rgba(0, 255, 255, 0.320), transparent 60%),
+    radial-gradient(ellipse 90% 70% at 50% 0%, rgba(138, 43, 226, 0.380), transparent 65%),
+    radial-gradient(ellipse 110% 50% at 80% 50%, rgba(255, 215, 0, 0.380), transparent 40%),
+    #ffffff;
 }
 
 .hero h1 {
-  font-size: 3rem;
-  font-weight: 700;
+  font-size: 4rem;
+  font-weight: 500;
   margin-bottom: 10px;
-  background: linear-gradient(to right, #ff6b6b, #4ecdc4, #ffd166, #6a0572, #ab83a1);
+  background: linear-gradient(to right, #ffffff, #d5d5d5, #fba7a7);
+  /* font-family: "Geist", sans-serif; */
+  /* background: linear-gradient(to right, #ff6b6b, #4ecdc4, #ffd166, #6a0572, #ab83a1); */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.hero p {
-  font-size: 1.2rem;
-  background: linear-gradient(to right, #05ffea, #ee00ff);
+body.light-mode .hero h1 {
+  background: linear-gradient(to right, #000000, #000000, #ce8f8f);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.hero h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  background: linear-gradient(to right, #ffffff, #d5d5d5, #511e1e);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+body.light-mode .hero h2 {
+  background: linear-gradient(to right, #000000, #000000, #8f91ce);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero pre {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #989898;
   margin-bottom: 30px;
+
+}
+
+body.light-mode .hero pre {
+  color: #575757;
 }
 
 .explore-btn {
-  background-color: #f06262;
+  background-color: #05021a;
   color: white;
   text-decoration: none;
+  width: max-content;
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 1rem;
+  font-weight: 500;
+  box-shadow: #000;
 }
 
 .explore-btn:hover {
-  background-color: #f9a825;
+  background-color: #09032b;
 }
 
 body.light-mode .explore-btn {
-  background-color: #627ef0;
+  background-color: #05021a;
 }
 
 body.light-mode .explore-btn:hover {
-  background-color: #f9a825;
+  background-color: #09032b;
 }
 
 .categories {
@@ -182,6 +216,7 @@ body.light-mode .explore-btn:hover {
   padding: 50px 0;
   flex-direction: column;
   text-align: center;
+  background-color: #000000;
 }
 
 body.light-mode .categories {
@@ -191,7 +226,7 @@ body.light-mode .categories {
 .categories h2 {
   font-size: 2rem;
   margin-bottom: 40px;
-  color: #f9a825;
+  color: #ffffff;
 }
 
 .category-grid {
@@ -206,25 +241,25 @@ body.light-mode .categories {
 }
 
 .category-card {
-  background-color: #1c1616;
+  background-color: #000000;
+  box-shadow: 5px 5px 15px #ffffff2e;
   border-radius: 10px;
   padding: 25px;
-  box-shadow: 0 8px 15px rgba(229, 26, 26, 0.529);
+  /* box-shadow: 0 8px 15px rgba(229, 26, 26, 0.529); */
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
 body.light-mode .category-card {
-  background-color: #fdfdfd;
-  box-shadow: 0 8px 15px rgba(116, 146, 255, 0.611);
+  background-color: #ffffff;
+  box-shadow: 5px 5px 10px #00000059;
 }
 
 .category-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 12px 20px rgba(255, 251, 18, 0.4);
 }
 
 body.light-mode .category-card:hover {
-  box-shadow: 0 12px 20px rgba(255, 174, 0, 0.786);
+  /* box-shadow: 0 12px 20px rgba(255, 174, 0, 0.786); */
 }
 
 .categories-card img {
@@ -249,22 +284,23 @@ body.light-mode .category-card h3 {
 }
 
 .category-card a {
-  background-color: #f9a825;
-  color: #000000;
+  background-color: #05021a;
+  display: none;
+  color: #ffffff;
   padding: 8px 16px;
   border-radius: 6px;
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 500;
   display: inline-block;
 }
 
 .category-card a:hover {
-  background-color: #ffd54f;
+  background-color: #09032b;
 }
 
 .contact {
-  background-color: #1e1e1e7e;
-  color: #f06262;
+  background-color: #1010107e;
+  color: #ffffff;
   padding: 50px 20px;
   text-align: center;
 }
