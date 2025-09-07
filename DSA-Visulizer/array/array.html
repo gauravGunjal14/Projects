@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Visualize Array operations like Insert, Delete, Search, Update, and Traverse.">
+  <meta name="keywords"
+    content="DSA, Visualizer, Algorithms, Data Structures, Interactive, Array, Insert, Delete, Search, Update, Traverse, Gaurav Gunjal">
+  <title>Array Visualizer | Orion</title>
+  <link rel="stylesheet" href="../style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="navbar">
+    <div class="logo">ORION</div>
+    <nav>
+      <div class="nav-links">
+        <a href="#array-page" class="links">Array</a>
+        <a href="#visualizer" class="links">Visualizer</a>
+        <a href="#code" class="links">Code</a>
+        <a href="../index.html" class="links">Home</a>
+      </div>
+      <div class="theme">
+        <button id="toggelBtn" class="light-mode theme">
+          <img id="themeIcon" src="../icons/light-mode.png" alt="Switch into light mode">
+        </button>
+      </div>
+
+      <div class="menuIcon" id="menuIcon">&#9776;</div>
+      <div class="closeIcon" id="closeIcon" style="display: none;">&times;</div>
+    </nav>
+  </header>
+
+  <!-- main -->
+  <main id="array-page">
+
+    <!-- array info -->
+    <section class="sort-desc" id="arrayDesc">
+      <h2><strong>Array Visualization</strong></h2>
+      <p class="defination">
+        <strong>Definition:</strong>
+      <ul>
+        <li class="defination1">An array is a linear data structure that stores elements at contiguous memory locations.</li>
+      </ul>
+      </p>
+
+      <p class="working"><strong>Working:</strong>
+      <ul class="working1">
+        <li>Operations like Insertion, Deletion, Search, Update, and Traversal are performed on arrays.</li>
+      </ul>
+      </p>
+      <p class="time-complexity"><strong>Time Complexity:</strong> Depends on operation (Insert, Delete, Search).</p>
+      <p class="space-complexity"><strong>Space Complexity:</strong> O(n)</p>
+    </section>
+
+    <!-- visualizer -->
+    <section id="visualizer" class="visualizer">
+
+      <div class="visualizer-layout">
+
+        <!-- Left Panel -->
+        <div class="left-panel">
+          <!-- Input Section -->
+          <div class="input-section">
+            <label for="arraySize">Array Size:</label>
+            <input type="number" id="arraySize" placeholder="5" />
+
+            <label for="arrayInput">Enter elements:</label>
+            <input type="text" id="arrayInput" placeholder="10, 20, 30, 40, 50" />
+            <button id="generateArrayBtn">Generate Array</button>
+          </div>
+
+          <!-- Array Display -->
+          <div class="bar-wrapper">
+            <div id="arrayContainer" class="array-container"></div>
+            <div id="arrayIndexContainer" class="bar-index-container"></div>
+          </div>
+
+          <!-- Array Operation Controls -->
+          <div class="control-panel">
+            <h3>Operations:</h3>
+
+            <div class="operation">
+              <label>Insert:</label>
+              <input type="number" id="insertValue" placeholder="Value" />
+              <input type="number" id="insertIndex" placeholder="Index" />
+              <button id="insertBtn">Insert</button>
+            </div>
+
+            <div class="operation">
+              <label>Delete:</label>
+              <input type="number" id="deleteIndex" placeholder="Index" />
+              <button id="deleteBtn">Delete</button>
+            </div>
+
+            <div class="operation">
+              <label>Search:</label>
+              <input type="number" id="searchValue" placeholder="Value" />
+              <button id="searchBtn">Search</button>
+            </div>
+
+            <div class="operation">
+              <label>Update:</label>
+              <input type="number" id="updateIndex" placeholder="Index" />
+              <input type="number" id="updateValue" placeholder="New Value" />
+              <button id="updateBtn">Update</button>
+            </div>
+
+            <div class="operation">
+              <button id="traverseBtn">Traverse</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Panel -->
+        <div class="right-panel">
+          <h3>Steps:</h3>
+          <div class="step-info" id="stepInfo">
+            <h3>Visited Steps:</h3>
+            <ul id="stepList"></ul>
+          </div>
+
+          <div class="code-highlight-section">
+            <h3>Code Execution Highlight:</h3>
+            <pre id="codeBox">
+<code><span>// Example: Array Insertion</span>
+<span>for (int i = n; i > pos; i--) {</span>
+<span>   arr[i] = arr[i-1];</span>
+<span>}</span>
+<span>arr[pos] = value;</span>
+<span>n++;</span></code></pre>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- display multi-language code -->
+    <section id="code" class="sort-lan-selector">
+      <button class="sort-lan-btn active" id="cpp">C++</button>
+      <button class="sort-lan-btn" id="c">C</button>
+      <button class="sort-lan-btn" id="py">Python</button>
+      <button class="sort-lan-btn" id="java">Java</button>
+      <button class="sort-lan-btn" id="js">JavaScript</button>
+    </section>
+
+    <!-- code display -->
+    <section class="code-display">
+      <button id="copy-btn"><img src="../icons/dark-copy.png" alt="copy code"></button>
+      <p class="code-lang"></p>
+    </section>
+
+  </main>
+  <script src="./arrayLogic.js"></script>
+</body>
+
+</html>
