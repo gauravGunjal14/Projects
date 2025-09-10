@@ -638,9 +638,13 @@ body.light-mode .bar-index {
   transition: background-color 0.5s ease;
 }
 
+.input-section label {
+  color: white;
+}
+
 .input-section input {
   padding: 10px;
-  width: 60%;
+  width: 20%;
   max-width: 300px;
   border-radius: 5px;
   border: none;
@@ -678,6 +682,17 @@ body.light-mode .input-section button:hover {
   justify-content: center;
   align-items: center;
   margin-top: 10px;
+}
+
+.control-panel h3,label{
+  color: white;
+}
+
+.control-panel input{
+  padding-left: 8px;
+  height: 30px;
+  border-radius: 5px;
+  border: none;
 }
 
 .control-panel button,
