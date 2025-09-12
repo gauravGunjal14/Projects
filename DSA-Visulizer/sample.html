@@ -2,1394 +2,1392 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Visualize data structures and algorithms with animations and interactive tools.">
-  <meta name="keywords"
-    content="DSA, Visualizer, Algorithms, Data Structures, Interactive, Sorting, Sort, Gaurav Gunjal">
-  <title>DSA Visualizer</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      scroll-margin: 60px;
-    }
-
-    body {
-      font-family: 'Poppins', sans-serif;
-      background-color: #121212;
-    }
-
-    body.light-mode {
-      background-color: #ffffff;
-      color: #2d2d2d;
-    }
-
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      height: 60px;
-      align-items: center;
-      background-color: rgba(60, 60, 60, 0.974);
-      position: sticky;
-      top: 0;
-      z-index: 1;
-    }
-
-    body.light-mode .navbar {
-      background-color: #f7f7fff5;
-    }
-
-    .logo {
-      padding-left: 5vw;
-      font-size: 30px;
-      font-weight: 600;
-      color: #f06262;
-    }
-
-    body.light-mode .logo {
-      color: #627ef0;
-    }
-
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      height: 60px;
-      margin-right: 2vw;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 40px;
-      margin-right: 40px;
-    }
-
-    .nav-links.show {
-      display: flex;
-      flex-direction: column;
-      position: absolute;
-      top: 60px;
-      right: -40px;
-      background-color: #322727;
-      padding: 10px 20px;
-      border-radius: 10px;
-      z-index: 2;
-    }
-
-    body.light-mode .nav-links.show {
-      background-color: #ffe2e2;
-    }
-
-
-    .links {
-      text-decoration: none;
-      color: #f06262;
-      font-size: 18px;
-      font-weight: 500;
-      align-self: center;
-    }
-
-    body.light-mode .links {
-      color: #627ef0;
-    }
-
-    .links:hover {
-      color: #f9a825;
-    }
-
-    body.light-mode .links:hover {
-      color: #f9a825;
-    }
-
-    .theme {
-      background: none;
-      border: none;
-      cursor: pointer;
-      margin-right: 20px;
-      display: flex;
-      align-items: center;
-    }
-
-    .menuIcon,
-    .closeIcon {
-      display: none;
-      font-size: 30px;
-      color: #f06262;
-      cursor: pointer;
-      font-weight: 700;
-      width: 30px;
-    }
-
-    body.light-mode .menuIcon,
-    .closeIcon {
-      color: #627ef0;
-    }
-
-    .hero {
-      text-align: center;
-      padding: 100px 20px 80px;
-      background: linear-gradient(to right, #1e1e1e, #2e2e2e);
-    }
-
-    body.light-mode .hero {
-      background: linear-gradient(to right, #e7edff, #ffffff);
-    }
-
-    .hero h1 {
-      font-size: 3rem;
-      font-weight: 700;
-      margin-bottom: 10px;
-      background: linear-gradient(to right, #ff6b6b, #4ecdc4, #ffd166, #6a0572, #ab83a1);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .hero p {
-      font-size: 1.2rem;
-      background: linear-gradient(to right, #05ffea, #ee00ff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 30px;
-    }
-
-    .explore-btn {
-      background-color: #f06262;
-      color: white;
-      text-decoration: none;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 1rem;
-    }
-
-    .explore-btn:hover {
-      background-color: #f9a825;
-    }
-
-    body.light-mode .explore-btn {
-      background-color: #627ef0;
-    }
-
-    body.light-mode .explore-btn:hover {
-      background-color: #f9a825;
-    }
-
-    .categories {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      padding: 50px 0;
-      flex-direction: column;
-      text-align: center;
-    }
-
-    body.light-mode .categories {
-      background-color: #ffffff;
-    }
-
-    .categories h2 {
-      font-size: 2rem;
-      margin-bottom: 40px;
-      color: #f9a825;
-    }
-
-    .category-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 30px;
-      padding: 0 20px;
-    }
-
-    .category-card img {
-      width: 200px;
-    }
-
-    .category-card {
-      background-color: #1c1616;
-      border-radius: 10px;
-      padding: 25px;
-      box-shadow: 0 8px 15px rgba(229, 26, 26, 0.529);
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-
-    body.light-mode .category-card {
-      background-color: #fdfdfd;
-      box-shadow: 0 8px 15px rgba(116, 146, 255, 0.611);
-    }
-
-    .category-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 20px rgba(255, 251, 18, 0.4);
-    }
-
-    body.light-mode .category-card:hover {
-      box-shadow: 0 12px 20px rgba(255, 174, 0, 0.786);
-    }
-
-    .categories-card img {
-      max-width: 80px;
-      margin-bottom: 15px;
-    }
-
-    .category-card h3 {
-      font-size: 1.4rem;
-      margin-bottom: 10px;
-      color: #fff;
-    }
-
-    body.light-mode .category-card h3 {
-      color: #000;
-    }
-
-    .category-card p {
-      font-size: 0.95rem;
-      color: #aaa;
-      margin-bottom: 15px;
-    }
-
-    .category-card a {
-      background-color: #f9a825;
-      color: #000000;
-      padding: 8px 16px;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: 600;
-      display: inline-block;
-    }
-
-    .category-card a:hover {
-      background-color: #ffd54f;
-    }
-
-    .contact {
-      background-color: #1e1e1e7e;
-      color: #f06262;
-      padding: 50px 20px;
-      text-align: center;
-    }
-
-    body.light-mode .contact {
-      background-color: #ededed;
-      color: #627ef0;
-    }
-
-    .contact h2 {
-      font-size: 2rem;
-      margin-bottom: 20px;
-    }
-
-    .contact p {
-      font-size: 1.1rem;
-      margin-bottom: 30px;
-    }
-
-    .contact form {
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .contact form input,
-    .contact form textarea {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: none;
-      border-radius: 5px;
-      background-color: #2e2e2e;
-      color: #fff;
-    }
-
-    body.light-mode .contact form input {
-      background-color: #afc4ff;
-    }
-
-    body.light-mode .contact form textarea {
-      background-color: #afc4ff;
-    }
-
-    .contact button {
-      background-color: #f06262;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 1rem;
-      font-weight: 700;
-    }
-
-    body.light-mode .contact button {
-      background-color: #627ef0;
-    }
-
-    .contact button:hover {
-      background-color: #ffd166;
-      color: #000000;
-    }
-
-    body.light-mode .contact button:hover {
-      background-color: #f9a825;
-    }
-
-    .footer {
-      background-color: #1e1e1e;
-      color: #f06262;
-      text-align: center;
-      padding: 20px;
-    }
-
-    body.light-mode .footer {
-      background-color: #dfe0ff;
-    }
-
-    .footer p {
-      font-size: 0.9rem;
-      color: #999;
-    }
-
-    body.light-mode .footer p {
-      color: #000000;
-    }
-
-    .footer a {
-      color: #f9a825;
-
-    }
-
-    body.light-mode .footer a {
-      color: #f9a825;
-
-    }
-
-    @media screen and (max-width: 768px) {
-
-      .logo {
-        font-size: 1.5rem;
-      }
-
-      .nav-links {
-        display: none;
-      }
-
-      .menuIcon,
-      .closeIcon {
-        display: block;
-      }
-
-      .hero {
-        text-align: center;
-        padding: 25vh 20px 80px;
-        height: 80vh;
-      }
-
-      .hero h1 {
-        font-size: 1.6rem;
-        font-weight: 700;
-        margin-bottom: 10px;
-      }
-
-      .hero p {
-        font-size: 0.9rem;
-      }
-
-      .footer p {
-        font-size: 0.9rem;
-      }
-    }
-
-
-    /* sort page */
-
-    #sort-page {
-      padding: 50px 20px;
-      color: #fff;
-    }
-
-    body.light-mode #sort-page {
-      color: #2d2d2d;
-    }
-
-    .sort-selector {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-      margin: 0 60px 40px 60px;
-    }
-
-    .sort-selector a {
-      text-decoration: none;
-      color: #fff;
-    }
-
-    .sort-btn {
-      background-color: #f06262;
-      color: white;
-      border-radius: 8px;
-      border: none;
-      padding: 10px 20px;
-      cursor: pointer;
-      font-size: 1rem;
-      font-weight: 600;
-      transition: background-color 0.3s ease;
-    }
-
-    body.light-mode .sort-btn {
-      background-color: #627ef0;
-    }
-
-    .sort-btn:hover {
-      background-color: #bc2a2a;
-    }
-
-    body.light-mode .sort-btn:hover {
-      background-color: #2a47bc;
-    }
-
-    .sort-btn.active {
-      background-color: #f9a825;
-      color: #000000;
-    }
-
-    body.light-mode .sort-btn.active {
-      background-color: #f9a825;
-      color: #000000;
-    }
-
-    .sort-desc {
-      /* max-width: 800px; */
-      margin: 60px;
-      padding: 40px;
-      background-color: #543939;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
-      color: #a4a4a4;
-    }
-
-    .sort-desc strong {
-      color: white;
-    }
-
-    body.light-mode .sort-desc strong {
-      color: rgb(0, 0, 0);
-    }
-
-    body.light-mode .sort-desc {
-      background-color: #e2e3ff;
-      color: #212121;
-    }
-
-    .visualizer-layout {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-      background-color: #1c1616;
-      gap: 30px;
-      margin: 60px;
-      border-radius: 20px;
-      padding: 40px;
-    }
-
-    body.light-mode .visualizer-layout {
-      background-color: #d0daff;
-    }
-
-    .left-panel {
-      flex: 2;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .step-info {
-      height: 300px;
-      flex: 1;
-      background-color: #392d2f;
-      color: #f8f8f2;
-      padding: 15px;
-      border-radius: 10px;
-      font-size: 1.1rem;
-      max-height: 400px;
-      overflow-y: auto;
-      transition: all 0.3s ease;
-      padding-left: 30px;
-    }
-
-    body.light-mode .step-info {
-      background-color: #b4bfff;
-      color: #000;
-    }
-
-    .step-info li {
-      padding: 4px 6px;
-      margin-bottom: 3px;
-      border-radius: 6px;
-    }
-
-    .step-info li.current {
-      background-color: #ff8b8b;
-      font-weight: bold;
-      border-left: 4px solid #ff0000;
-    }
-
-    body.light-mode .step-info li.current {
-      background-color: #7291ff;
-      font-weight: bold;
-      border-left: 4px solid #0013c1;
-    }
-
-    .bar-wrapper {
-      display: flex;
-      flex-direction: column;
-      /* align-items: center; */
-      /* justify-content: flex-end; */
-      /* height: auto; */
-      overflow-x: auto;
-    }
-
-    .bars-container {
-      display: flex;
-      justify-content: center;
-      align-items: flex-end;
-      height: 300px;
-      margin-top: 35px;
-      background-color: #413434;
-      padding: 10px;
-      border-radius: 8px;
-      overflow-x: auto;
-      width: 100%;
-      min-width: max-content;
-    }
-
-    body.light-mode .bars-container {
-      background-color: #f4f6ff;
-    }
-
-    .bar-index-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 9.5px;
-      height: 40px;
-      margin-top: 5px;
-      font-size: 0.9rem;
-      color: #aaa;
-      width: 100%;
-      min-width: max-content;
-      padding: 15px;
-    }
-
-    .bar-index {
-      width: 30px;
-      text-align: center;
-      font-weight: bold;
-      color: #ccc;
-    }
-
-    body.light-mode .bar-index {
-      color: #333;
-    }
-
-    .bar {
-      font-size: 12px;
-      color: #000;
-      width: 30px;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      border-radius: 4px;
-      transition: height 0.3s, background-color 0.3s;
-      background-color: #61dafb;
-    }
-
-    .input-section {
-      margin-bottom: 20px;
-    }
-
-    .input-section input {
-      padding: 10px;
-      width: 60%;
-      max-width: 300px;
-      border-radius: 5px;
-      border: none;
-      margin-right: 10px;
-    }
-
-    .input-section button {
-      padding: 10px 15px;
-      background-color: #f06262;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-
-    .input-section button:hover {
-      background-color: #f9a825;
-      color: black;
-    }
-
-    body.light-mode .input-section button {
-      background-color: #4c70ff;
-    }
-
-    body.light-mode .input-section button:hover {
-      background-color: #1f46e2;
-      color: #ffffff;
-    }
-
-    .control-panel {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: center;
-      align-items: center;
-      margin-top: 10px;
-    }
-
-    .control-panel button,
-    .control-panel input[type="range"] {
-      padding: 8px 12px;
-      font-size: 1rem;
-      border-radius: 5px;
-      border: none;
-    }
-
-    .control-panel button {
-      background-color: #f06262;
-      color: white;
-      cursor: pointer;
-    }
-
-    .control-panel button:hover {
-      background-color: #f9a825;
-      color: black;
-    }
-
-    body.light-mode .control-panel button {
-      background-color: #627ef0;
-    }
-
-    body.light-mode .control-panel button:hover {
-      background-color: #4c70ff;
-      color: #ffffff;
-    }
-
-    .speed {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .sort-lan-selector {
-      margin: 40px 60px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      justify-content: center;
-    }
-
-    .sort-lan-btn {
-      background-color: #4ecdc4;
-      border: none;
-      color: #000000;
-      padding: 8px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-
-    .sort-lan-btn:hover {
-      background-color: #bffaf5;
-    }
-
-    .sort-lan-btn.active {
-      background-color: #ffd166;
-    }
-
-    .code-display {
-      margin: 60px;
-      padding: 40px;
-      background-color: #1c1616;
-      border-radius: 12px;
-      color: #fff;
-      white-space: pre-wrap;
-      overflow-x: auto;
-      display: flex;
-      flex-direction: column;
-    }
-
-    body.light-mode .code-display {
-      background-color: #dee9ff;
-      color: #000;
-    }
-
-    .code-display p {
-      font-size: 1.1rem;
-    }
-
-    #copy-btn {
-      width: 25px;
-      height: 25px;
-      background-color: #ffb6b6;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      align-self: flex-end;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    body.light-mode #copy-btn {
-      background-color: #b6c5ff;
-    }
-
-    @media screen and (max-width: 768px) {
-
-      .sort-selector {
-        margin: 0 20px 40px 20px;
-      }
-
-      .visualizer-layout {
-        flex-direction: column;
-        margin: 20px;
-        padding: 20px;
-        gap: 15px;
-      }
-
-      .step-info {
-        max-height: none;
-        margin-top: 20px;
-      }
-
-      .input-section input {
-        width: 80%;
-        margin-bottom: 10px;
-      }
-
-      .sort-desc {
-        font-size: 0.95rem;
-        padding: 20px;
-        margin: 20px;
-        margin-bottom: 50px
-      }
-
-      .bar-wrapper {
-        width: 70vw;
-        /* overflow-x: auto; */
-      }
-
-      .bars-container,
-      .bar-index-container {
-        width: 70vw;
-      }
-
-      .bar {
-        width: 12px;
-      }
-
-      .code-display {
-        padding: 15px;
-        margin: 20px;
-      }
-
-      .code-display p {
-        font-size: 0.8rem;
-      }
-
-      .step-info {
-        width: 100%;
-        max-height: 300px;
-        overflow-y: auto;
-      }
-
-      .sort-lan-selector {
-        margin: 40px 20px;
-      }
-    }
-
-    #codeBox span {
-      display: block;
-      padding: 2px 6px;
-      border-radius: 4px;
-      transition: background-color 0.3s ease;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Visualize data structures and algorithms with animations and interactive tools.">
+    <meta name="keywords"
+        content="DSA, Visualizer, Algorithms, Data Structures, Interactive, Array, Array Operations, Gaurav Gunjal">
+    <title>Array Visualizer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-margin: 80px;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #121212;
+        }
+
+        body.light-mode {
+            background-color: #ffffff;
+            color: #2d2d2d;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            height: 60px;
+            align-items: center;
+            background-color: rgba(60, 60, 60, 0.974);
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+        body.light-mode .navbar {
+            background-color: #f7f7fff5;
+        }
+
+        .logo {
+            padding-left: 5vw;
+            font-size: 30px;
+            font-weight: 600;
+            color: #f06262;
+        }
+
+        body.light-mode .logo {
+            color: #627ef0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+            margin-right: 2vw;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            margin-right: 40px;
+        }
+
+        .nav-links.show {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: 60px;
+            right: -40px;
+            background-color: #322727;
+            padding: 10px 20px;
+            border-radius: 10px;
+            z-index: 2;
+        }
+
+        body.light-mode .nav-links.show {
+            background-color: #e5e2ff;
+        }
+
+        .links {
+            text-decoration: none;
+            color: #f06262;
+            font-size: 18px;
+            font-weight: 500;
+            align-self: center;
+        }
+
+        body.light-mode .links {
+            color: #627ef0;
+        }
+
+        .links:hover {
+            color: #f9a825;
+        }
+
+        body.light-mode .links:hover {
+            color: #f9a825;
+        }
+
+        .theme {
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .menuIcon,
+        .closeIcon {
+            display: none;
+            font-size: 30px;
+            color: #f06262;
+            cursor: pointer;
+            font-weight: 700;
+            width: 30px;
+        }
+
+        body.light-mode .menuIcon,
+        .closeIcon {
+            color: #627ef0;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 100px 20px 80px;
+            background: linear-gradient(to right, #1e1e1e, #2e2e2e);
+        }
+
+        body.light-mode .hero {
+            background: linear-gradient(to right, #e7edff, #ffffff);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #ff6b6b, #4ecdc4, #ffd166, #6a0572, #ab83a1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            background: linear-gradient(to right, #05ffea, #ee00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 30px;
+        }
+
+        .explore-btn {
+            background-color: #f06262;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .explore-btn:hover {
+            background-color: #f9a825;
+        }
+
+        body.light-mode .explore-btn {
+            background-color: #627ef0;
+        }
+
+        body.light-mode .explore-btn:hover {
+            background-color: #f9a825;
+        }
+
+        .categories {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 50px 0;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        body.light-mode .categories {
+            background-color: #ffffff;
+        }
+
+        .categories h2 {
+            font-size: 2rem;
+            margin-bottom: 40px;
+            color: #f9a825;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        .category-card img {
+            width: 200px;
+        }
+
+        .category-card {
+            background-color: #1c1616;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 8px 15px rgba(229, 26, 26, 0.529);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        body.light-mode .category-card {
+            background-color: #fdfdfd;
+            box-shadow: 0 8px 15px rgba(116, 146, 255, 0.611);
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(255, 251, 18, 0.4);
+        }
+
+        body.light-mode .category-card:hover {
+            box-shadow: 0 12px 20px rgba(255, 174, 0, 0.786);
+        }
+
+        .categories-card img {
+            max-width: 80px;
+            margin-bottom: 15px;
+        }
+
+        .category-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        body.light-mode .category-card h3 {
+            color: #000;
+        }
+
+        .category-card p {
+            font-size: 0.95rem;
+            color: #aaa;
+            margin-bottom: 15px;
+        }
+
+        .category-card a {
+            background-color: #f9a825;
+            color: #000000;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .category-card a:hover {
+            background-color: #ffd54f;
+        }
+
+        .contact {
+            background-color: #1e1e1e7e;
+            color: #f06262;
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        body.light-mode .contact {
+            background-color: #ededed;
+            color: #627ef0;
+        }
+
+        .contact h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .contact p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+
+        .contact form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact form input,
+        .contact form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #2e2e2e;
+            color: #fff;
+        }
+
+        body.light-mode .contact form input {
+            background-color: #afc4ff;
+        }
+
+        body.light-mode .contact form textarea {
+            background-color: #afc4ff;
+        }
+
+        .contact button {
+            background-color: #f06262;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        body.light-mode .contact button {
+            background-color: #627ef0;
+        }
+
+        .contact button:hover {
+            background-color: #ffd166;
+            color: #000000;
+        }
+
+        body.light-mode .contact button:hover {
+            background-color: #f9a825;
+        }
+
+        .footer {
+            background-color: #1e1e1e;
+            color: #f06262;
+            text-align: center;
+            padding: 20px;
+        }
+
+        body.light-mode .footer {
+            background-color: #dfe0ff;
+        }
+
+        .footer p {
+            font-size: 0.9rem;
+            color: #999;
+        }
+
+        body.light-mode .footer p {
+            color: #000000;
+        }
+
+        .footer a {
+            color: #f9a825;
+
+        }
+
+        body.light-mode .footer a {
+            color: #f9a825;
+
+        }
+
+        @media screen and (max-width: 768px) {
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .menuIcon,
+            .closeIcon {
+                display: block;
+            }
+
+            .hero {
+                text-align: center;
+                padding: 25vh 20px 80px;
+                height: 80vh;
+            }
+
+            .hero h1 {
+                font-size: 1.6rem;
+                font-weight: 700;
+                margin-bottom: 10px;
+            }
+
+            .hero p {
+                font-size: 0.9rem;
+            }
+
+            .footer p {
+                font-size: 0.9rem;
+            }
+        }
+
+
+        /* sort page */
+
+        #sort-page {
+            padding: 50px 20px;
+            color: #fff;
+        }
+
+        body.light-mode #sort-page {
+            color: #2d2d2d;
+        }
+
+        .sort-selector {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 60px 40px 60px;
+        }
+
+        .sort-selector a {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .sort-btn {
+            background-color: #f06262;
+            color: white;
+            border-radius: 8px;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        body.light-mode .sort-btn {
+            background-color: #627ef0;
+        }
+
+        .sort-btn:hover {
+            background-color: #bc2a2a;
+        }
+
+        body.light-mode .sort-btn:hover {
+            background-color: #2a47bc;
+        }
+
+        .sort-btn.active {
+            background-color: #f9a825;
+            color: #000000;
+        }
+
+        body.light-mode .sort-btn.active {
+            background-color: #f9a825;
+            color: #000000;
+        }
+
+        .sort-desc {
+            /* max-width: 800px; */
+            margin: 60px;
+            padding: 40px;
+            background-color: #543939;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+            color: #a4a4a4;
+        }
+
+        .sort-desc strong {
+            color: white;
+        }
+
+        body.light-mode .sort-desc strong {
+            color: rgb(0, 0, 0);
+        }
+
+        .defination1 {
+            list-style-type: none;
+            margin-left: 20px;
+        }
+
+        .working1 {
+            margin-left: 40px;
+        }
+
+        body.light-mode .sort-desc {
+            background-color: #e2e3ff;
+            color: #212121;
+        }
+
+        .visualizer-layout {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #1c1616;
+            gap: 30px;
+            margin: 60px;
+            border-radius: 20px;
+            padding: 20px 40px;
+        }
+
+        body.light-mode .visualizer-layout {
+            background-color: #d0daff;
+        }
+
+        .left-panel {
+            flex: 8;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .right-panel {
+            flex: 3;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .step-info {
+            background-color: #392d2f;
+            color: #f8f8f2;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            max-height: 320px;
+            overflow-y: auto;
+            transition: all 0.3s ease;
+            height: 320px;
+        }
+
+        body.light-mode .step-info {
+            background-color: #b4bfff;
+            color: #000;
+        }
+
+        .step-info li {
+            padding: 4px 6px;
+            margin-bottom: 3px;
+            border-radius: 6px;
+        }
+
+        .step-info li.current {
+            background-color: #ff8b8b;
+            font-weight: bold;
+            border-left: 4px solid #ff0000;
+        }
+
+        body.light-mode .step-info li.current {
+            background-color: #7291ff;
+            font-weight: bold;
+            border-left: 4px solid #0013c1;
+        }
+
+        .bar-wrapper {
+            display: flex;
+            flex-direction: column;
+            overflow-x: auto;
+        }
+        
+        /* New styling to align index numbers with bars */
+        .bars-container {
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            height: 100px;
+            background-color: #413434;
+            padding: 10px;
+            border-radius: 8px;
+            width: 100%;
+            min-width: 575px;
+            justify-self: center;
+            flex-direction: row; /* Align index and bar horizontally */
+        }
+        
+        .bar-index-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: flex-start;
+            height: 30px;
+            font-size: 0.9rem;
+            color: #aaa;
+            width: 100%;
+            min-width: max-content;
+        }
+
+        body.light-mode .bars-container {
+            background-color: #f4f6ff;
+        }
+
+        #codeBox {
+            background: #1e1e1e;
+            padding: 0.8em;
+            border-radius: 8px;
+            color: #f1f1f1;
+            overflow-x: auto;
+        }
+
+        .bar-index {
+            width: 60px; /* Match bar width */
+            text-align: center;
+            font-weight: bold;
+            color: #ccc;
+            margin: 0 5px; /* Match bar margin */
+        }
+
+        body.light-mode .bar-index {
+            color: #333;
+        }
+
+        .bar {
+            font-size: 16px;
+            color: #fff;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid black;
+            background-color: #61dafb;
+            border-radius: 0;
+            margin: 0 5px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .bar.highlight {
+            background-color: #f9a825 !important;
+            transform: scale(1.1);
+            border-color: #f9a825;
+        }
+
+        .bar.remove {
+            background-color: #ff4d4d !important;
+            transform: scale(0.5);
+            opacity: 0;
+            border-color: #ff4d4d;
+        }
+
+        .bar.found {
+            background-color: #2ecc71 !important;
+            border-color: #2ecc71;
+            box-shadow: 0 0 10px #2ecc71;
+        }
+
+        .bar.sorted {
+            background-color: #2ecc71 !important;
+            border-color: #2ecc71;
+            transition: background-color 0.5s ease;
+        }
+
+        .input-section label {
+            color: white;
+        }
+
+        .input-section input {
+            padding: 10px;
+            width: 20%;
+            max-width: 300px;
+            border-radius: 5px;
+            border: none;
+            margin-right: 10px;
+        }
+
+        .input-section button {
+            padding: 10px 15px;
+            background-color: #f06262;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .input-section button:hover {
+            background-color: #f9a825;
+            color: black;
+        }
+
+        body.light-mode .input-section button {
+            background-color: #4c70ff;
+        }
+
+        body.light-mode .input-section button:hover {
+            background-color: #1f46e2;
+            color: #ffffff;
+        }
+
+        .control-panel {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .control-panel h3,
+        label {
+            color: white;
+        }
+
+        .control-panel input {
+            padding-left: 8px;
+            height: 30px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        .control-panel button,
+        .control-panel input[type="range"] {
+            padding: 8px 12px;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: none;
+        }
+
+        .control-panel button {
+            background-color: #f06262;
+            color: white;
+            cursor: pointer;
+        }
+
+        .control-panel button:hover {
+            background-color: #f9a825;
+            color: black;
+        }
+
+        body.light-mode .control-panel button {
+            background-color: #627ef0;
+        }
+
+        body.light-mode .control-panel button:hover {
+            background-color: #4c70ff;
+            color: #ffffff;
+        }
+
+        .speed {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sort-lan-selector {
+            margin: 40px 60px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .sort-lan-btn {
+            background-color: #4ecdc4;
+            border: none;
+            color: #000000;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .sort-lan-btn:hover {
+            background-color: #bffaf5;
+        }
+
+        .sort-lan-btn.active {
+            background-color: #ffd166;
+        }
+
+        .code-display {
+            margin: 60px;
+            padding: 40px;
+            background-color: #1c1616;
+            border-radius: 12px;
+            color: #fff;
+            white-space: pre-wrap;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        body.light-mode .code-display {
+            background-color: #dee9ff;
+            color: #000;
+        }
+
+        .code-display p {
+            font-size: 1.1rem;
+        }
+
+        #copy-btn {
+            width: 25px;
+            height: 25px;
+            background-color: #ffb6b6;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            align-self: flex-end;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: sticky;
+            top: 80px;
+        }
+
+        body.light-mode #copy-btn {
+            background-color: #b6c5ff;
+        }
+
+        @media (max-width: 1220px) {
+            .visualizer-layout {
+                flex-direction: column;
+                align-items: stretch;
+                margin: 60px;
+                padding: 20px;
+                gap: 20px;
+            }
+
+            .left-panel,
+            .right-panel {
+                flex: none;
+                width: 100%;
+            }
+
+            .step-info {
+                height: 320px;
+                max-height: 320px;
+                flex-shrink: 0;
+            }
+        }
+
+
+        @media screen and (max-width: 768px) {
+            .sort-selector {
+                margin: 0 20px 40px 20px;
+            }
+
+            .sort-desc h2 {
+                font-size: 0.9rem;
+            }
+
+            .sort-desc p {
+                font-size: 0.8rem;
+            }
+
+            .visualizer-layout {
+                margin: 15px;
+                padding: 15px;
+                gap: 15px;
+            }
+
+            .left-panel,
+            .right-panel {
+                width: 100%;
+            }
+
+            .step-info {
+                height: 320px;
+                max-height: 320px;
+                font-size: 1rem;
+                padding: 10px 20px;
+            }
+
+            .input-section label {
+                font-size: 0.9rem;
+                font-weight: 700;
+            }
+
+            .input-section input {
+                margin-bottom: 10px;
+                width: 40%;
+            }
+
+            .sort-desc {
+                font-size: 0.95rem;
+                padding: 20px;
+                margin: 20px;
+                margin-bottom: 50px;
+            }
+
+            .bar-wrapper {
+                width: 100%;
+                overflow-x: auto;
+            }
+
+            .bars-container {
+                justify-content: flex-start;
+                min-width: max-content;
+                padding: 10px;
+            }
+
+            .bar-index-container {
+                justify-content: flex-start;
+                min-width: max-content;
+                padding: 15px;
+                gap: 10px;
+            }
+
+            .bar {
+                width: 40px;
+                height: 40px;
+                flex-shrink: 0;
+                font-size: 12px;
+            }
+            
+            .bar-index {
+                width: 40px;
+                flex-shrink: 0;
+            }
+
+            .code-display {
+                padding: 15px;
+                margin: 20px;
+            }
+
+            .code-display p {
+                font-size: 0.8rem;
+            }
+
+            .sort-lan-selector {
+                margin: 40px 20px;
+            }
+
+            #codeBox {
+                font-size: 0.6rem;
+            }
+        }
+
+        .array-operations {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+        
+        .array-operations input {
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            min-width: 100px;
+        }
+
+        .array-operations button {
+            background-color: #4ecdc4;
+            border: none;
+            color: #000000;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+    </style>
 </head>
 
 <body>
-  <!-- Header -->
-  <header class="navbar">
-    <div class="logo">DSA Visualizer</div>
-    <nav>
-      <div class="nav-links">
-        <a href="../index.html" class="links">Home</a>
-      </div>
-      <div class="theme">
-        <button id="toggelBtn" class="light-mode theme"><img id="themeIcon" src="../icons/light-mode.png"
-            alt="Switch into light mode"></button>
-      </div>
-
-      <div class="menuIcon" id="menuIcon">&#9776;</div>
-      <div class="closeIcon" id="closeIcon" style="display: none;">&times;</div>
-    </nav>
-  </header>
-
-  <!-- main -->
-  <main id="sort-page">
-    <!-- sort selector -->
-    <section class="sort-selector">
-      <button class="sort-btn" id="insertion"><a href="./insertion.html">Insertion</a></button>
-      <button class="sort-btn" id="selection">Selection</button>
-      <button class="sort-btn active" id="bubble">Bubble</button>
-      <button class="sort-btn" id="quick">Quick</button>
-      <button class="sort-btn" id="merge">Merge</button>
-      <button class="sort-btn" id="heap">Heap</button>
-      <button class="sort-btn" id="radix">Radix</button>
-    </section>
-
-    <!-- sort info. -->
-    <section class="sort-desc" id="sortDesc">
-      <h2><strong>Bubble Sort</strong></h2>
-      <p><strong>Definition:</strong> Bubble Sort repeatedly steps through the list, compares adjacent elements and
-        swaps them if they are in the wrong order.</p>
-      <p><strong>Working:</strong> After each pass, the largest unsorted element "bubbles" to the end of the list.</p>
-      <p><strong>Time Complexity:</strong> O(n²) average and worst case</p>
-      <p><strong>Space Complexity:</strong> O(1)</p>
-    </section>
-
-    <section class="visualizer">
-
-      <div class="visualizer-layout">
-
-        <div class="left-panel">
-          <div class="input-section">
-            <label for="customInput">Enter numbers:</label>
-            <input type="text" id="customInput" placeholder="45, 18, 10, 7" />
-            <button id="generateBtn">Generate Bars</button>
-          </div>
-
-          <div class="bar-wrapper">
-            <div id="barContainer" class="bars-container"></div>
-            <div id="barIndexContainer" class="bar-index-container"></div>
-          </div>
-
-          <div class="control-panel">
-            <button id="playBtn">&#9654; Play</button>
-            <button id="pauseBtn">&#x23F8; Pause</button>
-            <button id="prevBtn">&#10094; Prev</button>
-            <button id="nextBtn">&#10095; Next</button>
-            <button id="restart">&#x27F3; Restart</button>
-            <div class="speed">
-              <label for="speedRange">Speed:</label>
-              <input type="range" id="speedRange" min="100" max="2000" value="1000" />
+    <header class="navbar">
+        <div class="logo">DSA Visualizer</div>
+        <nav>
+            <div class="nav-links">
+                <a href="#array-page" class="links">Array</a>
+                <a href="#visualizer" class="links">Visualizer</a>
+                <a href="#code" class="links">Code</a>
+                <a href="../index.html" class="links">Home</a>
             </div>
-          </div>
-        </div>
+            <div class="theme">
+                <button id="toggelBtn" class="light-mode theme"><img id="themeIcon" src="../icons/light-mode.png"
+                        alt="Switch into light mode"></button>
+            </div>
 
-        <div class="step-info" id="stepInfo">
-          <h3>Visited Steps:</h3>
-          <ul id="stepList"></ul>
-        </div>
+            <div class="menuIcon" id="menuIcon">&#9776;</div>
+            <div class="closeIcon" id="closeIcon" style="display: none;">&times;</div>
+        </nav>
+    </header>
 
-        <div class="code-highlight-section">
-          <h3>Code Execution Highlight:</h3>
-          <pre id="codeBox"
-            style="background: #1e1e1e; padding: 1em; border-radius: 8px; color: #f1f1f1; overflow-x: auto;">
-    <code>
-<span id="outer-loop">for (let i = 0; i < arr.length - 1; i++) {</span>
-<span id="inner-loop">  for (let j = 0; j < arr.length - i - 1; j++) {</span>
-<span id="compare">    if (arr[j] > arr[j + 1]) {</span>
-<span id="swap">      [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];</span>
-<span>    }</span>
-<span>  }</span>
-<span>}</span>
-    </code>
-  </pre>
-        </div>
+    <main id="array-page">
+        <section id="visualizer" class="visualizer">
+            <div class="visualizer-layout">
+                <div class="left-panel">
+                    <div class="input-section">
+                        <label for="customInput">Enter initial array (comma-separated):</label>
+                        <input type="text" id="customInput" placeholder="45, 18, 10" />
+                        <button id="generateBtn">Generate Array</button>
+                        <button id="resetBtn">Reset</button>
+                    </div>
 
-      </div>
+                    <div class="bar-wrapper">
+                        <div id="barIndexContainer" class="bar-index-container"></div>
+                        <div id="barContainer" class="bars-container"></div>
+                    </div>
 
-    </section>
+                    <div class="array-operations">
+                        <input type="text" id="valueInput" placeholder="Value">
+                        <input type="text" id="indexInput" placeholder="Index">
+                        <button id="insertBtn">Insertion</button>
+                        <button id="deleteBtn">Deletion</button>
+                        <button id="searchBtn">Searching</button>
+                        <button id="sortBtn">Sorting</button>
+                    </div>
 
+                </div>
 
-    <!-- display multi-language code -->
-    <section class="sort-lan-selector">
-      <button class="sort-lan-btn active" id="cpp">C++</button>
-      <button class="sort-lan-btn" id="c">C</button>
-      <button class="sort-lan-btn" id="py">Python</button>
-      <button class="sort-lan-btn" id="java">Java</button>
-      <button class="sort-lan-btn" id="js">JavaScript</button>
-    </section>
+                <div class="right-panel">
+                    <h3>Steps:</h3>
+                    <div class="step-info" id="stepInfo">
+                        <h3>Visited Steps:</h3>
+                        <ul id="stepList"></ul>
+                    </div>
 
-    <!-- code display -->
-    <section class="code-display">
-      <button id="copy-btn"><img src="../icons/dark-copy.png" alt=""></button>
-      <!-- display code of selected language -->
-      <p class="code-lang"></p>
-    </section>
+                    <div class="code-highlight-section">
+                        <h3>Code Snippet:</h3>
+                        <pre id="codeBox">
+<code id="codeSnippet"></code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-  </main>
-  <script>
-    // Dark Mode and Light Mode
-    const toggelBtn = document.getElementById("toggelBtn");
-    const themeIcon = document.getElementById("themeIcon")
-    const body = document.querySelector("body");
+        <section class="code-display" id="code">
+            <button id="copy-btn"><img src="../icons/dark-copy.png" alt=""></button>
+            <p class="code-lang" id="codeLang"></p>
+        </section>
+    </main>
 
-    if (localStorage.getItem("theme") === "light") {
-      body.classList.add("light-mode");
-      themeIcon.src = "../icons/dark-mode.png";
-    }
+    <script>
+        // Dark Mode and Light Mode
+        const toggelBtn = document.getElementById("toggelBtn");
+        const themeIcon = document.getElementById("themeIcon")
+        const body = document.querySelector("body");
 
-    toggelBtn.addEventListener("click", () => {
-      body.classList.toggle("light-mode");
-
-      if (body.classList.contains("light-mode")) {
-        themeIcon.src = "../icons/dark-mode.png";
-        localStorage.setItem("theme", "light");
-      }
-      else {
-        themeIcon.src = "../icons/light-mode.png";
-        localStorage.setItem("theme", "dark");
-      }
-    });
-
-    // menuIcon logic
-    const menuIcon = document.getElementById("menuIcon");
-    const closeIcon = document.getElementById("closeIcon");
-    const navLinks = document.querySelector(".nav-links");
-
-    menuIcon.addEventListener("click", () => {
-      navLinks.classList.add("show");
-      menuIcon.style.display = "none";
-      closeIcon.style.display = "block";
-    });
-
-    closeIcon.addEventListener("click", () => {
-      navLinks.classList.remove("show");
-      closeIcon.style.display = "none";
-      menuIcon.style.display = "block";
-    });
-
-    const allLinks = document.querySelectorAll(".nav-links a");
-    allLinks.forEach(link => {
-      link.addEventListener("click", () => {
-        if (navLinks.classList.contains("show")) {
-          navLinks.classList.remove("show");
-          closeIcon.style.display = "none";
-          menuIcon.style.display = "block";
+        if (localStorage.getItem("theme") === "light") {
+            body.classList.add("light-mode");
+            themeIcon.src = "../icons/dark-mode.png";
         }
-      });
-    });
 
-    // language button logic
-    let lang = "cpp";
-
-    // bydefault cpp code will be displayed
-    window.addEventListener("DOMContentLoaded", () => {
-      document.querySelector(".code-display p").textContent = sortCodes[lang];
-    });
-
-    const sortCodes = {
-      cpp: `#include <bits/stdc++.h>
-using namespace std;
-
-// An optimized version of Bubble Sort 
-void bubbleSort(vector<int>& arr) {
-    int n = arr.size();
-    bool swapped;
-
-    for (int i = 0; i < n - 1; i++) {
-        swapped = false;
-        for (int j = 0; j < n - i - 1; j++) {
-            if (arr[j] > arr[j + 1]) {
-                swap(arr[j], arr[j + 1]);
-                swapped = true;
+        toggelBtn.addEventListener("click", () => {
+            body.classList.toggle("light-mode");
+            if (body.classList.contains("light-mode")) {
+                themeIcon.src = "../icons/dark-mode.png";
+                localStorage.setItem("theme", "light");
+            } else {
+                themeIcon.src = "../icons/light-mode.png";
+                localStorage.setItem("theme", "dark");
             }
-        }
-        if (!swapped)
-            break;
-    }
-}
+        });
 
-void printVector(const vector<int>& arr) {
-    for (int num : arr)
-        cout << " " << num;
-}
+        // menuIcon logic
+        const menuIcon = document.getElementById("menuIcon");
+        const closeIcon = document.getElementById("closeIcon");
+        const navLinks = document.querySelector(".nav-links");
 
-int main() {
-    vector<int> arr = {64, 34, 25, 12, 22, 11, 90};
-    bubbleSort(arr);
-    cout << "Sorted array: \\n";
-    printVector(arr);
-    return 0;
-}`,
+        menuIcon.addEventListener("click", () => {
+            navLinks.classList.add("show");
+            menuIcon.style.display = "none";
+            closeIcon.style.display = "block";
+        });
 
-      c: `#include <stdbool.h>
-#include <stdio.h>
+        closeIcon.addEventListener("click", () => {
+            navLinks.classList.remove("show");
+            closeIcon.style.display = "none";
+            menuIcon.style.display = "block";
+        });
 
-void swap(int* xp, int* yp){
-    int temp = *xp;
-    *xp = *yp;
-    *yp = temp;
-}
-
-void bubbleSort(int arr[], int n){
-    int i, j;
-    bool swapped;
-    for (i = 0; i < n - 1; i++) {
-        swapped = false;
-        for (j = 0; j < n - i - 1; j++) {
-            if (arr[j] > arr[j + 1]) {
-                swap(&arr[j], &arr[j + 1]);
-                swapped = true;
-            }
-        }
-        if (!swapped)
-            break;
-    }
-}
-
-void printArray(int arr[], int size){
-    for (int i = 0; i < size; i++)
-        printf("%d ", arr[i]);
-}
-
-int main(){
-    int arr[] = {64, 34, 25, 12, 22, 11, 90};
-    int n = sizeof(arr) / sizeof(arr[0]);
-    bubbleSort(arr, n);
-    printf("Sorted array: \\n");
-    printArray(arr, n);
-    return 0;
-}`,
-
-      py: `# Optimized implementation of Bubble Sort in Python
-def bubble_sort(arr):
-    n = len(arr)
-    for i in range(n):
-        swapped = False
-        for j in range(0, n - i - 1):
-            if arr[j] > arr[j + 1]:
-                arr[j], arr[j + 1] = arr[j + 1], arr[j]
-                swapped = True
-        if not swapped:
-            break
-
-def print_array(arr):
-    for i in arr:
-        print(i, end=" ")
-
-arr = [64, 34, 25, 12, 22, 11, 90]
-bubble_sort(arr)
-print("Sorted array:")
-print_array(arr)`,
-
-      java: `// Optimized Bubble Sort in Java
-class GFG {
-    static void bubbleSort(int arr[], int n){
-        int i, j, temp;
-        boolean swapped;
-        for (i = 0; i < n - 1; i++) {
-            swapped = false;
-            for (j = 0; j < n - i - 1; j++) {
-                if (arr[j] > arr[j + 1]) {
-                    temp = arr[j];
-                    arr[j] = arr[j + 1];
-                    arr[j + 1] = temp;
-                    swapped = true;
+        const allLinks = document.querySelectorAll(".nav-links a");
+        allLinks.forEach(link => {
+            link.addEventListener("click", () => {
+                if (navLinks.classList.contains("show")) {
+                    navLinks.classList.remove("show");
+                    closeIcon.style.display = "none";
+                    menuIcon.style.display = "block";
                 }
-            }
-            if (!swapped)
-                break;
+            });
+        });
+
+        // Array Visualizer Logic
+        const valueInput = document.getElementById('valueInput');
+        const indexInput = document.getElementById('indexInput');
+        const insertBtn = document.getElementById('insertBtn');
+        const deleteBtn = document.getElementById('deleteBtn');
+        const searchBtn = document.getElementById('searchBtn');
+        const sortBtn = document.getElementById('sortBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const generateBtn = document.getElementById('generateBtn');
+        const customInput = document.getElementById('customInput');
+        const barContainer = document.getElementById('barContainer');
+        const barIndexContainer = document.getElementById('barIndexContainer');
+        const codeSnippet = document.getElementById('codeSnippet');
+        const stepList = document.getElementById('stepList');
+
+        let currentArray = [];
+        let isAnimating = false;
+
+        const jsCodes = {
+            insert: `// Insertion adds an element at a specific index.
+function insert(arr, index, value) {
+    if (index < 0 || index > arr.length) {
+        console.error("Invalid index.");
+        return;
+    }
+    // Shift elements to make space
+    for (let i = arr.length; i > index; i--) {
+        arr[i] = arr[i - 1];
+    }
+    // Insert the new value
+    arr[index] = value;
+}`,
+            delete: `// Deletion removes an element from a specific index.
+function remove(arr, index) {
+    if (index < 0 || index >= arr.length) {
+        console.error("Invalid index.");
+        return;
+    }
+    // Shift elements to fill the gap
+    for (let i = index; i < arr.length - 1; i++) {
+        arr[i] = arr[i + 1];
+    }
+    arr.length--; // Reduce array size
+}`,
+            search: `// Searching finds an element and returns its index.
+function search(arr, value) {
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] === value) {
+            return i; // Found!
         }
     }
-
-    static void printArray(int arr[], int size){
-        for (int i = 0; i < size; i++)
-            System.out.print(arr[i] + " ");
-        System.out.println();
-    }
-
-    public static void main(String args[]){
-        int arr[] = {64, 34, 25, 12, 22, 11, 90};
-        int n = arr.length;
-        bubbleSort(arr, n);
-        System.out.println("Sorted array:");
-        printArray(arr, n);
-    }
+    return -1; // Not found
 }`,
-
-      js: `// Optimized Bubble Sort in JavaScript
+            sort: `// A simple Bubble Sort algorithm.
 function bubbleSort(arr) {
     let n = arr.length;
-    for (let i = 0; i < n; i++) {
-        let swapped = false;
+    for (let i = 0; i < n - 1; i++) {
         for (let j = 0; j < n - i - 1; j++) {
             if (arr[j] > arr[j + 1]) {
                 [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
-                swapped = true;
             }
         }
-        if (!swapped) break;
     }
-}
+}`
+        };
 
-function printArray(arr) {
-    console.log(arr.join(" "));
-}
-
-let arr = [64, 34, 25, 12, 22, 11, 90];
-bubbleSort(arr);
-console.log("Sorted array:");
-printArray(arr);`
-    };
-
-    const buttons = document.querySelectorAll(".sort-lan-selector button");
-    const codeDisplay = document.querySelector(".code-display p");
-
-    buttons.forEach(button => {
-      button.addEventListener("click", (event) => {
-        const selectedLang = event.target.id;
-
-        if (selectedLang !== lang) {
-          document.querySelector(".sort-lan-selector .active")?.classList.remove("active");
-          event.target.classList.add("active");
-
-          lang = selectedLang;
-          codeDisplay.textContent = sortCodes[lang] || "// Code not found!";
-        }
-      });
-    });
-
-    // copy btn logic
-    document.getElementById("copy-btn").addEventListener("click", () => {
-      const code = document.querySelector(".code-display p").textContent;
-      navigator.clipboard.writeText(code)
-        .then(() => {
-          alert("Code copied to clipboard!");
-        })
-        .catch(err => {
-          alert("Failed to copy code. Please try again.");
+        document.addEventListener("DOMContentLoaded", () => {
+            const defaultArray = [45, 18, 10, 72, 33];
+            currentArray = [...defaultArray];
+            generateBars(currentArray);
+            updateCodeDisplay("insert");
         });
-    });
 
-    // main sorting logic
-    const inputBox = document.getElementById('customInput');
-    const generateBtn = document.getElementById('generateBtn');
-    const barContainer = document.getElementById('barContainer');
-    const playBtn = document.getElementById('playBtn');
-    const pauseBtn = document.getElementById('pauseBtn');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const restartBtn = document.getElementById('restart')
-    const stepInfo = document.getElementById('stepInfo');
-    const speedSlider = document.getElementById('speedRange');
+        async function generateBars(arr) {
+            barContainer.innerHTML = '';
+            barIndexContainer.innerHTML = '';
+            stepList.innerHTML = '';
+            if (arr.length === 0) {
+                barContainer.innerHTML = '<p style="color: #fff; text-align: center; margin-top: 20px;">Array is empty.</p>';
+                return;
+            }
 
-    let bars = [];
-    let steps = [];
-    let currentStep = 0;
-    let interval = null;
-    let speed = 500;
+            arr.forEach((num, idx) => {
+                const bar = document.createElement('div');
+                bar.classList.add('bar');
+                bar.textContent = num;
+                barContainer.appendChild(bar);
 
-    // Bar Generator
-    function generateBars(arr) {
-      barContainer.innerHTML = '';
-      document.getElementById('barIndexContainer').innerHTML = '';
-      bars = [];
-
-      const maxVal = Math.max(...arr); // 🔥 Find the max to scale everything
-
-      arr.forEach((num, idx) => {
-        // Normalize height relative to max value
-        const heightPercent = (num / maxVal) * 100;
-
-        const bar = document.createElement('div');
-        bar.classList.add('bar');
-        bar.style.height = `${heightPercent}%`;
-        bar.style.width = `30px`;
-        bar.style.margin = '0 5px';
-        bar.style.backgroundColor = '#61dafb';
-        bar.style.display = 'flex';
-        bar.style.alignItems = 'flex-end';
-        bar.style.justifyContent = 'center';
-        bar.textContent = num;
-        bars.push(bar);
-        barContainer.appendChild(bar);
-
-        const indexLabel = document.createElement('div');
-        indexLabel.classList.add('bar-index');
-        indexLabel.textContent = idx;
-        document.getElementById('barIndexContainer').appendChild(indexLabel);
-      });
-    }
-
-    // Bubble Sort Step Recorder
-    function recordBubbleSortSteps(arr) {
-      steps = [];
-      let temp = [...arr];
-
-      for (let i = 0; i < temp.length - 1; i++) {
-        for (let j = 0; j < temp.length - i - 1; j++) {
-          const shouldSwap = temp[j] > temp[j + 1];
-
-          // Push step BEFORE actual swap
-          steps.push({
-            indices: [j, j + 1],
-            swapped: shouldSwap,
-            arrSnapshot: [...temp], // snapshot before swap
-            codeLine: shouldSwap ? 'swap' : 'compare'
-          });
-
-          // Do swap if needed
-          if (shouldSwap) {
-            [temp[j], temp[j + 1]] = [temp[j + 1], temp[j]];
-          }
-        }
-      }
-    }
-
-    // Animate a Step
-    function animateStep(index) {
-      if (index < 0 || index >= steps.length) return;
-
-      const step = steps[index];
-      const [i, j] = step.indices;
-
-      // Update bars
-      step.arrSnapshot.forEach((val, idx) => {
-        bars[idx].style.height = `${val * 3}px`;
-        bars[idx].textContent = val;
-        bars[idx].style.backgroundColor = '#61dafb';
-      });
-
-      bars[i].style.backgroundColor = '#f39c12';
-      bars[j].style.backgroundColor = '#e74c3c';
-
-      // Update step info single-line display (optional)
-      // document.getElementById('stepInfo').textContent = `Comparing index ${i} and ${j}. ${step.swapped ? "Swapped" : "No Swap"}`;
-
-      // Update full step list below
-      updateStepList();
-    }
-
-    function updateStepList() {
-      const stepList = document.getElementById('stepList');
-      stepList.innerHTML = '';
-
-      for (let i = 0; i <= currentStep - 1; i++) {
-        const step = steps[i];
-        const [a, b] = step.indices;
-        const arr = step.arrSnapshot;
-        const valA = arr[a];
-        const valB = arr[b];
-
-        const li = document.createElement('li');
-
-        let description = `Visited index ${a} (${valA}) and ${b} (${valB}) → `;
-        if (step.swapped) {
-          description += `${valA} > ${valB}, so swapped`;
-        } else {
-          description += `${valA} ≤ ${valB}, no swap`;
+                const indexLabel = document.createElement('div');
+                indexLabel.classList.add('bar-index');
+                indexLabel.textContent = idx;
+                barIndexContainer.appendChild(indexLabel);
+            });
+            updateStepList("Array generated.");
         }
 
-        li.textContent = `Step ${i + 1}: ${description}`;
-
-        if (i === currentStep - 1) {
-          li.classList.add('current');
-          highlightCodeLine(step.codeLine); // highlight the matching code line
+        function updateCodeDisplay(operation) {
+            codeSnippet.textContent = jsCodes[operation] || "Select an operation to see the code.";
+        }
+        
+        function updateStepList(message) {
+            const li = document.createElement('li');
+            li.textContent = message;
+            stepList.appendChild(li);
+            stepList.scrollTop = stepList.scrollHeight; // Auto-scroll to the latest step
         }
 
-        stepList.appendChild(li);
-      }
+        // --- Operations Functions ---
 
-      const container = document.getElementById('stepInfo');
-      container.scrollTop = container.scrollHeight;
-    }
+        async function insertElement() {
+            if (isAnimating) return;
+            isAnimating = true;
+            updateCodeDisplay("insert");
+            resetVisualizer(false);
 
-    // Highlight Code Line
-    function highlightCodeLine(lineId) {
-      const allLines = document.querySelectorAll('#codeBox span');
-      allLines.forEach(line => {
-        line.style.backgroundColor = '';
-      });
+            const value = parseInt(valueInput.value);
+            const index = parseInt(indexInput.value);
 
-      const lineToHighlight = document.getElementById(lineId);
-      if (lineToHighlight) {
-        lineToHighlight.style.backgroundColor = '#0f6df1ff';
-      }
-    }
+            if (isNaN(value) || isNaN(index) || index < 0 || index > currentArray.length) {
+                alert("Please enter a valid number for value and a valid index (0 to " + currentArray.length + ").");
+                isAnimating = false;
+                return;
+            }
+            
+            updateStepList(`Preparing to insert value ${value} at index ${index}...`);
+            const tempArray = [...currentArray];
+            const bars = document.querySelectorAll('.bar');
 
-    // Play
-    function play() {
-      if (interval) return;
-
-      interval = setInterval(() => {
-        if (currentStep >= steps.length) {
-          clearInterval(interval);
-          interval = null;
-          return;
+            // Animate shifting elements
+            for (let i = tempArray.length - 1; i >= index; i--) {
+                if(bars[i]) {
+                    bars[i].classList.add('highlight');
+                }
+                updateStepList(`Shifting element ${tempArray[i]} from index ${i} to ${i+1}.`);
+                await new Promise(resolve => setTimeout(resolve, 500));
+                
+                if(bars[i]) {
+                    bars[i].classList.remove('highlight');
+                }
+            }
+            
+            // Insert the new element
+            tempArray.splice(index, 0, value);
+            updateStepList(`Inserting value ${value} at index ${index}.`);
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            currentArray = tempArray;
+            generateBars(currentArray);
+            isAnimating = false;
         }
-        animateStep(currentStep++);
-      }, getActualSpeed());
-    }
 
-    // Pause
-    function pause() {
-      clearInterval(interval);
-      interval = null;
-    }
+        async function deleteElement() {
+            if (isAnimating) return;
+            isAnimating = true;
+            updateCodeDisplay("delete");
+            resetVisualizer(false);
 
-    // Events
-    generateBtn.addEventListener('click', () => {
-      const input = inputBox.value.trim();
-      if (!input) return;
+            const index = parseInt(indexInput.value);
+            if (isNaN(index) || index < 0 || index >= currentArray.length) {
+                alert("Please enter a valid index to delete (0 to " + (currentArray.length - 1) + ").");
+                isAnimating = false;
+                return;
+            }
+            
+            updateStepList(`Preparing to delete element at index ${index}...`);
+            const bars = document.querySelectorAll('.bar');
+            const value = currentArray[index];
+            
+            // Animate deletion
+            bars[index].classList.add('remove');
+            updateStepList(`Removing value ${value} from index ${index}.`);
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            const tempArray = [...currentArray];
+            tempArray.splice(index, 1);
+            currentArray = tempArray;
+            generateBars(currentArray);
 
-      const arr = input.split(',').map(num => parseInt(num.trim())).filter(num => !isNaN(num));
-      if (arr.length === 0) return;
+            // Animate shifting elements
+            for (let i = index; i < currentArray.length; i++) {
+                const updatedBars = document.querySelectorAll('.bar');
+                updatedBars[i].classList.add('highlight');
+                updateStepList(`Shifting element ${currentArray[i]} from index ${i+1} to ${i}.`);
+                await new Promise(resolve => setTimeout(resolve, 500));
+                updatedBars[i].classList.remove('highlight');
+            }
+            
+            isAnimating = false;
+        }
 
-      generateBars(arr);
-      recordBubbleSortSteps(arr);
-      currentStep = 0;
-      animateStep(currentStep);
-    });
+        async function searchElement() {
+            if (isAnimating) return;
+            isAnimating = true;
+            updateCodeDisplay("search");
+            resetVisualizer(false);
 
-    playBtn.addEventListener('click', play);
+            const value = parseInt(valueInput.value);
+            if (isNaN(value)) {
+                alert("Please enter a valid number to search for.");
+                isAnimating = false;
+                return;
+            }
+            
+            updateStepList(`Searching for value ${value}...`);
+            const bars = document.querySelectorAll('.bar');
+            let found = false;
 
-    pauseBtn.addEventListener('click', pause);
+            for (let i = 0; i < bars.length; i++) {
+                bars[i].classList.add('highlight');
+                updateStepList(`Checking element at index ${i}: Is it ${value}?`);
+                await new Promise(resolve => setTimeout(resolve, 500));
+                
+                if (parseInt(bars[i].textContent) === value) {
+                    bars[i].classList.remove('highlight');
+                    bars[i].classList.add('found');
+                    updateStepList(`Found value ${value} at index ${i}!`);
+                    found = true;
+                    break;
+                }
+                bars[i].classList.remove('highlight');
+            }
 
-    nextBtn.addEventListener('click', () => {
-      if (currentStep < steps.length) {
-        animateStep(currentStep++);
-      }
-    });
+            if (!found) {
+                updateStepList(`Value ${value} not found in the array.`);
+            }
+            isAnimating = false;
+        }
 
-    prevBtn.addEventListener('click', () => {
-      if (currentStep > 0) {
-        currentStep--; // go back first
-        animateStep(currentStep);
-      }
-    });
+        async function sortArray() {
+            if (isAnimating) return;
+            isAnimating = true;
+            updateCodeDisplay("sort");
+            resetVisualizer(false);
+            
+            updateStepList("Starting Bubble Sort...");
+            let n = currentArray.length;
+            const bars = document.querySelectorAll('.bar');
 
-    restartBtn.addEventListener('click', () => {
-      pause();
-      currentStep = 0;
-      animateStep(currentStep);
-    });
+            for (let i = 0; i < n - 1; i++) {
+                for (let j = 0; j < n - i - 1; j++) {
+                    bars[j].classList.add('highlight');
+                    bars[j + 1].classList.add('highlight');
+                    updateStepList(`Comparing ${currentArray[j]} and ${currentArray[j+1]} (indices ${j} and ${j+1}).`);
+                    await new Promise(resolve => setTimeout(resolve, 500));
 
-    function getActualSpeed() {
-      const sliderValue = parseInt(speedSlider.value);
-      return 2100 - sliderValue; // 100 => 2000ms, 2000 => 100ms
-    }
-  </script>
+                    if (currentArray[j] > currentArray[j + 1]) {
+                        updateStepList(`Swapping ${currentArray[j]} and ${currentArray[j+1]}.`);
+                        [currentArray[j], currentArray[j + 1]] = [currentArray[j + 1], currentArray[j]];
+                        [bars[j].textContent, bars[j + 1].textContent] = [bars[j + 1].textContent, bars[j].textContent];
+                    }
+
+                    bars[j].classList.remove('highlight');
+                    bars[j + 1].classList.remove('highlight');
+                }
+                bars[n - 1 - i].classList.add('sorted');
+                updateStepList(`Element at index ${n - 1 - i} is now sorted.`);
+            }
+            bars[0].classList.add('sorted');
+            updateStepList("Sorting complete. The array is now sorted.");
+            isAnimating = false;
+        }
+
+        function resetVisualizer(clearInput = true) {
+            if (isAnimating) return;
+            const bars = document.querySelectorAll('.bar');
+            bars.forEach(bar => {
+                bar.classList.remove('highlight', 'remove', 'found', 'sorted');
+            });
+            if (clearInput) {
+                valueInput.value = '';
+                indexInput.value = '';
+                generateBars(currentArray);
+            }
+            stepList.innerHTML = ''; // Clear steps log
+        }
+
+        // Event Listeners for array operations
+        insertBtn.addEventListener('click', insertElement);
+        deleteBtn.addEventListener('click', deleteElement);
+        searchBtn.addEventListener('click', searchElement);
+        sortBtn.addEventListener('click', sortArray);
+        resetBtn.addEventListener('click', () => {
+             const defaultArray = [45, 18, 10, 72, 33];
+            currentArray = [...defaultArray];
+            generateBars(currentArray);
+        });
+
+        // Event Listener for initial array generation
+        generateBtn.addEventListener('click', () => {
+            const input = customInput.value.trim();
+            const arr = input.split(',').map(num => parseInt(num.trim())).filter(num => !isNaN(num));
+            if (arr.length === 0) {
+                alert("Please enter a comma-separated list of numbers.");
+                return;
+            }
+            currentArray = arr;
+            generateBars(currentArray);
+        });
+
+        // Copy btn logic
+        document.getElementById("copy-btn").addEventListener("click", () => {
+            const code = document.getElementById("codeLang").textContent;
+            navigator.clipboard.writeText(code)
+                .then(() => {
+                    alert("Code copied to clipboard!");
+                })
+                .catch(err => {
+                    alert("Failed to copy code. Please try again.");
+                });
+        });
+    </script>
 </body>
 
 </html>
