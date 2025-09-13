@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Visualize data structures and algorithms with animations and interactive tools.">
     <meta name="keywords"
-        content="DSA, Visualizer, Algorithms, Data Structures, Interactive, Array, Array Operations, Gaurav Gunjal">
-    <title>Array Visualizer</title>
+        content="DSA, Visualizer, Algorithms, Data Structures, Interactive, Stack, Stack Operations, Gaurav Gunjal">
+    <title>Stack Visualizer</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -128,213 +128,6 @@
             color: #627ef0;
         }
 
-        .hero {
-            text-align: center;
-            padding: 100px 20px 80px;
-            background: linear-gradient(to right, #1e1e1e, #2e2e2e);
-        }
-
-        body.light-mode .hero {
-            background: linear-gradient(to right, #e7edff, #ffffff);
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            background: linear-gradient(to right, #ff6b6b, #4ecdc4, #ffd166, #6a0572, #ab83a1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            background: linear-gradient(to right, #05ffea, #ee00ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 30px;
-        }
-
-        .explore-btn {
-            background-color: #f06262;
-            color: white;
-            text-decoration: none;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-
-        .explore-btn:hover {
-            background-color: #f9a825;
-        }
-
-        body.light-mode .explore-btn {
-            background-color: #627ef0;
-        }
-
-        body.light-mode .explore-btn:hover {
-            background-color: #f9a825;
-        }
-
-        .categories {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            padding: 50px 0;
-            flex-direction: column;
-            text-align: center;
-        }
-
-        body.light-mode .categories {
-            background-color: #ffffff;
-        }
-
-        .categories h2 {
-            font-size: 2rem;
-            margin-bottom: 40px;
-            color: #f9a825;
-        }
-
-        .category-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            padding: 0 20px;
-        }
-
-        .category-card img {
-            width: 200px;
-        }
-
-        .category-card {
-            background-color: #1c1616;
-            border-radius: 10px;
-            padding: 25px;
-            box-shadow: 0 8px 15px rgba(229, 26, 26, 0.529);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        body.light-mode .category-card {
-            background-color: #fdfdfd;
-            box-shadow: 0 8px 15px rgba(116, 146, 255, 0.611);
-        }
-
-        .category-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 20px rgba(255, 251, 18, 0.4);
-        }
-
-        body.light-mode .category-card:hover {
-            box-shadow: 0 12px 20px rgba(255, 174, 0, 0.786);
-        }
-
-        .categories-card img {
-            max-width: 80px;
-            margin-bottom: 15px;
-        }
-
-        .category-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 10px;
-            color: #fff;
-        }
-
-        body.light-mode .category-card h3 {
-            color: #000;
-        }
-
-        .category-card p {
-            font-size: 0.95rem;
-            color: #aaa;
-            margin-bottom: 15px;
-        }
-
-        .category-card a {
-            background-color: #f9a825;
-            color: #000000;
-            padding: 8px 16px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: 600;
-            display: inline-block;
-        }
-
-        .category-card a:hover {
-            background-color: #ffd54f;
-        }
-
-        .contact {
-            background-color: #1e1e1e7e;
-            color: #f06262;
-            padding: 50px 20px;
-            text-align: center;
-        }
-
-        body.light-mode .contact {
-            background-color: #ededed;
-            color: #627ef0;
-        }
-
-        .contact h2 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-        }
-
-        .contact p {
-            font-size: 1.1rem;
-            margin-bottom: 30px;
-        }
-
-        .contact form {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .contact form input,
-        .contact form textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: none;
-            border-radius: 5px;
-            background-color: #2e2e2e;
-            color: #fff;
-        }
-
-        body.light-mode .contact form input {
-            background-color: #afc4ff;
-        }
-
-        body.light-mode .contact form textarea {
-            background-color: #afc4ff;
-        }
-
-        .contact button {
-            background-color: #f06262;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 700;
-        }
-
-        body.light-mode .contact button {
-            background-color: #627ef0;
-        }
-
-        .contact button:hover {
-            background-color: #ffd166;
-            color: #000000;
-        }
-
-        body.light-mode .contact button:hover {
-            background-color: #f9a825;
-        }
-
         .footer {
             background-color: #1e1e1e;
             color: #f06262;
@@ -357,12 +150,10 @@
 
         .footer a {
             color: #f9a825;
-
         }
 
         body.light-mode .footer a {
             color: #f9a825;
-
         }
 
         @media screen and (max-width: 768px) {
@@ -379,88 +170,22 @@
                 display: block;
             }
 
-            .hero {
-                text-align: center;
-                padding: 25vh 20px 80px;
-                height: 80vh;
-            }
-
-            .hero h1 {
-                font-size: 1.6rem;
-                font-weight: 700;
-                margin-bottom: 10px;
-            }
-
-            .hero p {
-                font-size: 0.9rem;
-            }
-
             .footer p {
                 font-size: 0.9rem;
             }
         }
 
-
-        /* sort page */
-
-        #sort-page {
+        /* Stack page */
+        #stack-page {
             padding: 50px 20px;
             color: #fff;
         }
 
-        body.light-mode #sort-page {
+        body.light-mode #stack-page {
             color: #2d2d2d;
         }
 
-        .sort-selector {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-            margin: 0 60px 40px 60px;
-        }
-
-        .sort-selector a {
-            text-decoration: none;
-            color: #fff;
-        }
-
-        .sort-btn {
-            background-color: #f06262;
-            color: white;
-            border-radius: 8px;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: background-color 0.3s ease;
-        }
-
-        body.light-mode .sort-btn {
-            background-color: #627ef0;
-        }
-
-        .sort-btn:hover {
-            background-color: #bc2a2a;
-        }
-
-        body.light-mode .sort-btn:hover {
-            background-color: #2a47bc;
-        }
-
-        .sort-btn.active {
-            background-color: #f9a825;
-            color: #000000;
-        }
-
-        body.light-mode .sort-btn.active {
-            background-color: #f9a825;
-            color: #000000;
-        }
-
         .sort-desc {
-            /* max-width: 800px; */
             margin: 60px;
             padding: 40px;
             background-color: #543939;
@@ -477,12 +202,10 @@
             color: rgb(0, 0, 0);
         }
 
-        .defination1 {
-            list-style-type: none;
-            margin-left: 20px;
-        }
-
-        .working1 {
+        .definition1,
+        .working1,
+        .time-complexity1,
+        .space-complexity1 {
             margin-left: 40px;
         }
 
@@ -544,13 +267,13 @@
             border-radius: 6px;
         }
 
-        .step-info li.current {
+        .step-info li .current {
             background-color: #ff8b8b;
             font-weight: bold;
             border-left: 4px solid #ff0000;
         }
 
-        body.light-mode .step-info li.current {
+        body.light-mode .step-info li .current {
             background-color: #7291ff;
             font-weight: bold;
             border-left: 4px solid #0013c1;
@@ -558,59 +281,45 @@
 
         .bar-wrapper {
             display: flex;
-            flex-direction: column;
-            overflow-x: auto;
-        }
-        
-        /* New styling to align index numbers with bars */
-        .bars-container {
-            display: flex;
-            justify-content: flex-start;
-            align-items: flex-start;
-            height: 100px;
-            background-color: #413434;
-            padding: 10px;
-            border-radius: 8px;
-            width: 100%;
-            min-width: 575px;
-            justify-self: center;
-            flex-direction: row; /* Align index and bar horizontally */
-        }
-        
-        .bar-index-container {
-            display: flex;
             flex-direction: row;
-            justify-content: flex-start;
-            align-items: flex-start;
-            height: 30px;
-            font-size: 0.9rem;
-            color: #aaa;
-            width: 100%;
-            min-width: max-content;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 10px;
+            background-color: #413434;
+            border-radius: 8px;
+            position: relative;
+            height: 300px;
+            overflow-y: auto;
         }
 
-        body.light-mode .bars-container {
+        body.light-mode .bar-wrapper {
             background-color: #f4f6ff;
         }
 
-        #codeBox {
-            background: #1e1e1e;
-            padding: 0.8em;
-            border-radius: 8px;
-            color: #f1f1f1;
-            overflow-x: auto;
+        .stack-container {
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+            justify-content: flex-start;
+            height: fit-content;
+            width: fit-content;
+            min-height: 100%;
+            padding: 10px;
         }
 
-        .bar-index {
-            width: 60px; /* Match bar width */
-            text-align: center;
+        .top-pointer {
+            position: absolute;
+            top: 0;
+            right: 50%;
+            transform: translateX(50%);
             font-weight: bold;
-            color: #ccc;
-            margin: 0 5px; /* Match bar margin */
+            color: #ff4d4d;
+            font-size: 1.2rem;
+            transition: top 0.3s ease-in-out;
         }
 
-        body.light-mode .bar-index {
-            color: #333;
+        body.light-mode .top-pointer {
+            color: #4c70ff;
         }
 
         .bar {
@@ -624,8 +333,8 @@
             border: 2px solid black;
             background-color: #61dafb;
             border-radius: 0;
-            margin: 0 5px;
-            transition: all 0.3s;
+            margin: 5px 0;
+            transition: all 0.5s ease-in-out;
             cursor: pointer;
         }
 
@@ -633,25 +342,19 @@
             background-color: #f9a825 !important;
             transform: scale(1.1);
             border-color: #f9a825;
+            border: 2px solid black;
+        }
+
+        .bar.pushed {
+            transform: translateY(0);
         }
 
         .bar.remove {
             background-color: #ff4d4d !important;
-            transform: scale(0.5);
+            transform: translateY(-200px) scale(0);
             opacity: 0;
             border-color: #ff4d4d;
-        }
-
-        .bar.found {
-            background-color: #2ecc71 !important;
-            border-color: #2ecc71;
-            box-shadow: 0 0 10px #2ecc71;
-        }
-
-        .bar.sorted {
-            background-color: #2ecc71 !important;
-            border-color: #2ecc71;
-            transition: background-color 0.5s ease;
+            border: 2px solid black;
         }
 
         .input-section label {
@@ -691,59 +394,33 @@
             color: #ffffff;
         }
 
-        .control-panel {
+        .stack-operations {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 15px;
+            margin-top: 20px;
             justify-content: center;
-            align-items: center;
-            margin-top: 10px;
         }
 
-        .control-panel h3,
-        label {
-            color: white;
-        }
-
-        .control-panel input {
-            padding-left: 8px;
-            height: 30px;
-            border-radius: 5px;
+        .stack-operations input {
+            padding: 10px;
+            border-radius: 8px;
             border: none;
+            min-width: 100px;
         }
 
-        .control-panel button,
-        .control-panel input[type="range"] {
-            padding: 8px 12px;
-            font-size: 1rem;
-            border-radius: 5px;
+        .stack-operations button {
+            background-color: #4ecdc4;
             border: none;
-        }
-
-        .control-panel button {
-            background-color: #f06262;
-            color: white;
+            color: #000000;
+            padding: 8px 16px;
+            border-radius: 6px;
             cursor: pointer;
+            font-weight: 600;
         }
 
-        .control-panel button:hover {
-            background-color: #f9a825;
-            color: black;
-        }
-
-        body.light-mode .control-panel button {
-            background-color: #627ef0;
-        }
-
-        body.light-mode .control-panel button:hover {
-            background-color: #4c70ff;
-            color: #ffffff;
-        }
-
-        .speed {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .stack-operations button:hover {
+            background-color: #bffaf5;
         }
 
         .sort-lan-selector {
@@ -836,10 +513,6 @@
 
 
         @media screen and (max-width: 768px) {
-            .sort-selector {
-                margin: 0 20px 40px 20px;
-            }
-
             .sort-desc h2 {
                 font-size: 0.9rem;
             }
@@ -885,20 +558,11 @@
 
             .bar-wrapper {
                 width: 100%;
-                overflow-x: auto;
+                height: 200px;
             }
 
-            .bars-container {
-                justify-content: flex-start;
+            .stack-container {
                 min-width: max-content;
-                padding: 10px;
-            }
-
-            .bar-index-container {
-                justify-content: flex-start;
-                min-width: max-content;
-                padding: 15px;
-                gap: 10px;
             }
 
             .bar {
@@ -906,11 +570,6 @@
                 height: 40px;
                 flex-shrink: 0;
                 font-size: 12px;
-            }
-            
-            .bar-index {
-                width: 40px;
-                flex-shrink: 0;
             }
 
             .code-display {
@@ -930,31 +589,6 @@
                 font-size: 0.6rem;
             }
         }
-
-        .array-operations {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-top: 20px;
-            justify-content: center;
-        }
-        
-        .array-operations input {
-            padding: 10px;
-            border-radius: 8px;
-            border: none;
-            min-width: 100px;
-        }
-
-        .array-operations button {
-            background-color: #4ecdc4;
-            border: none;
-            color: #000000;
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-        }
     </style>
 </head>
 
@@ -963,7 +597,7 @@
         <div class="logo">DSA Visualizer</div>
         <nav>
             <div class="nav-links">
-                <a href="#array-page" class="links">Array</a>
+                <a href="#stack-page" class="links">Stack</a>
                 <a href="#visualizer" class="links">Visualizer</a>
                 <a href="#code" class="links">Code</a>
                 <a href="../index.html" class="links">Home</a>
@@ -978,35 +612,70 @@
         </nav>
     </header>
 
-    <main id="array-page">
+    <section class="sort-desc" id="sortDesc">
+        <h2><strong>Stack</strong></h2>
+
+        <p class="definition">
+            <strong>Definition:</strong>
+        <ul>
+            <li class="definition1">A stack is a linear data structure that follows the **Last-In, First-Out (LIFO)** principle.</li>
+            <li class="definition1">The last element added to the stack is the first element to be removed.</li>
+            <li class="definition1">Stacks are commonly used for tasks like undo/redo functionality, function call management, and expression evaluation.</li>
+        </ul>
+        </p>
+
+        <p class="working">
+            <strong>Working:</strong>
+        <ul class="working1">
+            <li>The primary operations are **Push** (adding an element to the top) and **Pop** (removing the top element).</li>
+            <li>A stack pointer, often called `top`, keeps track of the most recently added element.</li>
+            <li>Other operations include **Peek** (viewing the top element without removing it) and **isEmpty** (checking if the stack is empty).</li>
+        </ul>
+        </p>
+
+        <p class="time-complexity">
+            <strong>Time Complexity:</strong>
+        <ul class="time-complexity1">
+            <li>Push: <code>O(1)</code></li>
+            <li>Pop: <code>O(1)</code></li>
+            <li>Peek: <code>O(1)</code></li>
+            <li>Search: <code>O(n)</code> (worst case)</li>
+        </ul>
+        </p>
+
+        <p class="space-complexity">
+            <strong>Space Complexity:</strong>
+        <ul class="space-complexity1">
+            <li><code>O(n)</code> (to store <em>n</em> elements)</li>
+        </ul>
+        </p>
+    </section>
+
+    <main id="stack-page">
         <section id="visualizer" class="visualizer">
             <div class="visualizer-layout">
                 <div class="left-panel">
                     <div class="input-section">
-                        <label for="customInput">Enter initial array (comma-separated):</label>
+                        <label for="customInput">Enter initial elements (comma-separated):</label>
                         <input type="text" id="customInput" placeholder="45, 18, 10" />
-                        <button id="generateBtn">Generate Array</button>
+                        <button id="generateBtn">Generate Stack</button>
                         <button id="resetBtn">Reset</button>
                     </div>
 
                     <div class="bar-wrapper">
-                        <div id="barIndexContainer" class="bar-index-container"></div>
-                        <div id="barContainer" class="bars-container"></div>
+                        <div id="topPointer" class="top-pointer">TOP</div>
+                        <div id="stackContainer" class="stack-container"></div>
                     </div>
 
-                    <div class="array-operations">
-                        <input type="text" id="valueInput" placeholder="Value">
-                        <input type="text" id="indexInput" placeholder="Index">
-                        <button id="insertBtn">Insertion</button>
-                        <button id="deleteBtn">Deletion</button>
-                        <button id="searchBtn">Searching</button>
-                        <button id="sortBtn">Sorting</button>
+                    <div class="stack-operations">
+                        <input type="text" id="valueInput" placeholder="Value to push">
+                        <button id="pushBtn">Push</button>
+                        <button id="popBtn">Pop</button>
+                        <button id="peekBtn">Peek</button>
                     </div>
-
                 </div>
 
                 <div class="right-panel">
-                    <h3>Steps:</h3>
                     <div class="step-info" id="stepInfo">
                         <h3>Visited Steps:</h3>
                         <ul id="stepList"></ul>
@@ -1021,372 +690,349 @@
             </div>
         </section>
 
-        <section class="code-display" id="code">
+        <section id="code" class="sort-lan-selector">
+            <button class="sort-lan-btn active" id="cpp">C++</button>
+            <button class="sort-lan-btn" id="c">C</button>
+            <button class="sort-lan-btn" id="py">Python</button>
+            <button class="sort-lan-btn" id="java">Java</button>
+            <button class="sort-lan-btn" id="js">JavaScript</button>
+        </section>
+
+        <section class="code-display">
             <button id="copy-btn"><img src="../icons/dark-copy.png" alt=""></button>
-            <p class="code-lang" id="codeLang"></p>
+            <p class="code-lang"></p>
         </section>
     </main>
 
+    <footer class="footer">
+        <div class="footer-content">
+            <p>Some visual assets used are sourced from <a href="https://visualgo.net" target="_blank">Visualgo.net</a>
+                for educational reference purposes. All rights belong to their respective creators.</p>
+        </div>
+    </footer>
+
     <script>
-        // Dark Mode and Light Mode
-        const toggelBtn = document.getElementById("toggelBtn");
-        const themeIcon = document.getElementById("themeIcon")
-        const body = document.querySelector("body");
+        // --- Dark Mode and Light Mode ---
+const toggelBtn = document.getElementById("toggelBtn");
+const themeIcon = document.getElementById("themeIcon");
+const body = document.querySelector("body");
 
-        if (localStorage.getItem("theme") === "light") {
-            body.classList.add("light-mode");
-            themeIcon.src = "../icons/dark-mode.png";
-        }
+if (localStorage.getItem("theme") === "light") {
+    body.classList.add("light-mode");
+    themeIcon.src = "../icons/dark-mode.png";
+}
 
-        toggelBtn.addEventListener("click", () => {
-            body.classList.toggle("light-mode");
-            if (body.classList.contains("light-mode")) {
-                themeIcon.src = "../icons/dark-mode.png";
-                localStorage.setItem("theme", "light");
-            } else {
-                themeIcon.src = "../icons/light-mode.png";
-                localStorage.setItem("theme", "dark");
-            }
-        });
+toggelBtn.addEventListener("click", () => {
+    body.classList.toggle("light-mode");
+    if (body.classList.contains("light-mode")) {
+        themeIcon.src = "../icons/dark-mode.png";
+        localStorage.setItem("theme", "light");
+    } else {
+        themeIcon.src = "../icons/light-mode.png";
+        localStorage.setItem("theme", "dark");
+    }
+});
 
-        // menuIcon logic
-        const menuIcon = document.getElementById("menuIcon");
-        const closeIcon = document.getElementById("closeIcon");
-        const navLinks = document.querySelector(".nav-links");
+// --- Menu Icon Logic ---
+const menuIcon = document.getElementById("menuIcon");
+const closeIcon = document.getElementById("closeIcon");
+const navLinks = document.querySelector(".nav-links");
+const allLinks = document.querySelectorAll(".nav-links a");
 
-        menuIcon.addEventListener("click", () => {
-            navLinks.classList.add("show");
-            menuIcon.style.display = "none";
-            closeIcon.style.display = "block";
-        });
+menuIcon.addEventListener("click", () => {
+    navLinks.classList.add("show");
+    menuIcon.style.display = "none";
+    closeIcon.style.display = "block";
+});
 
-        closeIcon.addEventListener("click", () => {
+closeIcon.addEventListener("click", () => {
+    navLinks.classList.remove("show");
+    closeIcon.style.display = "none";
+    menuIcon.style.display = "block";
+});
+
+allLinks.forEach(link => {
+    link.addEventListener("click", () => {
+        if (navLinks.classList.contains("show")) {
             navLinks.classList.remove("show");
             closeIcon.style.display = "none";
             menuIcon.style.display = "block";
-        });
+        }
+    });
+});
 
-        const allLinks = document.querySelectorAll(".nav-links a");
-        allLinks.forEach(link => {
-            link.addEventListener("click", () => {
-                if (navLinks.classList.contains("show")) {
-                    navLinks.classList.remove("show");
-                    closeIcon.style.display = "none";
-                    menuIcon.style.display = "block";
-                }
-            });
-        });
+// --- Stack Visualizer Logic ---
+const valueInput = document.getElementById('valueInput');
+const pushBtn = document.getElementById('pushBtn');
+const popBtn = document.getElementById('popBtn');
+const peekBtn = document.getElementById('peekBtn');
+const resetBtn = document.getElementById('resetBtn');
+const generateBtn = document.getElementById('generateBtn');
+const customInput = document.getElementById('customInput');
+const stackContainer = document.getElementById('stackContainer');
+const topPointer = document.getElementById('topPointer');
+const codeSnippet = document.getElementById('codeSnippet');
+const stepList = document.getElementById('stepList');
+const sortLanButtons = document.querySelectorAll(".sort-lan-selector button");
+const codeDisplay = document.querySelector(".code-display p");
 
-        // Array Visualizer Logic
-        const valueInput = document.getElementById('valueInput');
-        const indexInput = document.getElementById('indexInput');
-        const insertBtn = document.getElementById('insertBtn');
-        const deleteBtn = document.getElementById('deleteBtn');
-        const searchBtn = document.getElementById('searchBtn');
-        const sortBtn = document.getElementById('sortBtn');
-        const resetBtn = document.getElementById('resetBtn');
-        const generateBtn = document.getElementById('generateBtn');
-        const customInput = document.getElementById('customInput');
-        const barContainer = document.getElementById('barContainer');
-        const barIndexContainer = document.getElementById('barIndexContainer');
-        const codeSnippet = document.getElementById('codeSnippet');
-        const stepList = document.getElementById('stepList');
+let currentStack = [];
+let isAnimating = false;
+let currentLang = "cpp";
 
-        let currentArray = [];
-        let isAnimating = false;
+const jsCodes = {
+    push: `// Push adds an element to the top of the stack.
+function push(stack, value) {
+    stack.push(value);
+}`,
+    pop: `// Pop removes the top element from the stack.
+function pop(stack) {
+    if (stack.length > 0) {
+        return stack.pop();
+    } else {
+        console.error("Stack is empty.");
+        return null;
+    }
+}`,
+    peek: `// Peek returns the top element without removing it.
+function peek(stack) {
+    if (stack.length > 0) {
+        return stack[stack.length - 1];
+    } else {
+        console.error("Stack is empty.");
+        return null;
+    }
+}`,
+};
 
-        const jsCodes = {
-            insert: `// Insertion adds an element at a specific index.
-function insert(arr, index, value) {
-    if (index < 0 || index > arr.length) {
-        console.error("Invalid index.");
+const stackSyntax = {
+    js: `let stack = [10, 20, 30];`,
+    py: `stack = [10, 20, 30]`,
+    java: `Stack<Integer> stack = new Stack<>();
+stack.push(10);`,
+    cpp: `std::stack<int> s;
+s.push(10);`,
+    c: `// C does not have a built-in stack.
+// It is implemented using arrays or linked lists.`,
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+    const defaultStack = [10, 20, 30];
+    currentStack = [...defaultStack];
+    generateStack(currentStack);
+    updateCodeDisplay("push");
+
+    document.getElementById(currentLang).classList.add("active");
+    codeDisplay.textContent = stackSyntax.cpp;
+});
+
+async function generateStack(arr) {
+    if (isAnimating) return;
+    resetVisualizer();
+    stackContainer.innerHTML = '';
+
+    if (arr.length === 0) {
+        stackContainer.innerHTML = '<p style="color: #fff; text-align: center; margin-top: 20px;">Stack is empty.</p>';
+        topPointer.style.display = 'none';
+        updateStepList("Stack is empty.");
         return;
     }
-    // Shift elements to make space
-    for (let i = arr.length; i > index; i--) {
-        arr[i] = arr[i - 1];
-    }
-    // Insert the new value
-    arr[index] = value;
-}`,
-            delete: `// Deletion removes an element from a specific index.
-function remove(arr, index) {
-    if (index < 0 || index >= arr.length) {
-        console.error("Invalid index.");
+
+    arr.forEach(num => {
+        const bar = document.createElement('div');
+        bar.classList.add('bar');
+        bar.textContent = num;
+        stackContainer.appendChild(bar);
+    });
+
+    topPointer.style.display = 'block';
+    updateStepList("Stack generated successfully.");
+}
+
+function updateCodeDisplay(operation) {
+    codeSnippet.textContent = jsCodes[operation] || "Select an operation to see the code.";
+}
+
+function updateStepList(message) {
+    const li = document.createElement('li');
+    li.textContent = message;
+    stepList.appendChild(li);
+    stepList.scrollTop = stepList.scrollHeight;
+}
+
+// --- Operations Functions ---
+
+async function pushElement() {
+    if (isAnimating) return;
+    isAnimating = true;
+    updateCodeDisplay("push");
+    resetVisualizer(false);
+
+    const value = parseInt(valueInput.value);
+
+    if (isNaN(value)) {
+        alert("Please enter a valid number to push.");
+        isAnimating = false;
         return;
     }
-    // Shift elements to fill the gap
-    for (let i = index; i < arr.length - 1; i++) {
-        arr[i] = arr[i + 1];
+
+    updateStepList(`Step 1: Pushing value ${value} onto the stack.`);
+    const newBar = document.createElement('div');
+    newBar.classList.add('bar');
+    newBar.textContent = value;
+    stackContainer.appendChild(newBar);
+    
+    // Animate the bar sliding in
+    await new Promise(resolve => setTimeout(resolve, 50));
+    newBar.style.transform = `translateY(0)`;
+    newBar.style.opacity = '1';
+    
+    updateStepList("Step 2: New element added to the top.");
+    
+    await new Promise(resolve => setTimeout(resolve, 500));
+    newBar.classList.add('highlight');
+    topPointer.style.display = 'block';
+
+    updateStepList(`Step 3: Top pointer is updated to point to the new element.`);
+    
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    newBar.classList.remove('highlight');
+    isAnimating = false;
+}
+
+async function popElement() {
+    if (isAnimating) return;
+    if (currentStack.length === 0) {
+        alert("Stack is empty. Cannot pop.");
+        return;
     }
-    arr.length--; // Reduce array size
-}`,
-            search: `// Searching finds an element and returns its index.
-function search(arr, value) {
-    for (let i = 0; i < arr.length; i++) {
-        if (arr[i] === value) {
-            return i; // Found!
-        }
+    isAnimating = true;
+    updateCodeDisplay("pop");
+    resetVisualizer(false);
+    
+    const bars = document.querySelectorAll('.bar');
+    const topBar = bars[bars.length - 1];
+    const value = topBar.textContent;
+
+    updateStepList(`Step 1: Preparing to pop the top element (${value}).`);
+    topBar.classList.add('highlight');
+    await new Promise(resolve => setTimeout(resolve, 500));
+
+    updateStepList(`Step 2: Removing the top element.`);
+    topBar.classList.remove('highlight');
+    topBar.classList.add('remove');
+
+    await new Promise(resolve => setTimeout(resolve, 500));
+    stackContainer.removeChild(topBar);
+    currentStack.pop();
+
+    updateStepList(`Step 3: Element ${value} removed. Stack size is now ${currentStack.length}.`);
+
+    if (currentStack.length > 0) {
+        const newTop = document.querySelectorAll('.bar');
+        newTop[newTop.length - 1].classList.add('highlight');
+        updateStepList(`Step 4: The new top element is ${newTop[newTop.length - 1].textContent}.`);
+        await new Promise(resolve => setTimeout(resolve, 500));
+        newTop[newTop.length - 1].classList.remove('highlight');
+    } else {
+        stackContainer.innerHTML = '<p style="color: #fff; text-align: center; margin-top: 20px;">Stack is empty.</p>';
+        updateStepList(`Step 4: The stack is now empty.`)
+        topPointer.style.display = 'none';
     }
-    return -1; // Not found
-}`,
-            sort: `// A simple Bubble Sort algorithm.
-function bubbleSort(arr) {
-    let n = arr.length;
-    for (let i = 0; i < n - 1; i++) {
-        for (let j = 0; j < n - i - 1; j++) {
-            if (arr[j] > arr[j + 1]) {
-                [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
-            }
-        }
+
+    isAnimating = false;
+}
+
+async function peekElement() {
+    if (isAnimating) return;
+    if (currentStack.length === 0) {
+        alert("Stack is empty. Cannot peek.");
+        return;
     }
-}`
-        };
+    isAnimating = true;
+    updateCodeDisplay("peek");
+    resetVisualizer(false);
 
-        document.addEventListener("DOMContentLoaded", () => {
-            const defaultArray = [45, 18, 10, 72, 33];
-            currentArray = [...defaultArray];
-            generateBars(currentArray);
-            updateCodeDisplay("insert");
+    const bars = document.querySelectorAll('.bar');
+    const topBar = bars[bars.length - 1];
+    const value = topBar.textContent;
+
+    updateStepList(`Step 1: Checking the top element...`);
+    topBar.classList.add('highlight');
+
+    updateStepList(`Step 2: The top element is ${value}.`);
+    await new Promise(resolve => setTimeout(resolve, 1500));
+
+    topBar.classList.remove('highlight');
+    isAnimating = false;
+}
+
+function resetVisualizer(clearInput = true) {
+    if (isAnimating) return;
+    const bars = document.querySelectorAll('.bar');
+    bars.forEach(bar => {
+        bar.classList.remove('highlight', 'remove', 'found', 'sorted');
+    });
+    if (clearInput) {
+        valueInput.value = '';
+    }
+    stepList.innerHTML = '';
+}
+
+// --- Event Listeners for stack operations ---
+pushBtn.addEventListener('click', () => {
+    pushElement();
+    currentStack.push(parseInt(valueInput.value));
+});
+popBtn.addEventListener('click', () => {
+    popElement();
+    currentStack.pop();
+});
+peekBtn.addEventListener('click', () => {
+    peekElement();
+});
+resetBtn.addEventListener('click', () => {
+    const defaultStack = [10, 20, 30];
+    currentStack = [...defaultStack];
+    generateStack(currentStack);
+});
+
+// Event Listener for initial stack generation
+generateBtn.addEventListener('click', () => {
+    const input = customInput.value.trim();
+    const arr = input.split(',').map(num => parseInt(num.trim())).filter(num => !isNaN(num));
+    if (arr.length === 0) {
+        alert("Please enter a comma-separated list of numbers.");
+        return;
+    }
+    currentStack = arr;
+    generateStack(currentStack);
+});
+
+// Copy button logic
+document.getElementById("copy-btn").addEventListener("click", () => {
+    const code = codeSnippet.textContent;
+    navigator.clipboard.writeText(code)
+        .then(() => {
+            alert("Code copied to clipboard!");
+        })
+        .catch(err => {
+            alert("Failed to copy code. Please try again.");
         });
+});
 
-        async function generateBars(arr) {
-            barContainer.innerHTML = '';
-            barIndexContainer.innerHTML = '';
-            stepList.innerHTML = '';
-            if (arr.length === 0) {
-                barContainer.innerHTML = '<p style="color: #fff; text-align: center; margin-top: 20px;">Array is empty.</p>';
-                return;
-            }
-
-            arr.forEach((num, idx) => {
-                const bar = document.createElement('div');
-                bar.classList.add('bar');
-                bar.textContent = num;
-                barContainer.appendChild(bar);
-
-                const indexLabel = document.createElement('div');
-                indexLabel.classList.add('bar-index');
-                indexLabel.textContent = idx;
-                barIndexContainer.appendChild(indexLabel);
-            });
-            updateStepList("Array generated.");
+// Language selection logic
+sortLanButtons.forEach(button => {
+    button.addEventListener("click", (event) => {
+        const selectedLang = event.target.id;
+        if (selectedLang !== currentLang) {
+            document.querySelector(".sort-lan-selector .active")?.classList.remove("active");
+            event.target.classList.add("active");
+            currentLang = selectedLang;
+            codeDisplay.textContent = stackSyntax[currentLang] || "// Code not found!";
         }
-
-        function updateCodeDisplay(operation) {
-            codeSnippet.textContent = jsCodes[operation] || "Select an operation to see the code.";
-        }
-        
-        function updateStepList(message) {
-            const li = document.createElement('li');
-            li.textContent = message;
-            stepList.appendChild(li);
-            stepList.scrollTop = stepList.scrollHeight; // Auto-scroll to the latest step
-        }
-
-        // --- Operations Functions ---
-
-        async function insertElement() {
-            if (isAnimating) return;
-            isAnimating = true;
-            updateCodeDisplay("insert");
-            resetVisualizer(false);
-
-            const value = parseInt(valueInput.value);
-            const index = parseInt(indexInput.value);
-
-            if (isNaN(value) || isNaN(index) || index < 0 || index > currentArray.length) {
-                alert("Please enter a valid number for value and a valid index (0 to " + currentArray.length + ").");
-                isAnimating = false;
-                return;
-            }
-            
-            updateStepList(`Preparing to insert value ${value} at index ${index}...`);
-            const tempArray = [...currentArray];
-            const bars = document.querySelectorAll('.bar');
-
-            // Animate shifting elements
-            for (let i = tempArray.length - 1; i >= index; i--) {
-                if(bars[i]) {
-                    bars[i].classList.add('highlight');
-                }
-                updateStepList(`Shifting element ${tempArray[i]} from index ${i} to ${i+1}.`);
-                await new Promise(resolve => setTimeout(resolve, 500));
-                
-                if(bars[i]) {
-                    bars[i].classList.remove('highlight');
-                }
-            }
-            
-            // Insert the new element
-            tempArray.splice(index, 0, value);
-            updateStepList(`Inserting value ${value} at index ${index}.`);
-            await new Promise(resolve => setTimeout(resolve, 500));
-            
-            currentArray = tempArray;
-            generateBars(currentArray);
-            isAnimating = false;
-        }
-
-        async function deleteElement() {
-            if (isAnimating) return;
-            isAnimating = true;
-            updateCodeDisplay("delete");
-            resetVisualizer(false);
-
-            const index = parseInt(indexInput.value);
-            if (isNaN(index) || index < 0 || index >= currentArray.length) {
-                alert("Please enter a valid index to delete (0 to " + (currentArray.length - 1) + ").");
-                isAnimating = false;
-                return;
-            }
-            
-            updateStepList(`Preparing to delete element at index ${index}...`);
-            const bars = document.querySelectorAll('.bar');
-            const value = currentArray[index];
-            
-            // Animate deletion
-            bars[index].classList.add('remove');
-            updateStepList(`Removing value ${value} from index ${index}.`);
-            await new Promise(resolve => setTimeout(resolve, 500));
-            
-            const tempArray = [...currentArray];
-            tempArray.splice(index, 1);
-            currentArray = tempArray;
-            generateBars(currentArray);
-
-            // Animate shifting elements
-            for (let i = index; i < currentArray.length; i++) {
-                const updatedBars = document.querySelectorAll('.bar');
-                updatedBars[i].classList.add('highlight');
-                updateStepList(`Shifting element ${currentArray[i]} from index ${i+1} to ${i}.`);
-                await new Promise(resolve => setTimeout(resolve, 500));
-                updatedBars[i].classList.remove('highlight');
-            }
-            
-            isAnimating = false;
-        }
-
-        async function searchElement() {
-            if (isAnimating) return;
-            isAnimating = true;
-            updateCodeDisplay("search");
-            resetVisualizer(false);
-
-            const value = parseInt(valueInput.value);
-            if (isNaN(value)) {
-                alert("Please enter a valid number to search for.");
-                isAnimating = false;
-                return;
-            }
-            
-            updateStepList(`Searching for value ${value}...`);
-            const bars = document.querySelectorAll('.bar');
-            let found = false;
-
-            for (let i = 0; i < bars.length; i++) {
-                bars[i].classList.add('highlight');
-                updateStepList(`Checking element at index ${i}: Is it ${value}?`);
-                await new Promise(resolve => setTimeout(resolve, 500));
-                
-                if (parseInt(bars[i].textContent) === value) {
-                    bars[i].classList.remove('highlight');
-                    bars[i].classList.add('found');
-                    updateStepList(`Found value ${value} at index ${i}!`);
-                    found = true;
-                    break;
-                }
-                bars[i].classList.remove('highlight');
-            }
-
-            if (!found) {
-                updateStepList(`Value ${value} not found in the array.`);
-            }
-            isAnimating = false;
-        }
-
-        async function sortArray() {
-            if (isAnimating) return;
-            isAnimating = true;
-            updateCodeDisplay("sort");
-            resetVisualizer(false);
-            
-            updateStepList("Starting Bubble Sort...");
-            let n = currentArray.length;
-            const bars = document.querySelectorAll('.bar');
-
-            for (let i = 0; i < n - 1; i++) {
-                for (let j = 0; j < n - i - 1; j++) {
-                    bars[j].classList.add('highlight');
-                    bars[j + 1].classList.add('highlight');
-                    updateStepList(`Comparing ${currentArray[j]} and ${currentArray[j+1]} (indices ${j} and ${j+1}).`);
-                    await new Promise(resolve => setTimeout(resolve, 500));
-
-                    if (currentArray[j] > currentArray[j + 1]) {
-                        updateStepList(`Swapping ${currentArray[j]} and ${currentArray[j+1]}.`);
-                        [currentArray[j], currentArray[j + 1]] = [currentArray[j + 1], currentArray[j]];
-                        [bars[j].textContent, bars[j + 1].textContent] = [bars[j + 1].textContent, bars[j].textContent];
-                    }
-
-                    bars[j].classList.remove('highlight');
-                    bars[j + 1].classList.remove('highlight');
-                }
-                bars[n - 1 - i].classList.add('sorted');
-                updateStepList(`Element at index ${n - 1 - i} is now sorted.`);
-            }
-            bars[0].classList.add('sorted');
-            updateStepList("Sorting complete. The array is now sorted.");
-            isAnimating = false;
-        }
-
-        function resetVisualizer(clearInput = true) {
-            if (isAnimating) return;
-            const bars = document.querySelectorAll('.bar');
-            bars.forEach(bar => {
-                bar.classList.remove('highlight', 'remove', 'found', 'sorted');
-            });
-            if (clearInput) {
-                valueInput.value = '';
-                indexInput.value = '';
-                generateBars(currentArray);
-            }
-            stepList.innerHTML = ''; // Clear steps log
-        }
-
-        // Event Listeners for array operations
-        insertBtn.addEventListener('click', insertElement);
-        deleteBtn.addEventListener('click', deleteElement);
-        searchBtn.addEventListener('click', searchElement);
-        sortBtn.addEventListener('click', sortArray);
-        resetBtn.addEventListener('click', () => {
-             const defaultArray = [45, 18, 10, 72, 33];
-            currentArray = [...defaultArray];
-            generateBars(currentArray);
-        });
-
-        // Event Listener for initial array generation
-        generateBtn.addEventListener('click', () => {
-            const input = customInput.value.trim();
-            const arr = input.split(',').map(num => parseInt(num.trim())).filter(num => !isNaN(num));
-            if (arr.length === 0) {
-                alert("Please enter a comma-separated list of numbers.");
-                return;
-            }
-            currentArray = arr;
-            generateBars(currentArray);
-        });
-
-        // Copy btn logic
-        document.getElementById("copy-btn").addEventListener("click", () => {
-            const code = document.getElementById("codeLang").textContent;
-            navigator.clipboard.writeText(code)
-                .then(() => {
-                    alert("Code copied to clipboard!");
-                })
-                .catch(err => {
-                    alert("Failed to copy code. Please try again.");
-                });
-        });
+    });
+});
     </script>
 </body>
 

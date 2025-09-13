@@ -6,10 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Visualize data structures and algorithms with animations and interactive tools.">
     <meta name="keywords"
-        content="DSA, Visualizer, Algorithms, Data Structures, Interactive, Array, Array Operations, Gaurav Gunjal">
-    <title>Array Visualizer</title>
+        content="DSA, Visualizer, Algorithms, Data Structures, Interactive, Stack, Stack Operations, Gaurav Gunjal">
+    <title>Stack Visualizer</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <!-- <link rel="stylesheet" href="../style.css"> -->
     <style>
         * {
             margin: 0;
@@ -151,12 +150,10 @@
 
         .footer a {
             color: #f9a825;
-
         }
 
         body.light-mode .footer a {
             color: #f9a825;
-
         }
 
         @media screen and (max-width: 768px) {
@@ -178,67 +175,17 @@
             }
         }
 
-
-        /* sort page */
-
-        #sort-page {
+        /* Stack page */
+        #stack-page {
             padding: 50px 20px;
             color: #fff;
         }
 
-        body.light-mode #sort-page {
+        body.light-mode #stack-page {
             color: #2d2d2d;
         }
 
-        .sort-selector {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-            margin: 0 60px 40px 60px;
-        }
-
-        .sort-selector a {
-            text-decoration: none;
-            color: #fff;
-        }
-
-        .sort-btn {
-            background-color: #f06262;
-            color: white;
-            border-radius: 8px;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: background-color 0.3s ease;
-        }
-
-        body.light-mode .sort-btn {
-            background-color: #627ef0;
-        }
-
-        .sort-btn:hover {
-            background-color: #bc2a2a;
-        }
-
-        body.light-mode .sort-btn:hover {
-            background-color: #2a47bc;
-        }
-
-        .sort-btn.active {
-            background-color: #f9a825;
-            color: #000000;
-        }
-
-        body.light-mode .sort-btn.active {
-            background-color: #f9a825;
-            color: #000000;
-        }
-
         .sort-desc {
-            /* max-width: 800px; */
             margin: 60px;
             padding: 40px;
             background-color: #543939;
@@ -255,16 +202,11 @@
             color: rgb(0, 0, 0);
         }
 
-        .definition1 {
+        .definition1,
+        .working1,
+        .time-complexity1,
+        .space-complexity1 {
             margin-left: 40px;
-        }
-
-        .working1 {
-            margin-left: 40px;
-        }
-
-        .time-complexity1, .space-complexity1 {
-          margin-left: 40px;
         }
 
         body.light-mode .sort-desc {
@@ -339,59 +281,46 @@
 
         .bar-wrapper {
             display: flex;
-            flex-direction: column;
-            overflow-x: auto;
-        }
-        
-        /* New styling to align index numbers with bars */
-        .bars-container {
-            display: flex;
+            flex-direction: row;
+            align-items: flex-end;
             justify-content: center;
-            align-items: center;
-            height: 150px;
-            margin-top: 10px;
-            background-color: #413434;
             padding: 10px;
+            background-color: #413434;
             border-radius: 8px;
-            overflow-x: auto;
-            width: 100%;
-            min-width: 575px;
-            justify-self: center;
-        }
-        
-        .bar-index-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 30px;
-            font-size: 0.9rem;
-            color: #aaa;
-            width: 100%;
-            min-width: max-content;
+            position: relative;
+            height: 300px;
+            overflow-y: auto;
         }
 
-        body.light-mode .bars-container {
+        body.light-mode .bar-wrapper {
             background-color: #f4f6ff;
         }
 
-        #codeBox {
-            background: #1e1e1e;
-            padding: 0.8em;
-            border-radius: 8px;
-            color: #f1f1f1;
-            overflow-x: auto;
+        .stack-container {
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+            justify-content: flex-start;
+            height: fit-content;
+            width: fit-content;
+            min-height: 100%;
+            padding: 10px;
+            overflow-y: auto;
         }
 
-        .bar-index {
-            width: 60px; /* Match bar width */
-            text-align: center;
+        .top-pointer {
+            position: absolute;
+            top: 0;
+            right: 50%;
+            transform: translateX(50%);
             font-weight: bold;
-            color: #ccc;
-            margin: 0 5px; /* Match bar margin */
+            color: #ff4d4d;
+            font-size: 1.2rem;
+            transition: top 0.3s ease-in-out;
         }
 
-        body.light-mode .bar-index {
-            color: #333;
+        body.light-mode .top-pointer {
+            color: #4c70ff;
         }
 
         .bar {
@@ -403,10 +332,10 @@
             align-items: center;
             justify-content: center;
             border: 2px solid black;
-            background-color: #61dafb;
+            background-color: #618ffb;
             border-radius: 0;
-            margin: 0 5px;
-            transition: all 0.3s;
+            margin: 5px 0;
+            transition: all 0.5s ease-in-out;
             cursor: pointer;
         }
 
@@ -417,25 +346,15 @@
             border: 2px solid black;
         }
 
+        .bar.pushed {
+            transform: translateY(0);
+        }
+
         .bar.remove {
             background-color: #ff4d4d !important;
-            transform: scale(0.5);
+            transform: translateY(-200px) scale(0);
             opacity: 0;
             border-color: #ff4d4d;
-            border: 2px solid black;
-        }
-
-        .bar.found {
-            background-color: #2ecc71 !important;
-            border-color: #2ecc71;
-            box-shadow: 0 0 10px #2ecc71;
-            border: 2px solid black;
-        }
-
-        .bar.sorted {
-            background-color: #2ecc71 !important;
-            border-color: #2ecc71;
-            transition: background-color 0.5s ease;
             border: 2px solid black;
         }
 
@@ -476,59 +395,33 @@
             color: #ffffff;
         }
 
-        .control-panel {
+        .stack-operations {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 15px;
+            margin-top: 20px;
             justify-content: center;
-            align-items: center;
-            margin-top: 10px;
         }
 
-        .control-panel h3,
-        label {
-            color: white;
-        }
-
-        .control-panel input {
-            padding-left: 8px;
-            height: 30px;
-            border-radius: 5px;
+        .stack-operations input {
+            padding: 10px;
+            border-radius: 8px;
             border: none;
+            min-width: 100px;
         }
 
-        .control-panel button,
-        .control-panel input[type="range"] {
-            padding: 8px 12px;
-            font-size: 1rem;
-            border-radius: 5px;
+        .stack-operations button {
+            background-color: #4ecdc4;
             border: none;
-        }
-
-        .control-panel button {
-            background-color: #f06262;
-            color: white;
+            color: #000000;
+            padding: 8px 16px;
+            border-radius: 6px;
             cursor: pointer;
+            font-weight: 600;
         }
 
-        .control-panel button:hover {
-            background-color: #f9a825;
-            color: black;
-        }
-
-        body.light-mode .control-panel button {
-            background-color: #627ef0;
-        }
-
-        body.light-mode .control-panel button:hover {
-            background-color: #4c70ff;
-            color: #ffffff;
-        }
-
-        .speed {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .stack-operations button:hover {
+            background-color: #bffaf5;
         }
 
         .sort-lan-selector {
@@ -621,10 +514,6 @@
 
 
         @media screen and (max-width: 768px) {
-            .sort-selector {
-                margin: 0 20px 40px 20px;
-            }
-
             .sort-desc h2 {
                 font-size: 0.9rem;
             }
@@ -670,20 +559,11 @@
 
             .bar-wrapper {
                 width: 100%;
-                overflow-x: auto;
+                height: 200px;
             }
 
-            .bars-container {
-                justify-content: flex-start;
+            .stack-container {
                 min-width: max-content;
-                padding: 10px;
-            }
-
-            .bar-index-container {
-                justify-content: flex-start;
-                min-width: max-content;
-                padding: 15px;
-                gap: 10px;
             }
 
             .bar {
@@ -691,11 +571,6 @@
                 height: 40px;
                 flex-shrink: 0;
                 font-size: 12px;
-            }
-            
-            .bar-index {
-                width: 40px;
-                flex-shrink: 0;
             }
 
             .code-display {
@@ -715,31 +590,6 @@
                 font-size: 0.6rem;
             }
         }
-
-        .array-operations {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-top: 20px;
-            justify-content: center;
-        }
-        
-        .array-operations input {
-            padding: 10px;
-            border-radius: 8px;
-            border: none;
-            min-width: 100px;
-        }
-
-        .array-operations button {
-            background-color: #4ecdc4;
-            border: none;
-            color: #000000;
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-        }
     </style>
 </head>
 
@@ -748,7 +598,7 @@
         <div class="logo">DSA Visualizer</div>
         <nav>
             <div class="nav-links">
-                <a href="#array-page" class="links">Array</a>
+                <a href="#stack-page" class="links">Stack</a>
                 <a href="#visualizer" class="links">Visualizer</a>
                 <a href="#code" class="links">Code</a>
                 <a href="../index.html" class="links">Home</a>
@@ -764,75 +614,66 @@
     </header>
 
     <section class="sort-desc" id="sortDesc">
-  <h2><strong>Array</strong></h2>
+        <h2><strong>Stack</strong></h2>
 
-  <!-- Definition -->
-  <p class="definition">
-    <strong>Definition:</strong>
-    <ul>
-      <li class="definition1">Array is a linear data structure where elements are stored at contiguous memory locations.</li>
-      <li class="definition1">It allows storing multiple elements of the same data type using a single variable name.</li>
-      <li class="definition1">Each element can be accessed directly using its index (starting from 0).</li>
-    </ul>
-  </p>
+        <p class="definition">
+            <strong>Definition:</strong>
+        <ul>
+            <li class="definition1">A stack is a linear data structure that follows the **Last-In, First-Out (LIFO)** principle.</li>
+            <li class="definition1">The last element added to the stack is the first element to be removed.</li>
+            <li class="definition1">Stacks are commonly used for tasks like undo/redo functionality, function call management, and expression evaluation.</li>
+        </ul>
+        </p>
 
-  <!-- Working -->
-  <p class="working">
-    <strong>Working:</strong>
-    <ul class="working1">
-      <li>Array stores data in a continuous memory block.</li>
-      <li>Each element is accessed using an index: <code>arr[index]</code>.</li>
-      <li>Insertion/Deletion at the end is easy, but at the beginning/middle requires shifting elements.</li>
-      <li>Efficient for random access, but costly for frequent insertions/deletions.</li>
-    </ul>
-  </p>
+        <p class="working">
+            <strong>Working:</strong>
+        <ul class="working1">
+            <li>The primary operations are **Push** (adding an element to the top) and **Pop** (removing the top element).</li>
+            <li>A stack pointer, often called `top`, keeps track of the most recently added element.</li>
+            <li>Other operations include **Peek** (viewing the top element without removing it) and **isEmpty** (checking if the stack is empty).</li>
+        </ul>
+        </p>
 
-  <!-- Time Complexity -->
-  <p class="time-complexity">
-    <strong>Time Complexity:</strong>
-    <ul class="time-complexity1">
-      <li>Access (Read): <code>O(1)</code></li>
-      <li>Search: <code>O(n)</code></li>
-      <li>Insertion: <code>O(n)</code> (worst case, when inserting at beginning)</li>
-      <li>Deletion: <code>O(n)</code> (worst case, when deleting from beginning)</li>
-    </ul>
-  </p>
+        <p class="time-complexity">
+            <strong>Time Complexity:</strong>
+        <ul class="time-complexity1">
+            <li>Push: <code>O(1)</code></li>
+            <li>Pop: <code>O(1)</code></li>
+            <li>Peek: <code>O(1)</code></li>
+            <li>Search: <code>O(n)</code> (worst case)</li>
+        </ul>
+        </p>
 
-  <!-- Space Complexity -->
-  <p class="space-complexity">
-    <strong>Space Complexity:</strong>
-    <ul class="space-complexity1">
-      <li><code>O(n)</code> (to store <em>n</em> elements)</li>
-    </ul>
-  </p>
-</section>
+        <p class="space-complexity">
+            <strong>Space Complexity:</strong>
+        <ul class="space-complexity1">
+            <li><code>O(n)</code> (to store <em>n</em> elements)</li>
+        </ul>
+        </p>
+    </section>
 
-
-    <main id="array-page">
+    <main id="stack-page">
         <section id="visualizer" class="visualizer">
             <div class="visualizer-layout">
                 <div class="left-panel">
                     <div class="input-section">
-                        <label for="customInput">Enter initial array (comma-separated):</label>
+                        <label for="customInput">Enter initial elements (comma-separated):</label>
                         <input type="text" id="customInput" placeholder="45, 18, 10" />
-                        <button id="generateBtn">Generate Array</button>
+                        <button id="generateBtn">Generate Stack</button>
                         <button id="resetBtn">Reset</button>
                     </div>
 
                     <div class="bar-wrapper">
-                        <div id="barIndexContainer" class="bar-index-container"></div>
-                        <div id="barContainer" class="bars-container"></div>
+                        <div id="topPointer" class="top-pointer">TOP</div>
+                        <div id="stackContainer" class="stack-container"></div>
                     </div>
 
-                    <div class="array-operations">
-                        <input type="text" id="valueInput" placeholder="Value">
-                        <input type="text" id="indexInput" placeholder="Index">
-                        <button id="insertBtn">Insertion</button>
-                        <button id="deleteBtn">Deletion</button>
-                        <button id="searchBtn">Searching</button>
-                        <button id="sortBtn">Sorting</button>
+                    <div class="stack-operations">
+                        <input type="text" id="valueInput" placeholder="Value to push">
+                        <button id="pushBtn">Push</button>
+                        <button id="popBtn">Pop</button>
+                        <button id="peekBtn">Peek</button>
                     </div>
-
                 </div>
 
                 <div class="right-panel">
@@ -850,30 +691,28 @@
             </div>
         </section>
 
-    <section id="code" class="sort-lan-selector">
-      <button class="sort-lan-btn active" id="cpp">C++</button>
-      <button class="sort-lan-btn" id="c">C</button>
-      <button class="sort-lan-btn" id="py">Python</button>
-      <button class="sort-lan-btn" id="java">Java</button>
-      <button class="sort-lan-btn" id="js">JavaScript</button>
-    </section>
+        <section id="code" class="sort-lan-selector">
+            <button class="sort-lan-btn active" id="cpp">C++</button>
+            <button class="sort-lan-btn" id="c">C</button>
+            <button class="sort-lan-btn" id="py">Python</button>
+            <button class="sort-lan-btn" id="java">Java</button>
+            <button class="sort-lan-btn" id="js">JavaScript</button>
+        </section>
 
-    <!-- code display -->
-    <section class="code-display">
-      <button id="copy-btn"><img src="../icons/dark-copy.png" alt=""></button>
-      <!-- display code of selected language -->
-      <p class="code-lang"></p>
-    </section>
+        <section class="code-display">
+            <button id="copy-btn"><img src="../icons/dark-copy.png" alt=""></button>
+            <p class="code-lang"></p>
+        </section>
 
-    <footer class="footer">
+            <footer class="footer">
         <div class="footer-content">
             <p>Some visual assets used are sourced from <a href="https://visualgo.net" target="_blank">Visualgo.net</a>
                 for educational reference purposes. All rights belong to their respective creators.</p>
         </div>
     </footer>
-    </main>
 
-    <script src="./arrayLogic.js"></script>
+    <script src="./stackjs.js"></script>
+    </main>
 </body>
 
 </html>
