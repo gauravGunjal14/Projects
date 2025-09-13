@@ -2,143 +2,854 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Visualize Array operations like Insert, Delete, Search, Update, and Traverse.">
-  <meta name="keywords"
-    content="DSA, Visualizer, Algorithms, Data Structures, Interactive, Array, Insert, Delete, Search, Update, Traverse, Gaurav Gunjal">
-  <title>Array Visualizer</title>
-  <link rel="stylesheet" href="../style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Visualize data structures and algorithms with animations and interactive tools.">
+    <meta name="keywords"
+        content="DSA, Visualizer, Algorithms, Data Structures, Interactive, Array, Array Operations, Gaurav Gunjal">
+    <title>Array Visualizer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="../style.css"> -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-margin: 80px;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #121212;
+        }
+
+        body.light-mode {
+            background-color: #ffffff;
+            color: #2d2d2d;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            height: 60px;
+            align-items: center;
+            background-color: rgba(60, 60, 60, 0.974);
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+        body.light-mode .navbar {
+            background-color: #f7f7fff5;
+        }
+
+        .logo {
+            padding-left: 5vw;
+            font-size: 30px;
+            font-weight: 600;
+            color: #f06262;
+        }
+
+        body.light-mode .logo {
+            color: #627ef0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+            margin-right: 2vw;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            margin-right: 40px;
+        }
+
+        .nav-links.show {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: 60px;
+            right: -40px;
+            background-color: #322727;
+            padding: 10px 20px;
+            border-radius: 10px;
+            z-index: 2;
+        }
+
+        body.light-mode .nav-links.show {
+            background-color: #e5e2ff;
+        }
+
+        .links {
+            text-decoration: none;
+            color: #f06262;
+            font-size: 18px;
+            font-weight: 500;
+            align-self: center;
+        }
+
+        body.light-mode .links {
+            color: #627ef0;
+        }
+
+        .links:hover {
+            color: #f9a825;
+        }
+
+        body.light-mode .links:hover {
+            color: #f9a825;
+        }
+
+        .theme {
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .menuIcon,
+        .closeIcon {
+            display: none;
+            font-size: 30px;
+            color: #f06262;
+            cursor: pointer;
+            font-weight: 700;
+            width: 30px;
+        }
+
+        body.light-mode .menuIcon,
+        .closeIcon {
+            color: #627ef0;
+        }
+
+        .footer {
+            background-color: #1e1e1e;
+            color: #f06262;
+            text-align: center;
+            padding: 20px;
+        }
+
+        body.light-mode .footer {
+            background-color: #dfe0ff;
+        }
+
+        .footer p {
+            font-size: 0.9rem;
+            color: #999;
+        }
+
+        body.light-mode .footer p {
+            color: #000000;
+        }
+
+        .footer a {
+            color: #f9a825;
+
+        }
+
+        body.light-mode .footer a {
+            color: #f9a825;
+
+        }
+
+        @media screen and (max-width: 768px) {
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .menuIcon,
+            .closeIcon {
+                display: block;
+            }
+
+            .footer p {
+                font-size: 0.9rem;
+            }
+        }
+
+
+        /* sort page */
+
+        #sort-page {
+            padding: 50px 20px;
+            color: #fff;
+        }
+
+        body.light-mode #sort-page {
+            color: #2d2d2d;
+        }
+
+        .sort-selector {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 60px 40px 60px;
+        }
+
+        .sort-selector a {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .sort-btn {
+            background-color: #f06262;
+            color: white;
+            border-radius: 8px;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        body.light-mode .sort-btn {
+            background-color: #627ef0;
+        }
+
+        .sort-btn:hover {
+            background-color: #bc2a2a;
+        }
+
+        body.light-mode .sort-btn:hover {
+            background-color: #2a47bc;
+        }
+
+        .sort-btn.active {
+            background-color: #f9a825;
+            color: #000000;
+        }
+
+        body.light-mode .sort-btn.active {
+            background-color: #f9a825;
+            color: #000000;
+        }
+
+        .sort-desc {
+            /* max-width: 800px; */
+            margin: 60px;
+            padding: 40px;
+            background-color: #543939;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+            color: #a4a4a4;
+        }
+
+        .sort-desc strong {
+            color: white;
+        }
+
+        body.light-mode .sort-desc strong {
+            color: rgb(0, 0, 0);
+        }
+
+        .definition1 {
+            margin-left: 40px;
+        }
+
+        .working1 {
+            margin-left: 40px;
+        }
+
+        .time-complexity1, .space-complexity1 {
+          margin-left: 40px;
+        }
+
+        body.light-mode .sort-desc {
+            background-color: #e2e3ff;
+            color: #212121;
+        }
+
+        .visualizer-layout {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #1c1616;
+            gap: 30px;
+            margin: 60px;
+            border-radius: 20px;
+            padding: 20px 40px;
+        }
+
+        body.light-mode .visualizer-layout {
+            background-color: #d0daff;
+        }
+
+        .left-panel {
+            flex: 8;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .right-panel {
+            flex: 3;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .step-info {
+            background-color: #392d2f;
+            color: #f8f8f2;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            max-height: 320px;
+            overflow-y: auto;
+            transition: all 0.3s ease;
+            height: 320px;
+        }
+
+        body.light-mode .step-info {
+            background-color: #b4bfff;
+            color: #000;
+        }
+
+        .step-info li {
+            padding: 4px 6px;
+            margin-bottom: 3px;
+            border-radius: 6px;
+        }
+
+        .step-info li .current {
+            background-color: #ff8b8b;
+            font-weight: bold;
+            border-left: 4px solid #ff0000;
+        }
+
+        body.light-mode .step-info li .current {
+            background-color: #7291ff;
+            font-weight: bold;
+            border-left: 4px solid #0013c1;
+        }
+
+        .bar-wrapper {
+            display: flex;
+            flex-direction: column;
+            overflow-x: auto;
+        }
+        
+        /* New styling to align index numbers with bars */
+        .bars-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 150px;
+            margin-top: 10px;
+            background-color: #413434;
+            padding: 10px;
+            border-radius: 8px;
+            overflow-x: auto;
+            width: 100%;
+            min-width: 575px;
+            justify-self: center;
+        }
+        
+        .bar-index-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 30px;
+            font-size: 0.9rem;
+            color: #aaa;
+            width: 100%;
+            min-width: max-content;
+        }
+
+        body.light-mode .bars-container {
+            background-color: #f4f6ff;
+        }
+
+        #codeBox {
+            background: #1e1e1e;
+            padding: 0.8em;
+            border-radius: 8px;
+            color: #f1f1f1;
+            overflow-x: auto;
+        }
+
+        .bar-index {
+            width: 60px; /* Match bar width */
+            text-align: center;
+            font-weight: bold;
+            color: #ccc;
+            margin: 0 5px; /* Match bar margin */
+        }
+
+        body.light-mode .bar-index {
+            color: #333;
+        }
+
+        .bar {
+            font-size: 16px;
+            color: #fff;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid black;
+            background-color: #61dafb;
+            border-radius: 0;
+            margin: 0 5px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .bar.highlight {
+            background-color: #f9a825 !important;
+            transform: scale(1.1);
+            border-color: #f9a825;
+            border: 2px solid black;
+        }
+
+        .bar.remove {
+            background-color: #ff4d4d !important;
+            transform: scale(0.5);
+            opacity: 0;
+            border-color: #ff4d4d;
+            border: 2px solid black;
+        }
+
+        .bar.found {
+            background-color: #2ecc71 !important;
+            border-color: #2ecc71;
+            box-shadow: 0 0 10px #2ecc71;
+            border: 2px solid black;
+        }
+
+        .bar.sorted {
+            background-color: #2ecc71 !important;
+            border-color: #2ecc71;
+            transition: background-color 0.5s ease;
+            border: 2px solid black;
+        }
+
+        .input-section label {
+            color: white;
+        }
+
+        .input-section input {
+            padding: 10px;
+            width: 20%;
+            max-width: 300px;
+            border-radius: 5px;
+            border: none;
+            margin-right: 10px;
+        }
+
+        .input-section button {
+            padding: 10px 15px;
+            background-color: #f06262;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .input-section button:hover {
+            background-color: #f9a825;
+            color: black;
+        }
+
+        body.light-mode .input-section button {
+            background-color: #4c70ff;
+        }
+
+        body.light-mode .input-section button:hover {
+            background-color: #1f46e2;
+            color: #ffffff;
+        }
+
+        .control-panel {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .control-panel h3,
+        label {
+            color: white;
+        }
+
+        .control-panel input {
+            padding-left: 8px;
+            height: 30px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        .control-panel button,
+        .control-panel input[type="range"] {
+            padding: 8px 12px;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: none;
+        }
+
+        .control-panel button {
+            background-color: #f06262;
+            color: white;
+            cursor: pointer;
+        }
+
+        .control-panel button:hover {
+            background-color: #f9a825;
+            color: black;
+        }
+
+        body.light-mode .control-panel button {
+            background-color: #627ef0;
+        }
+
+        body.light-mode .control-panel button:hover {
+            background-color: #4c70ff;
+            color: #ffffff;
+        }
+
+        .speed {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sort-lan-selector {
+            margin: 40px 60px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .sort-lan-btn {
+            background-color: #4ecdc4;
+            border: none;
+            color: #000000;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .sort-lan-btn:hover {
+            background-color: #bffaf5;
+        }
+
+        .sort-lan-btn.active {
+            background-color: #ffd166;
+        }
+
+        .code-display {
+            margin: 60px;
+            padding: 40px;
+            background-color: #1c1616;
+            border-radius: 12px;
+            color: #fff;
+            white-space: pre-wrap;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        body.light-mode .code-display {
+            background-color: #dee9ff;
+            color: #000;
+        }
+
+        .code-display p {
+            font-size: 1.1rem;
+        }
+
+        #copy-btn {
+            width: 25px;
+            height: 25px;
+            background-color: #ffb6b6;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            align-self: flex-end;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: sticky;
+            top: 80px;
+        }
+
+        body.light-mode #copy-btn {
+            background-color: #b6c5ff;
+        }
+
+        @media (max-width: 1220px) {
+            .visualizer-layout {
+                flex-direction: column;
+                align-items: stretch;
+                margin: 60px;
+                padding: 20px;
+                gap: 20px;
+            }
+
+            .left-panel,
+            .right-panel {
+                flex: none;
+                width: 100%;
+            }
+
+            .step-info {
+                height: 320px;
+                max-height: 320px;
+                flex-shrink: 0;
+            }
+        }
+
+
+        @media screen and (max-width: 768px) {
+            .sort-selector {
+                margin: 0 20px 40px 20px;
+            }
+
+            .sort-desc h2 {
+                font-size: 0.9rem;
+            }
+
+            .sort-desc p {
+                font-size: 0.8rem;
+            }
+
+            .visualizer-layout {
+                margin: 15px;
+                padding: 15px;
+                gap: 15px;
+            }
+
+            .left-panel,
+            .right-panel {
+                width: 100%;
+            }
+
+            .step-info {
+                height: 320px;
+                max-height: 320px;
+                font-size: 1rem;
+                padding: 10px 20px;
+            }
+
+            .input-section label {
+                font-size: 0.9rem;
+                font-weight: 700;
+            }
+
+            .input-section input {
+                margin-bottom: 10px;
+                width: 40%;
+            }
+
+            .sort-desc {
+                font-size: 0.95rem;
+                padding: 20px;
+                margin: 20px;
+                margin-bottom: 50px;
+            }
+
+            .bar-wrapper {
+                width: 100%;
+                overflow-x: auto;
+            }
+
+            .bars-container {
+                justify-content: flex-start;
+                min-width: max-content;
+                padding: 10px;
+            }
+
+            .bar-index-container {
+                justify-content: flex-start;
+                min-width: max-content;
+                padding: 15px;
+                gap: 10px;
+            }
+
+            .bar {
+                width: 40px;
+                height: 40px;
+                flex-shrink: 0;
+                font-size: 12px;
+            }
+            
+            .bar-index {
+                width: 40px;
+                flex-shrink: 0;
+            }
+
+            .code-display {
+                padding: 15px;
+                margin: 20px;
+            }
+
+            .code-display p {
+                font-size: 0.8rem;
+            }
+
+            .sort-lan-selector {
+                margin: 40px 20px;
+            }
+
+            #codeBox {
+                font-size: 0.6rem;
+            }
+        }
+
+        .array-operations {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+        
+        .array-operations input {
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            min-width: 100px;
+        }
+
+        .array-operations button {
+            background-color: #4ecdc4;
+            border: none;
+            color: #000000;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+    </style>
 </head>
 
 <body>
-  <!-- Header -->
-  <header class="navbar">
-    <div class="logo">DSA Visualizer</div>
-    <nav>
-      <div class="nav-links">
-        <a href="#array-page" class="links">Array</a>
-        <a href="#visualizer" class="links">Visualizer</a>
-        <a href="#code" class="links">Code</a>
-        <a href="../index.html" class="links">Home</a>
-      </div>
-      <div class="theme">
-        <button id="toggelBtn" class="light-mode theme">
-          <img id="themeIcon" src="../icons/light-mode.png" alt="Switch into light mode">
-        </button>
-      </div>
-
-      <div class="menuIcon" id="menuIcon">&#9776;</div>
-      <div class="closeIcon" id="closeIcon" style="display: none;">&times;</div>
-    </nav>
-  </header>
-
-  <!-- main -->
-  <main id="array-page">
-
-    <!-- array info -->
-    <section class="sort-desc" id="arrayDesc">
-      <h2><strong>Array Visualization</strong></h2>
-      <p class="defination">
-        <strong>Definition:</strong>
-      <ul>
-        <li class="defination1">An array is a linear data structure that stores elements at contiguous memory locations.</li>
-      </ul>
-      </p>
-
-      <p class="working"><strong>Working:</strong>
-      <ul class="working1">
-        <li>Operations like Insertion, Deletion, Search, Update, and Traversal are performed on arrays.</li>
-      </ul>
-      </p>
-      <p class="time-complexity"><strong>Time Complexity:</strong> Depends on operation (Insert, Delete, Search).</p>
-      <p class="space-complexity"><strong>Space Complexity:</strong> O(n)</p>
-    </section>
-
-    <!-- visualizer -->
-    <section id="visualizer" class="visualizer">
-
-      <div class="visualizer-layout">
-
-        <!-- Left Panel -->
-        <div class="left-panel">
-          <!-- Input Section -->
-          <div class="input-section">
-            <label for="arraySize">Array Size:</label>
-            <input type="number" id="arraySize" placeholder="5" />
-
-            <label for="arrayInput">Enter elements:</label>
-            <input type="text" id="arrayInput" placeholder="10, 20, 30, 40, 50" />
-            <button id="generateArrayBtn">Generate Array</button>
-          </div>
-
-          <!-- Array Display -->
-          <div class="bar-wrapper">
-            <div id="barContainer" class="bars-container"></div>
-            <div id="barIndexContainer" class="bar-index-container"></div>
-          </div>
-
-          <!-- Array Operation Controls -->
-          <div class="control-panel">
-            <h3>Operations:</h3>
-
-            <div class="operation">
-              <label>Insert:</label>
-              <input type="number" id="insertValue" placeholder="Value" />
-              <input type="number" id="insertIndex" placeholder="Index" />
-              <button id="insertBtn">Insert</button>
+    <header class="navbar">
+        <div class="logo">DSA Visualizer</div>
+        <nav>
+            <div class="nav-links">
+                <a href="#array-page" class="links">Array</a>
+                <a href="#visualizer" class="links">Visualizer</a>
+                <a href="#code" class="links">Code</a>
+                <a href="../index.html" class="links">Home</a>
+            </div>
+            <div class="theme">
+                <button id="toggelBtn" class="light-mode theme"><img id="themeIcon" src="../icons/light-mode.png"
+                        alt="Switch into light mode"></button>
             </div>
 
-            <div class="operation">
-              <label>Delete:</label>
-              <input type="number" id="deleteIndex" placeholder="Index" />
-              <button id="deleteBtn">Delete</button>
+            <div class="menuIcon" id="menuIcon">&#9776;</div>
+            <div class="closeIcon" id="closeIcon" style="display: none;">&times;</div>
+        </nav>
+    </header>
+
+    <section class="sort-desc" id="sortDesc">
+  <h2><strong>Array</strong></h2>
+
+  <!-- Definition -->
+  <p class="definition">
+    <strong>Definition:</strong>
+    <ul>
+      <li class="definition1">Array is a linear data structure where elements are stored at contiguous memory locations.</li>
+      <li class="definition1">It allows storing multiple elements of the same data type using a single variable name.</li>
+      <li class="definition1">Each element can be accessed directly using its index (starting from 0).</li>
+    </ul>
+  </p>
+
+  <!-- Working -->
+  <p class="working">
+    <strong>Working:</strong>
+    <ul class="working1">
+      <li>Array stores data in a continuous memory block.</li>
+      <li>Each element is accessed using an index: <code>arr[index]</code>.</li>
+      <li>Insertion/Deletion at the end is easy, but at the beginning/middle requires shifting elements.</li>
+      <li>Efficient for random access, but costly for frequent insertions/deletions.</li>
+    </ul>
+  </p>
+
+  <!-- Time Complexity -->
+  <p class="time-complexity">
+    <strong>Time Complexity:</strong>
+    <ul class="time-complexity1">
+      <li>Access (Read): <code>O(1)</code></li>
+      <li>Search: <code>O(n)</code></li>
+      <li>Insertion: <code>O(n)</code> (worst case, when inserting at beginning)</li>
+      <li>Deletion: <code>O(n)</code> (worst case, when deleting from beginning)</li>
+    </ul>
+  </p>
+
+  <!-- Space Complexity -->
+  <p class="space-complexity">
+    <strong>Space Complexity:</strong>
+    <ul class="space-complexity1">
+      <li><code>O(n)</code> (to store <em>n</em> elements)</li>
+    </ul>
+  </p>
+</section>
+
+
+    <main id="array-page">
+        <section id="visualizer" class="visualizer">
+            <div class="visualizer-layout">
+                <div class="left-panel">
+                    <div class="input-section">
+                        <label for="customInput">Enter initial array (comma-separated):</label>
+                        <input type="text" id="customInput" placeholder="45, 18, 10" />
+                        <button id="generateBtn">Generate Array</button>
+                        <button id="resetBtn">Reset</button>
+                    </div>
+
+                    <div class="bar-wrapper">
+                        <div id="barIndexContainer" class="bar-index-container"></div>
+                        <div id="barContainer" class="bars-container"></div>
+                    </div>
+
+                    <div class="array-operations">
+                        <input type="text" id="valueInput" placeholder="Value">
+                        <input type="text" id="indexInput" placeholder="Index">
+                        <button id="insertBtn">Insertion</button>
+                        <button id="deleteBtn">Deletion</button>
+                        <button id="searchBtn">Searching</button>
+                        <button id="sortBtn">Sorting</button>
+                    </div>
+
+                </div>
+
+                <div class="right-panel">
+                    <div class="step-info" id="stepInfo">
+                        <h3>Visited Steps:</h3>
+                        <ul id="stepList"></ul>
+                    </div>
+
+                    <div class="code-highlight-section">
+                        <h3>Code Snippet:</h3>
+                        <pre id="codeBox">
+<code id="codeSnippet"></code></pre>
+                    </div>
+                </div>
             </div>
+        </section>
 
-            <div class="operation">
-              <label>Search:</label>
-              <input type="number" id="searchValue" placeholder="Value" />
-              <button id="searchBtn">Search</button>
-            </div>
-
-            <div class="operation">
-              <label>Update:</label>
-              <input type="number" id="updateIndex" placeholder="Index" />
-              <input type="number" id="updateValue" placeholder="New Value" />
-              <button id="updateBtn">Update</button>
-            </div>
-
-            <div class="operation">
-              <button id="traverseBtn">Traverse</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Right Panel -->
-        <div class="right-panel">
-          <h3>Steps:</h3>
-          <div class="step-info" id="stepInfo">
-            <h3>Visited Steps:</h3>
-            <ul id="stepList"></ul>
-          </div>
-
-          <div class="code-highlight-section">
-            <h3>Code Execution Highlight:</h3>
-            <pre id="codeBox">
-<code><span>// Example: Array Insertion</span>
-<span>for (int i = n; i > pos; i--) {</span>
-<span>   arr[i] = arr[i-1];</span>
-<span>}</span>
-<span>arr[pos] = value;</span>
-<span>n++;</span></code></pre>
-          </div>
-        </div>
-      </div>
-
-    </section>
-
-    <!-- display multi-language code -->
     <section id="code" class="sort-lan-selector">
       <button class="sort-lan-btn active" id="cpp">C++</button>
       <button class="sort-lan-btn" id="c">C</button>
@@ -149,12 +860,13 @@
 
     <!-- code display -->
     <section class="code-display">
-      <button id="copy-btn"><img src="../icons/dark-copy.png" alt="copy code"></button>
+      <button id="copy-btn"><img src="../icons/dark-copy.png" alt=""></button>
+      <!-- display code of selected language -->
       <p class="code-lang"></p>
     </section>
+    </main>
 
-  </main>
-  <script src="./arrayLogic.js"></script>
+    <script src="./arrayLogic.js"></script>
 </body>
 
 </html>
