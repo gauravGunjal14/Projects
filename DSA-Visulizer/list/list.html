@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Visualize linked list data structures and algorithms with animations and interactive tools.">
+    <meta name="keywords" content="DSA, Visualizer, Algorithms, Data Structures, Interactive, Linked List, List Operations, Gaurav Gunjal">
+    <title>Linked List Visualizer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-margin: 80px;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #121212;
+        }
+
+        body.light-mode {
+            background-color: #ffffff;
+            color: #2d2d2d;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            height: 60px;
+            align-items: center;
+            background-color: rgba(60, 60, 60, 0.974);
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+        body.light-mode .navbar {
+            background-color: #f7f7fff5;
+        }
+
+        .logo {
+            padding-left: 5vw;
+            font-size: 30px;
+            font-weight: 600;
+            color: #f06262;
+        }
+
+        body.light-mode .logo {
+            color: #627ef0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+            margin-right: 2vw;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            margin-right: 40px;
+        }
+
+        .nav-links.show {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: 60px;
+            right: -40px;
+            background-color: #322727;
+            padding: 10px 20px;
+            border-radius: 10px;
+            z-index: 2;
+        }
+
+        body.light-mode .nav-links.show {
+            background-color: #e5e2ff;
+        }
+
+        .links {
+            text-decoration: none;
+            color: #f06262;
+            font-size: 18px;
+            font-weight: 500;
+            align-self: center;
+        }
+
+        body.light-mode .links {
+            color: #627ef0;
+        }
+
+        .links:hover {
+            color: #f9a825;
+        }
+
+        body.light-mode .links:hover {
+            color: #f9a825;
+        }
+
+        .theme {
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .menuIcon,
+        .closeIcon {
+            display: none;
+            font-size: 30px;
+            color: #f06262;
+            cursor: pointer;
+            font-weight: 700;
+            width: 30px;
+        }
+
+        body.light-mode .menuIcon,
+        .closeIcon {
+            color: #627ef0;
+        }
+
+        .footer {
+            background-color: #1e1e1e;
+            color: #f06262;
+            text-align: center;
+            padding: 20px;
+        }
+
+        body.light-mode .footer {
+            background-color: #dfe0ff;
+        }
+
+        .footer p {
+            font-size: 0.9rem;
+            color: #999;
+        }
+
+        body.light-mode .footer p {
+            color: #000000;
+        }
+
+        .footer a {
+            color: #f9a825;
+        }
+
+        body.light-mode .footer a {
+            color: #f9a825;
+        }
+
+        @media screen and (max-width: 768px) {
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .menuIcon,
+            .closeIcon {
+                display: block;
+            }
+
+            .footer p {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* --- Linked List Page Specific Styles --- */
+        #linked-list-page {
+            padding: 50px 20px;
+            color: #fff;
+        }
+
+        body.light-mode #linked-list-page {
+            color: #2d2d2d;
+        }
+
+        .sort-desc {
+            margin: 60px;
+            padding: 40px;
+            background-color: #543939;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+            color: #a4a4a4;
+        }
+
+        .sort-desc strong {
+            color: white;
+        }
+
+        body.light-mode .sort-desc strong {
+            color: rgb(0, 0, 0);
+        }
+
+        .definition1,
+        .working1,
+        .time-complexity1,
+        .space-complexity1 {
+            margin-left: 40px;
+        }
+
+        body.light-mode .sort-desc {
+            background-color: #e2e3ff;
+            color: #212121;
+        }
+
+        .visualizer-layout {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #1c1616;
+            gap: 30px;
+            margin: 60px;
+            border-radius: 20px;
+            padding: 20px 40px;
+        }
+
+        body.light-mode .visualizer-layout {
+            background-color: #d0daff;
+        }
+
+        .left-panel {
+            flex: 8;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .right-panel {
+            flex: 3;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .step-info {
+            background-color: #392d2f;
+            color: #f8f8f2;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            max-height: 320px;
+            overflow-y: auto;
+            transition: all 0.3s ease;
+            height: 320px;
+        }
+
+        body.light-mode .step-info {
+            background-color: #b4bfff;
+            color: #000;
+        }
+
+        .step-info li {
+            padding: 4px 6px;
+            margin-bottom: 3px;
+            border-radius: 6px;
+        }
+
+        .step-info li .current {
+            background-color: #ff8b8b;
+            font-weight: bold;
+            border-left: 4px solid #ff0000;
+        }
+
+        body.light-mode .step-info li .current {
+            background-color: #7291ff;
+            font-weight: bold;
+            border-left: 4px solid #0013c1;
+        }
+
+        .list-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 40px 20px;
+            background-color: #413434;
+            border-radius: 8px;
+            position: relative;
+            height: 250px;
+            overflow-x: auto;
+            overflow-y: hidden;
+        }
+
+        body.light-mode .list-wrapper {
+            background-color: #f4f6ff;
+        }
+
+        .list-container {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            padding: 20px;
+            position: relative;
+        }
+
+        .node-group {
+            display: flex;
+            align-items: center;
+            position: relative;
+            margin-right: 10px;
+            transition: all 0.5s ease-in-out;
+        }
+
+        .node {
+            font-size: 16px;
+            color: #fff;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid black;
+            background-color: #61dafb;
+            border-radius: 50%;
+            transition: all 0.5s ease-in-out;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .arrow {
+            width: 40px;
+            height: 2px;
+            background-color: #ff4d4d;
+            position: relative;
+            margin: 0 5px;
+        }
+
+        body.light-mode .arrow {
+            background-color: #4c70ff;
+        }
+
+        .arrow::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: -4px;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+            border-left: 8px solid #ff4d4d;
+        }
+
+        body.light-mode .arrow::after {
+            border-left-color: #4c70ff;
+        }
+
+        .pointer {
+            position: absolute;
+            font-weight: bold;
+            color: #ff4d4d;
+            font-size: 1rem;
+            transition: left 0.5s ease-in-out;
+            text-align: center;
+            width: 60px;
+        }
+
+        body.light-mode .pointer {
+            color: #4c70ff;
+        }
+
+        #headPointer {
+            top: 70px;
+            /* Positioned closer to the node line */
+        }
+
+        #tailPointer {
+            top: 160px;
+            /* Positioned closer to the node line */
+        }
+
+        .node.highlight {
+            background-color: #f9a825 !important;
+            transform: scale(1.1);
+            border-color: #f9a825;
+        }
+
+        .node.found {
+            background-color: #4caf50 !important;
+            /* Green for found */
+            border-color: #4caf50;
+        }
+
+        .node.remove,
+        .node-group.remove {
+            background-color: #ff4d4d !important;
+            transform: translateY(-100px) scale(0);
+            opacity: 0;
+        }
+
+        .input-section label {
+            color: white;
+        }
+
+        .input-section input {
+            padding: 10px;
+            width: 20%;
+            max-width: 300px;
+            border-radius: 5px;
+            border: none;
+            margin-right: 10px;
+        }
+
+        .input-section button {
+            padding: 10px 15px;
+            background-color: #f06262;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .input-section button:hover {
+            background-color: #f9a825;
+            color: black;
+        }
+
+        body.light-mode .input-section button {
+            background-color: #4c70ff;
+        }
+
+        body.light-mode .input-section button:hover {
+            background-color: #1f46e2;
+            color: #ffffff;
+        }
+
+        .list-operations {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+
+        .list-operations input {
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            width: 80px;
+        }
+
+        .list-operations button {
+            background-color: #4ecdc4;
+            border: none;
+            color: #000000;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .list-operations button:hover {
+            background-color: #bffaf5;
+        }
+
+        .sort-lan-selector {
+            margin: 40px 60px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .sort-lan-btn {
+            background-color: #4ecdc4;
+            border: none;
+            color: #000000;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .sort-lan-btn:hover {
+            background-color: #bffaf5;
+        }
+
+        .sort-lan-btn.active {
+            background-color: #ffd166;
+        }
+
+        .code-display {
+            margin: 60px;
+            padding: 40px;
+            background-color: #1c1616;
+            border-radius: 12px;
+            color: #fff;
+            white-space: pre-wrap;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        body.light-mode .code-display {
+            background-color: #dee9ff;
+            color: #000;
+        }
+
+        .code-display p {
+            font-size: 1.1rem;
+        }
+
+        #copy-btn {
+            width: 25px;
+            height: 25px;
+            background-color: #ffb6b6;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            align-self: flex-end;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: sticky;
+            top: 80px;
+        }
+
+        body.light-mode #copy-btn {
+            background-color: #b6c5ff;
+        }
+
+        @media (max-width: 1220px) {
+            .visualizer-layout {
+                flex-direction: column;
+                align-items: stretch;
+                margin: 60px;
+                padding: 20px;
+                gap: 20px;
+            }
+
+            .left-panel,
+            .right-panel {
+                flex: none;
+                width: 100%;
+            }
+
+            .step-info {
+                height: 320px;
+                max-height: 320px;
+                flex-shrink: 0;
+            }
+        }
+
+
+        @media screen and (max-width: 768px) {
+            .sort-desc h2 {
+                font-size: 0.9rem;
+            }
+
+            .sort-desc p {
+                font-size: 0.8rem;
+            }
+
+            .visualizer-layout {
+                margin: 15px;
+                padding: 15px;
+                gap: 15px;
+            }
+
+            .left-panel,
+            .right-panel {
+                width: 100%;
+            }
+
+            .step-info {
+                height: 320px;
+                max-height: 320px;
+                font-size: 1rem;
+                padding: 10px 20px;
+            }
+
+            .input-section label {
+                font-size: 0.9rem;
+                font-weight: 700;
+            }
+
+            .input-section input {
+                margin-bottom: 10px;
+                width: 40%;
+            }
+
+            .sort-desc {
+                font-size: 0.95rem;
+                padding: 20px;
+                margin: 20px;
+                margin-bottom: 50px;
+            }
+
+            .list-operations {
+                gap: 5px;
+            }
+
+            .list-operations button {
+                padding: 6px 8px;
+                font-size: 0.7rem;
+            }
+
+            .list-operations input {
+                width: 60px;
+                padding: 8px;
+            }
+
+            .list-wrapper {
+                width: 100%;
+                height: 200px;
+            }
+
+            .node {
+                width: 40px;
+                height: 40px;
+                font-size: 12px;
+            }
+
+            .arrow {
+                width: 25px;
+            }
+
+            .code-display {
+                padding: 15px;
+                margin: 20px;
+            }
+
+            .code-display p {
+                font-size: 0.8rem;
+            }
+
+            .sort-lan-selector {
+                margin: 40px 20px;
+            }
+
+            #codeBox {
+                font-size: 0.6rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="logo">DSA Visualizer</div>
+        <nav>
+            <div class="nav-links">
+                <a href="#linked-list-page" class="links">Linked List</a>
+                <a href="#visualizer" class="links">Visualizer</a>
+                <a href="#code" class="links">Code</a>
+                <a href="../index.html" class="links">Home</a>
+            </div>
+            <div class="theme">
+                <button id="toggelBtn" class="light-mode theme"><img id="themeIcon" src="../icons/light-mode.png" alt="Switch into light mode"></button>
+            </div>
+
+            <div class="menuIcon" id="menuIcon">&#9776;</div>
+            <div class="closeIcon" id="closeIcon" style="display: none;">&times;</div>
+        </nav>
+    </header>
+
+    <section class="sort-desc" id="sortDesc">
+        <h2><strong>Linked List</strong></h2>
+        <p class="definition">
+            <strong>Definition:</strong>
+        <ul>
+            <li class="definition1">A linked list is a linear data structure where elements are not stored at contiguous memory locations.</li>
+            <li class="definition1">Elements are linked using pointers. Each element, called a <strong>node</strong>, consists of two parts: <strong>data</strong> and a <strong>pointer</strong> (or link) to the next node in the sequence.</li>
+            <li class="definition1">The first node is called the <strong>HEAD</strong>, and the last node's pointer is typically <strong>NULL</strong>, indicating the end of the list.</li>
+        </ul>
+        </p>
+        <p class="working">
+            <strong>Working:</strong>
+        <ul class="working1">
+            <li><strong>Insertion:</strong> A new node can be added at the beginning, end, or a specific position by adjusting the pointers of the adjacent nodes.</li>
+            <li><strong>Deletion:</strong> A node is removed by modifying the pointer of the preceding node to point to the succeeding node, effectively bypassing the one being deleted.</li>
+            <li><strong>Traversal:</strong> Starting from the HEAD, the list is traversed by following the `next` pointers until a NULL pointer is reached.</li>
+        </ul>
+        </p>
+        <p class="time-complexity">
+            <strong>Time Complexity:</strong>
+        <ul class="time-complexity1">
+            <li>Access: <code>O(n)</code></li>
+            <li>Search: <code>O(n)</code></li>
+            <li>Insertion: <code>O(1)</code> (at head), <code>O(n)</code> (at tail/middle)</li>
+            <li>Deletion: <code>O(1)</code> (at head), <code>O(n)</code> (at tail/middle)</li>
+        </ul>
+        </p>
+        <p class="space-complexity">
+            <strong>Space Complexity:</strong>
+        <ul class="space-complexity1">
+            <li><code>O(n)</code> (to store <em>n</em> elements)</li>
+        </ul>
+        </p>
+    </section>
+
+    <main id="linked-list-page">
+        <section id="visualizer" class="visualizer">
+            <div class="visualizer-layout">
+                <div class="left-panel">
+                    <div class="input-section">
+                        <label for="customInput">Enter initial elements (comma-separated):</label>
+                        <input type="text" id="customInput" placeholder="10, 20, 30" />
+                        <button id="generateBtn">Generate List</button>
+                        <button id="resetBtn">Reset</button>
+                    </div>
+
+                    <div class="list-wrapper">
+                        <div id="listContainer" class="list-container"></div>
+                    </div>
+
+                    <div class="list-operations">
+                        <input type="text" id="valueInput" placeholder="Value">
+                        <button id="insertHeadBtn">Insert Head</button>
+                        <button id="insertTailBtn">Insert Tail</button>
+                        <button id="deleteHeadBtn">Delete Head</button>
+                        <button id="deleteTailBtn">Delete Tail</button>
+                        <button id="searchBtn">Search</button>
+                        <input type="text" id="indexInput" placeholder="Index">
+                        <button id="deleteIndexBtn">Delete @ Index</button>
+                    </div>
+                </div>
+
+                <div class="right-panel">
+                    <div class="step-info" id="stepInfo">
+                        <h3>Visited Steps:</h3>
+                        <ul id="stepList"></ul>
+                    </div>
+
+                    <div class="code-highlight-section">
+                        <h3>Code Snippet:</h3>
+                        <pre id="codeBox"><code id="codeSnippet"></code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="code" class="sort-lan-selector">
+            <button class="sort-lan-btn active" id="cpp">C++</button>
+            <button class="sort-lan-btn" id="c">C</button>
+            <button class="sort-lan-btn" id="py">Python</button>
+            <button class="sort-lan-btn" id="java">Java</button>
+            <button class="sort-lan-btn" id="js">JavaScript</button>
+        </section>
+
+        <section class="code-display">
+            <button id="copy-btn"><img src="../icons/dark-copy.png" alt=""></button>
+            <p class="code-lang"></p>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>Some visual assets used are sourced from <a href="https://visualgo.net" target="_blank">Visualgo.net</a> for educational reference purposes. All rights belong to their respective creators.</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- Dark Mode and Light Mode ---
+        const toggelBtn = document.getElementById("toggelBtn");
+        const themeIcon = document.getElementById("themeIcon");
+        const body = document.querySelector("body");
+
+        if (localStorage.getItem("theme") === "light") {
+            body.classList.add("light-mode");
+            themeIcon.src = "../icons/dark-mode.png";
+        }
+
+        toggelBtn.addEventListener("click", () => {
+            body.classList.toggle("light-mode");
+            if (body.classList.contains("light-mode")) {
+                themeIcon.src = "../icons/dark-mode.png";
+                localStorage.setItem("theme", "light");
+            } else {
+                themeIcon.src = "../icons/light-mode.png";
+                localStorage.setItem("theme", "dark");
+            }
+        });
+
+        // --- Menu Icon Logic ---
+        const menuIcon = document.getElementById("menuIcon");
+        const closeIcon = document.getElementById("closeIcon");
+        const navLinks = document.querySelector(".nav-links");
+        const allLinks = document.querySelectorAll(".nav-links a");
+
+        menuIcon.addEventListener("click", () => {
+            navLinks.classList.add("show");
+            menuIcon.style.display = "none";
+            closeIcon.style.display = "block";
+        });
+
+        closeIcon.addEventListener("click", () => {
+            navLinks.classList.remove("show");
+            closeIcon.style.display = "none";
+            menuIcon.style.display = "block";
+        });
+
+        allLinks.forEach(link => {
+            link.addEventListener("click", () => {
+                if (navLinks.classList.contains("show")) {
+                    navLinks.classList.remove("show");
+                    closeIcon.style.display = "none";
+                    menuIcon.style.display = "block";
+                }
+            });
+        });
+
+        // --- Linked List Visualizer Logic ---
+        const valueInput = document.getElementById('valueInput');
+        const indexInput = document.getElementById('indexInput');
+        const insertHeadBtn = document.getElementById('insertHeadBtn');
+        const insertTailBtn = document.getElementById('insertTailBtn');
+        const deleteHeadBtn = document.getElementById('deleteHeadBtn');
+        const deleteTailBtn = document.getElementById('deleteTailBtn');
+        const deleteIndexBtn = document.getElementById('deleteIndexBtn');
+        const searchBtn = document.getElementById('searchBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const generateBtn = document.getElementById('generateBtn');
+        const customInput = document.getElementById('customInput');
+        const listContainer = document.getElementById('listContainer');
+        const listWrapper = document.querySelector('.list-wrapper');
+        const codeSnippet = document.getElementById('codeSnippet');
+        const stepList = document.getElementById('stepList');
+        const sortLanButtons = document.querySelectorAll(".sort-lan-selector button");
+        const codeDisplay = document.querySelector(".code-display p");
+
+        let listData = [];
+        let isAnimating = false;
+        let currentLang = "cpp";
+
+        const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+        const jsCodes = {
+            insertHead: `// Inserts a new node at the head
+function insertAtHead(value) {
+    const newNode = new Node(value);
+    newNode.next = this.head;
+    this.head = newNode;
+}`,
+            deleteHead: `// Deletes the head node
+function deleteFromHead() {
+    if (!this.head) return;
+    this.head = this.head.next;
+}`,
+            insertTail: `// Inserts a new node at the tail
+function insertAtTail(value) {
+    const newNode = new Node(value);
+    if (!this.head) {
+        this.head = newNode;
+        return;
+    }
+    let current = this.head;
+    while (current.next) {
+        current = current.next;
+    }
+    current.next = newNode;
+}`,
+            deleteTail: `// Deletes the tail node
+function deleteFromTail() {
+    if (!this.head || !this.head.next) {
+        this.head = null;
+        return;
+    }
+    let current = this.head;
+    while (current.next.next) {
+        current = current.next;
+    }
+    current.next = null;
+}`,
+            search: `// Searches for a value in the list
+function search(value) {
+    let current = this.head;
+    while (current) {
+        if (current.data === value) {
+            return true; // Found
+        }
+        current = current.next;
+    }
+    return false; // Not found
+}`
+        };
+
+        const listSyntax = {
+            js: `class Node {\n    constructor(data, next = null) {\n        this.data = data;\n        this.next = next;\n    }\n}`,
+            py: `class Node:\n    def __init__(self, data):\n        self.data = data\n        self.next = None`,
+            java: `class Node {\n    int data;\n    Node next;\n    Node(int d) { data = d; next = null; }\n}`,
+            cpp: `struct Node {\n    int data;\n    Node* next;\n};`,
+            c: `struct Node {\n    int data;\n    struct Node* next;\n};`,
+        };
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const randomList = [];
+            for (let i = 0; i < 4; i++) {
+                randomList.push(Math.floor(Math.random() * 99) + 1);
+            }
+
+            listData = [...randomList];
+            generateListUI(listData);
+            updateCodeDisplay("insertHead");
+            document.getElementById(currentLang).classList.add("active");
+            codeDisplay.textContent = listSyntax.cpp;
+        });
+
+        function updateCodeDisplay(operation) {
+            codeSnippet.textContent = jsCodes[operation] || "Select an operation to see the code.";
+        }
+
+        function updateStepList(message) {
+            const li = document.createElement('li');
+            li.textContent = message;
+            stepList.appendChild(li);
+            stepList.scrollTop = stepList.scrollHeight;
+        }
+
+        function clearHighlights() {
+            document.querySelectorAll('.node').forEach(n => n.classList.remove('highlight', 'found'));
+        }
+
+        function updatePointers() {
+            const oldPointers = listWrapper.querySelectorAll('.pointer');
+            oldPointers.forEach(p => p.remove());
+
+            const nodes = listContainer.querySelectorAll('.node-group');
+            if (nodes.length > 0) {
+                const headNode = nodes[0];
+                const tailNode = nodes[nodes.length - 1];
+
+                const headPointer = document.createElement('div');
+                headPointer.id = 'headPointer';
+                headPointer.className = 'pointer';
+                headPointer.textContent = 'HEAD';
+                headPointer.style.left = `${headNode.offsetLeft + (headNode.offsetWidth / 2) - 30}px`;
+                listWrapper.appendChild(headPointer);
+
+                const tailPointer = document.createElement('div');
+                tailPointer.id = 'tailPointer';
+                tailPointer.className = 'pointer';
+                tailPointer.textContent = 'TAIL';
+                tailPointer.style.left = `${tailNode.offsetLeft + (tailNode.offsetWidth / 2) - 30}px`;
+                listWrapper.appendChild(tailPointer);
+            }
+        }
+
+        function generateListUI(arr) {
+            listContainer.innerHTML = '';
+            if (arr.length === 0) {
+                listContainer.innerHTML = '<p style="color: #a4a4a4; width: 100%; text-align: center;">List is empty.</p>';
+            } else {
+                arr.forEach((value, index) => {
+                    const nodeGroup = document.createElement('div');
+                    nodeGroup.className = 'node-group';
+                    const node = document.createElement('div');
+                    node.className = 'node';
+                    node.textContent = value;
+                    nodeGroup.appendChild(node);
+                    if (index < arr.length - 1) {
+                        const arrow = document.createElement('div');
+                        arrow.className = 'arrow';
+                        nodeGroup.appendChild(arrow);
+                    } else {
+                        const nullText = document.createElement('span');
+                        nullText.textContent = 'NULL';
+                        nullText.style.margin = '0 10px';
+                        nodeGroup.appendChild(nullText);
+                    }
+                    listContainer.appendChild(nodeGroup);
+                });
+            }
+            setTimeout(updatePointers, 50);
+        }
+
+        async function handleOperation(operationFn, codeKey, ...args) {
+            if (isAnimating) return;
+            isAnimating = true;
+            clearHighlights();
+            updateCodeDisplay(codeKey);
+            await operationFn(...args);
+            isAnimating = false;
+        }
+
+        const operations = {
+            insertHead: async (value) => {
+                if (isNaN(value)) {
+                    alert("Please enter a valid number.");
+                    return;
+                }
+                updateStepList(`Inserting ${value} at HEAD.`);
+                listData.unshift(value);
+                generateListUI(listData);
+                await delay(100);
+                listContainer.firstChild.querySelector('.node').classList.add('highlight');
+                await delay(800);
+                valueInput.value = '';
+            },
+            insertTail: async (value) => {
+                if (isNaN(value)) {
+                    alert("Please enter a valid number.");
+                    return;
+                }
+                updateStepList(`Traversing to the TAIL.`);
+                const nodes = listContainer.querySelectorAll('.node');
+                for (const node of nodes) {
+                    node.classList.add('highlight');
+                    await delay(300);
+                    node.classList.remove('highlight');
+                }
+                updateStepList(`Inserting ${value} at TAIL.`);
+                listData.push(value);
+                generateListUI(listData);
+                await delay(100);
+                listContainer.lastChild.querySelector('.node').classList.add('highlight');
+                await delay(800);
+                valueInput.value = '';
+            },
+            deleteHead: async () => {
+                if (listData.length === 0) {
+                    alert("List is empty.");
+                    return;
+                }
+                updateStepList(`Deleting HEAD node.`);
+                const headGroup = listContainer.firstChild;
+                headGroup.classList.add('remove');
+                await delay(500);
+                listData.shift();
+                generateListUI(listData);
+            },
+            deleteTail: async () => {
+                if (listData.length === 0) {
+                    alert("List is empty.");
+                    return;
+                }
+                updateStepList(`Traversing to find the second to last node.`);
+                const nodeGroups = listContainer.querySelectorAll('.node-group');
+                for (let i = 0; i < nodeGroups.length - 1; i++) {
+                    nodeGroups[i].querySelector('.node').classList.add('highlight');
+                    await delay(300);
+                    nodeGroups[i].querySelector('.node').classList.remove('highlight');
+                }
+                updateStepList(`Deleting TAIL node.`);
+                const tailGroup = nodeGroups[nodeGroups.length - 1];
+                tailGroup.classList.add('remove');
+                await delay(500);
+                listData.pop();
+                generateListUI(listData);
+            },
+            deleteIndex: async (index) => {
+                if (isNaN(index) || index < 0 || index >= listData.length) {
+                    alert("Invalid index.");
+                    return;
+                }
+                updateStepList(`Traversing to index ${index}.`);
+                const nodeGroups = listContainer.querySelectorAll('.node-group');
+                for (let i = 0; i < index; i++) {
+                    nodeGroups[i].querySelector('.node').classList.add('highlight');
+                    await delay(300);
+                    nodeGroups[i].querySelector('.node').classList.remove('highlight');
+                }
+                updateStepList(`Deleting node at index ${index}.`);
+                nodeGroups[index].classList.add('remove');
+                await delay(500);
+                listData.splice(index, 1);
+                generateListUI(listData);
+                indexInput.value = '';
+            },
+            search: async (value) => {
+                if (isNaN(value)) {
+                    alert("Please enter a valid number.");
+                    return;
+                }
+                updateStepList(`Searching for value ${value}.`);
+                const nodes = listContainer.querySelectorAll('.node');
+                let found = false;
+                for (let i = 0; i < nodes.length; i++) {
+                    nodes[i].classList.add('highlight');
+                    await delay(500);
+                    if (parseInt(nodes[i].textContent) === value) {
+                        updateStepList(`Value ${value} found at index ${i}.`);
+                        nodes[i].classList.remove('highlight');
+                        nodes[i].classList.add('found');
+                        found = true;
+                        break;
+                    }
+                    nodes[i].classList.remove('highlight');
+                }
+                if (!found) {
+                    updateStepList(`Value ${value} not found in the list.`);
+                }
+                await delay(1500);
+                valueInput.value = '';
+            }
+        };
+
+        // Event Listeners
+        insertHeadBtn.addEventListener('click', () => handleOperation(operations.insertHead, 'insertHead', parseInt(valueInput.value)));
+        insertTailBtn.addEventListener('click', () => handleOperation(operations.insertTail, 'insertTail', parseInt(valueInput.value)));
+        deleteHeadBtn.addEventListener('click', () => handleOperation(operations.deleteHead, 'deleteHead'));
+        deleteTailBtn.addEventListener('click', () => handleOperation(operations.deleteTail, 'deleteTail'));
+        deleteIndexBtn.addEventListener('click', () => handleOperation(operations.deleteIndex, 'deleteTail', parseInt(indexInput.value))); // Reuse deleteTail code snippet for UI
+        searchBtn.addEventListener('click', () => handleOperation(operations.search, 'search', parseInt(valueInput.value)));
+
+        generateBtn.addEventListener('click', () => {
+            const arr = customInput.value.split(',').map(n => parseInt(n.trim())).filter(n => !isNaN(n));
+            listData = arr.length > 0 ? arr : [];
+            generateListUI(listData);
+        });
+
+        resetBtn.addEventListener('click', () => {
+            // Now reset generates a new random list as well
+            const randomList = [];
+            for (let i = 0; i < 4; i++) {
+                randomList.push(Math.floor(Math.random() * 99) + 1);
+            }
+            listData = [...randomList];
+            generateListUI(listData);
+            stepList.innerHTML = '';
+        });
+
+        // Language and Copy button logic
+        document.getElementById("copy-btn").addEventListener("click", () => {
+            navigator.clipboard.writeText(codeDisplay.textContent).then(() => alert("Code copied to clipboard!"), () => alert("Failed to copy."));
+        });
+
+        sortLanButtons.forEach(button => {
+            button.addEventListener("click", (event) => {
+                currentLang = event.target.id;
+                document.querySelector(".sort-lan-selector .active")?.classList.remove("active");
+                event.target.classList.add("active");
+                codeDisplay.textContent = listSyntax[currentLang];
+            });
+        });
+    </script>
+</body>
+
+</html>
