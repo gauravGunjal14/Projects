@@ -1707,65 +1707,277 @@ function animateStep(index) {
     updateStepList();
 }
 
-function updateStepList() {
-    const stepList = document.getElementById('stepList');
-    stepList.innerHTML = '';
+// Helper: safely clone array or return null
+function cloneArr(a) {
+  return Array.isArray(a) ? a.slice() : null;
+}
 
-    for (let i = 0; i <= currentStep - 1; i++) {
-        const step = steps[i];
-        const li = document.createElement('li');
-        let description = '';
+// Helper: format an array and highlight indices (returns HTML)
+function formatArray(arr, highlightIndices = []) {
+  if (!arr) return '[]';
+  return '[' + arr.map((v, idx) => {
+    if (highlightIndices.includes(idx)) return `<span class="val-highlight">${v}</span>`;
+    return `${v}`;
+  }).join(', ') + ']';
+}
 
-        switch (step.action) {
-            case "compare": {
-                const [a, b] = step.indices;
-                const arr = step.arrSnapshot;
-                description = `Compared index ${a} (${arr[a]}) and ${b} (${arr[b]}) → ${arr[a]} ≤ ${arr[b]}`;
-                break;
-            }
-            case "swap": {
-                const [a, b] = step.indices;
-                const arr = step.arrSnapshot;
-                description = `Swapped index ${a} (${arr[a]}) and ${b} (${arr[b]})`;
-                break;
-            }
-            case "shift": {
-                description = `Shifted element at index ${step.indices[0]}`;
-                break;
-            }
-            case "insert": {
-                description = `Inserted element at index ${step.indices[0]}`;
-                break;
-            }
-            case "partition": {
-                description = `Partitioning with pivot at index ${step.indices[0]}`;
-                break;
-            }
-            case "merge": {
-                description = `Merging subarrays ${step.indices.join(", ")}`;
-                break;
-            }
-            case "sorted": {
-                description = `Marking sorted indices [${step.sortedIndices.join(", ")}]`;
-                break;
-            }
-            default:
-                description = `No comparison (initialization/final state)`;
-        }
+// Try to get before/after snapshots from step object, with fallback/inference
+function getSnapshotsForStep(step) {
+  const after = cloneArr(step.arrSnapshot) || cloneArr(step.postSnapshot) || null;
+  let before = cloneArr(step.before) || cloneArr(step.preSnapshot) || null;
+  let inferred = false;
 
-        li.textContent = `Step ${i + 1}: ${description}`;
+  if (!before && after) {
+    // Try to infer for common operations
+    if (step.action === 'swap' && Array.isArray(step.indices) && step.indices.length >= 2) {
+      before = after.slice();
+      const [a, b] = step.indices;
+      // swap back to infer pre-swap state
+      [before[a], before[b]] = [before[b], before[a]];
+      inferred = true;
+    } else {
+      // fallback: assume no change (compare often doesn't change array)
+      before = after.slice();
+      inferred = true;
+    }
+  }
 
-        if (i === currentStep - 1) {
-            li.classList.add('current');
-            highlightCodeLine(step.codeLine);
-        }
+  return { before, after, inferred };
+}
 
-        stepList.appendChild(li);
+// Main upgraded function
+function updateStepList(currentAlgo) {
+  const stepList = document.getElementById('stepList');
+  stepList.innerHTML = '';
+
+  // Templates: customize per algorithm & action (edit these to change phrasing)
+  const templates = {
+    bubble: {
+      compare: (a, b, aval, bval, cmpResult) => ({
+        summary: `Comparing <b>${aval}</b> (index ${a}) and <b>${bval}</b> (index ${b}).`,
+        condition: `Condition checked: <code>${aval} &gt; ${bval}</code> → ${cmpResult ? '<b>true</b> (swap expected)' : '<b>false</b> (no swap)'} .`,
+        why: `Bubble sort repeatedly compares adjacent elements and moves larger elements to the right (end).`,
+        tip: cmpResult ? `Since left > right, swapping moves the larger value one step towards its final position.` : `No swap necessary; left is already <= right.`
+      }),
+      swap: (a, b, before, after) => ({
+        summary: `Swapping elements at index ${a} and ${b}.`,
+        condition: `Swap happened because the comparison indicated the left element was larger.`,
+        why: `Swap places the larger element towards the end for this pass of Bubble Sort.`,
+        result: { before, after },
+        tip: `After swap, the larger element is one step closer to its correct (final) position.`
+      })
+    },
+
+    selection: {
+      compare: (candidateIdx, idx, candVal, val, isNewMin) => ({
+        summary: `Comparing current minimum <b>${candVal}</b> (index ${candidateIdx}) with <b>${val}</b> (index ${idx}).`,
+        condition: `If <code>${val} &lt; ${candVal}</code> → update minimum.`,
+        why: `Selection sort finds the minimum from the unsorted portion and places it at the beginning.`,
+        tip: isNewMin ? `Found a smaller element → update candidate minimum.` : `Current minimum remains the smallest found so far.`
+      }),
+      swap: (minIdx, startIdx, before, after) => ({
+        summary: `Placing the minimum element (index ${minIdx}) at its correct sorted position (index ${startIdx}).`,
+        condition: `Swap between start and minimum index finalizes this pass.`,
+        why: `This ensures the smallest element of unsorted portion moves to sorted prefix.`,
+        result: { before, after },
+        tip: `After this, the sorted portion grows by one element.`
+      })
+    },
+
+    insertion: {
+      shift: (idx, val, before, after) => ({
+        summary: `Shifting element(s) to the right to make room for insertion.`,
+        condition: `We shift when the element to insert is smaller than elements in the sorted portion.`,
+        why: `Shifting creates space so the picked element can be inserted at its correct place.`,
+        result: { before, after },
+        tip: `Shifts preserve order while making space — repeated until correct position found.`
+      }),
+      insert: (idx, val, before, after) => ({
+        summary: `Inserting value <b>${val}</b> at index ${idx}.`,
+        condition: `The correct spot found in sorted prefix — insert here.`,
+        why: `Insertion places the picked element where all left elements are <= it.`,
+        result: { before, after },
+        tip: `The sorted prefix remains sorted after insertion.`
+      })
+    },
+
+    quick: {
+      partition: (pivotIdx, pivotVal, before, after) => ({
+        summary: `Partitioning around pivot <b>${pivotVal}</b> (index ${pivotIdx}).`,
+        condition: `Elements < pivot go left, >= pivot go right.`,
+        why: `Partition step organizes elements relative to pivot so recursion can sort subarrays.`,
+        result: { before, after },
+        tip: `Pivot ends up at its final sorted index after partition completes.`
+      }),
+      compare: (idx, pivotIdx, val, pivotVal, isLeft) => ({
+        summary: `Comparing <b>${val}</b> (index ${idx}) with pivot <b>${pivotVal}</b>.`,
+        condition: isLeft ? `Since ${val} < ${pivotVal}, it belongs to left partition.` : `Since ${val} >= ${pivotVal}, it goes to right partition.`,
+        why: `Partitioning groups smaller and larger elements to enable divide & conquer.`,
+        tip: `Items less than pivot will be sorted in left recursive call.`
+      })
+    },
+
+    merge: {
+      merge: (lhsRange, rhsRange, before, after) => ({
+        summary: `Merging subarrays ${lhsRange} and ${rhsRange}.`,
+        condition: `Compare heads of both subarrays and pick the smaller to append.`,
+        why: `Merge combines two sorted halves into a single sorted array.`,
+        result: { before, after },
+        tip: `Merging is stable — equal elements preserve original order.`
+      })
+    },
+
+    heap: {
+      compare: (parentIdx, childIdx, pVal, cVal, violates) => ({
+        summary: `Comparing parent <b>${pVal}</b> (index ${parentIdx}) with child <b>${cVal}</b> (index ${childIdx}).`,
+        condition: violates ? `Child > parent → heap property violated.` : `Heap property holds.`,
+        why: `Heapify restores the max-heap (or min-heap) property by moving larger elements up.`,
+        tip: violates ? `A swap will move the larger child up to maintain heap.` : `No action required.`
+      }),
+      swap: (a, b, before, after) => ({
+        summary: `Swapping to restore heap property.`,
+        condition: `Performed because heap property was violated.`,
+        why: `Swap moves larger child up to maintain parent >= children (for max-heap).`,
+        result: { before, after },
+        tip: `After swap, continue heapify down the subtree if necessary.`
+      })
+    }
+  };
+
+  // Iterate steps and build detailed UI
+  for (let i = 0; i <= currentStep - 1; i++) {
+    const step = steps[i];
+    const li = document.createElement('li');
+    li.className = 'step-item';
+    li.dataset.stepIndex = i;
+
+    const { before, after, inferred } = getSnapshotsForStep(step);
+    const arrBefore = before;
+    const arrAfter = after;
+
+    // helper to present before->after with highlights
+    function resultHTML(highlightIdxs = []) {
+      const bHTML = formatArray(arrBefore, highlightIdxs);
+      const aHTML = formatArray(arrAfter, highlightIdxs);
+      const note = inferred ? ' <em>(state inferred)</em>' : '';
+      return `<div class="step-result"><div><strong>Before:</strong> ${bHTML}</div>
+              <div><strong>After:</strong> ${aHTML}</div>${note}</div>`;
     }
 
-    const container = document.getElementById('stepInfo');
-    container.scrollTop = container.scrollHeight;
+    // Build description parts
+    let htmlParts = [];
+    let tpl = (templates[currentAlgo] && templates[currentAlgo][step.action]) || null;
+
+    // Default handling per action if no template or to compute dynamic fields
+    switch (step.action) {
+      case 'compare': {
+        const [a, b] = step.indices || [];
+        const left = arrBefore && typeof a === 'number' ? arrBefore[a] : (arrAfter && arrAfter[a]);
+        const right = arrBefore && typeof b === 'number' ? arrBefore[b] : (arrAfter && arrAfter[b]);
+
+        if (tpl) {
+          // Many templates provide tailored phrasing; allow them to be functions
+          const data = tpl(a, b, left, right, (left !== undefined && right !== undefined) ? (left > right) : null);
+          htmlParts.push(`<div class="step-summary">${data.summary}</div>`);
+          if (data.condition) htmlParts.push(`<div class="step-condition">${data.condition}</div>`);
+          if (data.why) htmlParts.push(`<div class="step-why">${data.why}</div>`);
+          if (data.tip) htmlParts.push(`<div class="step-tip">${data.tip}</div>`);
+        } else {
+          // generic detailed compare
+          const cmp = (left !== undefined && right !== undefined) ? (left > right ? '>' : (left < right ? '<' : '=')) : '?';
+          htmlParts.push(`<div class="step-summary">Comparing <b>${left}</b> (index ${a}) and <b>${right}</b> (index ${b}).</div>`);
+          htmlParts.push(`<div class="step-condition">Condition: ${left} ${cmp} ${right} → ${cmp === '>' ? '<b>swap</b>' : (cmp === '<' ? '<b>no swap</b>' : '<b>equal</b>')}</div>`);
+          htmlParts.push(`<div class="step-why">Because algorithm checks adjacent/target elements to decide next action.</div>`);
+        }
+
+        // show array state (compare typically doesn't change array)
+        htmlParts.push(resultHTML([a, b]));
+        break;
+      }
+
+      case 'swap': {
+        const [a, b] = step.indices || [];
+        if (tpl) {
+          const data = tpl(a, b, arrBefore, arrAfter);
+          htmlParts.push(`<div class="step-summary">${data.summary}</div>`);
+          if (data.condition) htmlParts.push(`<div class="step-condition">${data.condition}</div>`);
+          if (data.why) htmlParts.push(`<div class="step-why">${data.why}</div>`);
+          if (data.result) htmlParts.push(resultHTML([a, b]));
+          if (data.tip) htmlParts.push(`<div class="step-tip">${data.tip}</div>`);
+        } else {
+          htmlParts.push(`<div class="step-summary">Swapped elements at indices ${a} and ${b}.</div>`);
+          htmlParts.push(`<div class="step-why">Swap reorders elements according to comparison result.</div>`);
+          htmlParts.push(resultHTML([a, b]));
+          htmlParts.push(`<div class="step-tip">Observe how these two elements changed places.</div>`);
+        }
+        break;
+      }
+
+      case 'shift':
+      case 'insert': {
+        // insertion-specific
+        if (tpl) {
+          const data = tpl(step.indices[0], arrBefore && arrBefore[step.indices[0]], arrBefore, arrAfter);
+          htmlParts.push(`<div class="step-summary">${data.summary}</div>`);
+          if (data.condition) htmlParts.push(`<div class="step-condition">${data.condition}</div>`);
+          if (data.why) htmlParts.push(`<div class="step-why">${data.why}</div>`);
+          if (data.result) htmlParts.push(resultHTML([step.indices[0]]));
+          if (data.tip) htmlParts.push(`<div class="step-tip">${data.tip}</div>`);
+        } else {
+          htmlParts.push(`<div class="step-summary">Shift/Insert operation at index ${step.indices[0]}.</div>`);
+          htmlParts.push(resultHTML([step.indices[0]]));
+        }
+        break;
+      }
+
+      case 'partition':
+      case 'merge': {
+        if (tpl) {
+          const data = tpl(step.indices, arrBefore, arrAfter);
+          htmlParts.push(`<div class="step-summary">${data.summary}</div>`);
+          if (data.condition) htmlParts.push(`<div class="step-condition">${data.condition}</div>`);
+          if (data.why) htmlParts.push(`<div class="step-why">${data.why}</div>`);
+          if (data.result) htmlParts.push(resultHTML());
+          if (data.tip) htmlParts.push(`<div class="step-tip">${data.tip}</div>`);
+        } else {
+          htmlParts.push(`<div class="step-summary">Partition/Merge operation covering indices ${step.indices.join(', ')}.</div>`);
+          htmlParts.push(resultHTML());
+        }
+        break;
+      }
+
+      case 'sorted': {
+        const sortedIdxs = (step.sortedIndices || []).slice();
+        htmlParts.push(`<div class="step-summary">Marking sorted elements: ${formatArray(arrAfter, sortedIdxs)}</div>`);
+        htmlParts.push(`<div class="step-why">These elements are in their final sorted positions and will not move further.</div>`);
+        htmlParts.push(`<div class="step-tip">Green color indicates final position.</div>`);
+        break;
+      }
+
+      default: {
+        htmlParts.push(`<div class="step-summary">Internal / initialization step.</div>`);
+        if (arrAfter) htmlParts.push(`<div class="step-result"><strong>State:</strong> ${formatArray(arrAfter)}</div>`);
+        break;
+      }
+    }
+
+    // assemble
+    li.innerHTML = `<div class="step-container">${htmlParts.join('')}</div>`;
+
+    // Highlight current step and highlight corresponding code line
+    if (i === currentStep - 1) {
+      li.classList.add('current');
+      if (typeof highlightCodeLine === 'function') highlightCodeLine(step.codeLine);
+    }
+
+    stepList.appendChild(li);
+  }
+
+  // auto-scroll to bottom / current
+  const container = document.getElementById('stepInfo');
+  if (container) container.scrollTop = container.scrollHeight;
 }
+
 
 // Highlight Code Line
 function highlightCodeLine(lineId) {
@@ -1853,4 +2065,12 @@ restartBtn.addEventListener('click', () => {
 function getActualSpeed() {
     const sliderValue = parseInt(speedSlider.value);
     return 2100 - sliderValue; // 100 => 2000ms, 2000 => 100ms
+}
+
+function waveCelebrate(bars) {
+  bars.forEach((bar, i) => {
+    setTimeout(() => {
+      bar.classList.add("sorted");
+    }, i * 150); // 150ms delay har bar ke liye
+  });
 }
